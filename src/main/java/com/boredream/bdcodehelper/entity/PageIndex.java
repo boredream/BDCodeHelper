@@ -36,8 +36,15 @@ public class PageIndex {
      */
     public PageIndex(int startPage, int countPerPage) {
         this.startPage = startPage;
-        this.currentPage = startPage;
         this.countPerPage = countPerPage;
+        init();
+    }
+
+    /**
+     * 重置初始化
+     */
+    public void init() {
+        this.currentPage = startPage;
     }
 
     /**
@@ -52,7 +59,7 @@ public class PageIndex {
      *
      * @return 起始页
      */
-    public int startPage() {
+    public int toStartPage() {
         newPage = startPage;
         return newPage;
     }
@@ -62,18 +69,9 @@ public class PageIndex {
      *
      * @return 当前页+1作为下一页
      */
-    public int nextPage() {
+    public int toNextPage() {
         newPage = currentPage + 1;
         return newPage;
-    }
-
-    /**
-     * 当前页
-     *
-     * @return 当前页
-     */
-    public int currentPage() {
-        return currentPage;
     }
 
     /**
@@ -89,8 +87,12 @@ public class PageIndex {
         success();
 
         // 如果当前页为起始页, 则清空数据
-        if (currentPage() == startPage) {
+        if (currentPage == startPage) {
             currentList.clear();
+        }
+
+        if (newList == null) {
+            return;
         }
 
         // 添加数据

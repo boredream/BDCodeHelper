@@ -1,9 +1,5 @@
 package com.boredream.bdcodehelper.utils;
 
-import android.content.Context;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-
 public class ViewUtils {
 
 //    public static void setIndicator(Context context, final int size,
@@ -55,28 +51,4 @@ public class ViewUtils {
 //        }
 //    }
 
-    /**
-     * 隐藏软键盘
-     *
-     * @param editText
-     * @param context
-     */
-    public static void closeKeyBoard(EditText editText, Context context) {
-        ((InputMethodManager) context
-                .getSystemService(Context.INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(editText.getWindowToken(), 0);
-    }
-
-    /**
-     * 显示软键盘
-     *
-     * @param editText
-     * @param context
-     */
-    public static void openKeyBoard(EditText editText, Context context) {
-        editText.requestFocus();
-        InputMethodManager inputManager = (InputMethodManager) editText
-                .getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
-    }
 }

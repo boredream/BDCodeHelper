@@ -16,9 +16,6 @@ public class NetUtils {
 
     /**
      * 判断网络是否连接
-     *
-     * @param context
-     * @return
      */
     public static boolean isConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager)
@@ -61,13 +58,13 @@ public class NetUtils {
     /**
      * 打开网络设置界面
      */
-    public static void openSetting(Activity activity) {
+    public static void openSetting(Activity activity, int requestCode) {
         Intent intent = new Intent("/");
         ComponentName cm = new ComponentName("com.android.settings",
                 "com.android.settings.WirelessSettings");
         intent.setComponent(cm);
-        intent.setAction("android.intent.action.VIEW");
-        activity.startActivityForResult(intent, 0);
+        intent.setAction(Intent.ACTION_VIEW);
+        activity.startActivityForResult(intent, requestCode);
     }
 
 }

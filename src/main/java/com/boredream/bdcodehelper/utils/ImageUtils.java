@@ -7,9 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -17,19 +14,34 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 
-import java.util.HashMap;
-
-
+/**
+ * 图片工具类
+ */
 public class ImageUtils {
 
+    /**
+     * 拍照
+     */
     public static final int REQUEST_CODE_FROM_CAMERA = 5001;
+
+    /**
+     * 相册
+     */
     public static final int REQUEST_CODE_FROM_ALBUM = 5002;
+
+    /**
+     * 裁剪
+     */
     public static final int REQUEST_CODE_CROP_IMAGE = 5003;
 
     /**
      * 存放拍照图片的uri地址
      */
     public static Uri imageUriFromCamera;
+
+    /**
+     * 存放裁剪图片的uri地址
+     */
     public static Uri cropImageUri;
 
     /**
@@ -64,6 +76,7 @@ public class ImageUtils {
      * 打开相机拍照获取图片
      */
     public static void pickImageFromCamera(final Activity activity) {
+        // 先生成一个uri地址用于存放拍照获取的图片
         imageUriFromCamera = createImageUri(activity);
 
         Intent intent = new Intent();
@@ -111,10 +124,10 @@ public class ImageUtils {
 //		intent.putExtra("outputX", 300);
 //		intent.putExtra("outputY", 100);
 
-        // return-data为true时,会直接返回bitmap数据,但是大图裁剪时会出现问题,推荐下面为false时的方式
+        // return-data为true时,会直接返回bitmap数据,但是大图裁剪时会出现OOM,推荐下面为false时的方式
         // return-data为false时,不会返回bitmap,但需要指定一个MediaStore.EXTRA_OUTPUT保存图片uri
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, ImageUtils.cropImageUri);
         intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri);
 
         activity.startActivityForResult(intent, REQUEST_CODE_CROP_IMAGE);
     }
@@ -123,7 +136,7 @@ public class ImageUtils {
      * 创建一条图片uri,用于保存拍照后的照片
      */
     private static Uri createImageUri(Context context) {
-        String name = "boreWbImg" + System.currentTimeMillis();
+        String name = "boreImg" + System.currentTimeMillis();
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, name);
         values.put(MediaStore.Images.Media.DISPLAY_NAME, name + ".jpeg");
@@ -140,18 +153,6 @@ public class ImageUtils {
     }
 
     /**
-     * 获取图片文件路径
-     */
-    public static String getImageAbsolutePath(Context context, Uri uri) {
-        Cursor cursor = MediaStore.Images.Media.query(context.getContentResolver(), uri,
-                new String[]{MediaStore.Images.Media.DATA});
-        if (cursor.moveToFirst()) {
-            return cursor.getString(0);
-        }
-        return null;
-    }
-
-    /**
      * 用第三方应用app打开图片
      */
     public static void openImageByOtherApp(Context context, Uri imageUri) {
@@ -161,13 +162,8 @@ public class ImageUtils {
         context.startActivity(intent);
     }
 
-    /////////////////////Android4.4以上版本特殊处理如下//////////////////////////////////////
-
     /**
      * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
-     *
-     * @param context
-     * @param imageUri
      */
     public static String getImageAbsolutePath19(Context context, Uri imageUri) {
         if (context == null || imageUri == null)
@@ -264,67 +260,6 @@ public class ImageUtils {
      */
     private static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
-    }
-
-//    /**
-//     * 获取压缩后的图片字节数据
-//     *
-//     * @param path 图片文件路径
-//     */
-//    public static byte[] getCompressImageBytes(String path) {
-//        // TODO 图标压缩大小根据服务器限定判断
-//        ImageSize targetImageSize = new ImageSize(1080, 1920);
-//        // 利用ImageLoader同步加载图片,进行像素压缩
-//        Bitmap bitmap = ImageLoader.getInstance().loadImageSync("file://" + path, targetImageSize);
-//
-//        // 质量压缩至60%,输出为字节流
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
-//        byte[] bytes = baos.toByteArray();
-//
-//        // 回收图片
-//        bitmap.recycle();
-//
-//        return bytes;
-//    }
-
-    /**
-     * 获取网络图片缩略图
-     *
-     * @param url
-     * @param width
-     * @param height
-     * @return
-     */
-    public static Bitmap createVideoThumbnail(String url, int width, int height) {
-
-        Bitmap bitmap = null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        int kind = MediaStore.Video.Thumbnails.MINI_KIND;
-        try {
-            if (Build.VERSION.SDK_INT >= 14) {
-                retriever.setDataSource(url, new HashMap<String, String>());
-            } else {
-                retriever.setDataSource(url);
-            }
-            bitmap = retriever.getFrameAtTime();
-        } catch (IllegalArgumentException ex) {
-            // Assume this is a corrupt video file
-        } catch (RuntimeException ex) {
-            // Assume this is a corrupt video file.
-        } finally {
-            try {
-                retriever.release();
-            } catch (RuntimeException ex) {
-                // Ignore failures while cleaning up.
-            }
-        }
-
-        if (kind == MediaStore.Images.Thumbnails.MICRO_KIND && bitmap != null) {
-            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
-        }
-
-        return bitmap;
     }
 
 }

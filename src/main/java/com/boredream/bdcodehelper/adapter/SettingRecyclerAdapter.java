@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 设置选项列表适配器
  * <p>
- * 通用样式,左侧图标,中间文字,右侧文字,右侧图标
+ * Item通用样式为：左侧图标、中间文字、右侧文字、右侧图标。
  */
 public class SettingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

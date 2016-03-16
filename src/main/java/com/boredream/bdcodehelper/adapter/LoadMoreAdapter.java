@@ -234,6 +234,11 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
 
         isLoadingMore = true;
         mOnLoadMoreListener.onLoadMore();
+        onLoadMore();
+    }
+
+    protected void onLoadMore() {
+        // sub
     }
 
     public interface OnLoadMoreListener {

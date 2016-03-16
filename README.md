@@ -1,6 +1,6 @@
 # BDCodeHelper 代码助手
 Code Helper Model for android develper (Android Studio)  
-代码为Android Studio 的 Model，不是完整App应用，不能直接导入作为Android项目运行。  
+代码为Android Studio 的 Model，不是完整App应用。需要主项目依赖导入作为辅助开发工具。
 
 ---
 # 功能介绍

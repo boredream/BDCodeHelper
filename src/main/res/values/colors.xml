@@ -2,9 +2,9 @@
 <resources>
     <!-- basic -->
     <!-- 主色调 -->
-    <color name="colorPrimary">#d50202</color>
-    <color name="colorPrimaryDark">#940203</color>
-    <color name="colorAccent">#64bc1a</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
     <color name="colorSecondary">#ff9900</color>
     <color name="colorSecondaryDark">#d88200</color>
     <!-- 主体文字,标题/标签 -->

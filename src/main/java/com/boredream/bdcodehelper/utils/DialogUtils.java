@@ -16,8 +16,8 @@ public class DialogUtils {
     }
 
     public static Dialog createProgressDialog(Context context, boolean needCancle) {
-        Dialog dialog = new ProgressDialog(context);
-        dialog.setTitle("loading...");
+        ProgressDialog dialog = new ProgressDialog(context);
+        dialog.setMessage("Loading ...");
         dialog.setCancelable(needCancle);
         dialog.setCanceledOnTouchOutside(false);
         return dialog;

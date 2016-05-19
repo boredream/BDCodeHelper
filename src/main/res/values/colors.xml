@@ -24,4 +24,7 @@
     <!-- other -->
     <color name="txt_link_blue">#1ea5ff</color>
 
+    <!-- wheel -->
+    <color name="province_line_border">#C7C7C7</color>
+
 </resources>

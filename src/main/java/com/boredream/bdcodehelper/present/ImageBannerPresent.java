@@ -1,6 +1,6 @@
 package com.boredream.bdcodehelper.present;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
@@ -24,7 +24,7 @@ public class ImageBannerPresent {
     private static final int STATE_AUTO_SCROLLING = 1;
     private int currentState;
 
-    private Activity activity;
+    private Context context;
 
     private ArrayList<? extends ImageUrlInterface> images;
     private ViewPager vp_banner;
@@ -32,8 +32,8 @@ public class ImageBannerPresent {
     private RadioGroup rg_indicator;
     private BannerPagerAdapter adapter;
 
-    public ImageBannerPresent(Activity activity, View include_banner_with_indicator) {
-        this.activity = activity;
+    public ImageBannerPresent(Context context, View include_banner_with_indicator) {
+        this.context = context;
 
         vp_banner = (ViewPager) include_banner_with_indicator.findViewById(R.id.vp_banner);
         rg_indicator = (RadioGroup) include_banner_with_indicator.findViewById(R.id.rg_indicator);
@@ -53,7 +53,7 @@ public class ImageBannerPresent {
     public void load(ArrayList<? extends ImageUrlInterface> images) {
         this.images = images;
 
-        adapter = new BannerPagerAdapter(activity, images);
+        adapter = new BannerPagerAdapter(context, images);
         vp_banner.setAdapter(adapter);
 
         setIndicator();
@@ -113,11 +113,11 @@ public class ImageBannerPresent {
 
         rg_indicator.removeAllViews();
         for (int i = 0; i < images.size(); i++) {
-            RadioButton rb = new RadioButton(activity);
+            RadioButton rb = new RadioButton(context);
             RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
-                    DisplayUtils.dp2px(activity, 8), DisplayUtils.dp2px(activity, 8));
+                    DisplayUtils.dp2px(context, 8), DisplayUtils.dp2px(context, 8));
             if (i > 0) {
-                params.setMargins(DisplayUtils.dp2px(activity, 8), 0, 0, 0);
+                params.setMargins(DisplayUtils.dp2px(context, 8), 0, 0, 0);
             }
             rb.setLayoutParams(params);
             rb.setButtonDrawable(new ColorDrawable());

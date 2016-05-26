@@ -48,8 +48,8 @@ public class MultiPageLoadPresent {
     private MultiPageRequest request;
     private Subscriber subscriber;
 
-    public void load(RecyclerView.Adapter adapter, ArrayList datas,
-                     final PageIndex pageIndex, MultiPageRequest request, Subscriber subscriber) {
+    public <T> void load(RecyclerView.Adapter adapter, ArrayList datas,
+                     final PageIndex pageIndex, MultiPageRequest<T> request, Subscriber<T> subscriber) {
         this.datas = datas;
         this.pageIndex = pageIndex;
         this.request = request;

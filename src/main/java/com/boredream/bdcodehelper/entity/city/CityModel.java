@@ -1,41 +1,13 @@
 package com.boredream.bdcodehelper.entity.city;
 
-import java.util.List;
-
-public class CityModel {
-	private String name;
-	private List<DistrictModel> districtList;
-	
-	public CityModel() {
-		super();
-	}
-
-	public CityModel(String name, List<DistrictModel> districtList) {
-		super();
-		this.name = name;
-		this.districtList = districtList;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<DistrictModel> getDistrictList() {
-		return districtList;
-	}
-
-	public void setDistrictList(List<DistrictModel> districtList) {
-		this.districtList = districtList;
-	}
+public class CityModel extends BaseAddressModel {
+	public String province;
 
 	@Override
-	public String toString() {
-		return "CityModel [name=" + name + ", districtList=" + districtList
-				+ "]";
+	public boolean equals(Object o) {
+		if(o instanceof CityModel) {
+			return ((CityModel)o).id.equals(this.id);
+		}
+		return super.equals(o);
 	}
-	
 }

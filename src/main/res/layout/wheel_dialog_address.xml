@@ -27,23 +27,17 @@
         android:layout_marginTop="30dip"
         android:orientation="horizontal">
 
-        <kankan.wheel.widget.WheelView
+        <com.boredream.bdcodehelper.view.wheel.WheelView
             android:id="@+id/id_province"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"></kankan.wheel.widget.WheelView>
+            android:layout_weight="1"></com.boredream.bdcodehelper.view.wheel.WheelView>
 
-        <kankan.wheel.widget.WheelView
+        <com.boredream.bdcodehelper.view.wheel.WheelView
             android:id="@+id/id_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"></kankan.wheel.widget.WheelView>
-
-        <kankan.wheel.widget.WheelView
-            android:id="@+id/id_district"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"></kankan.wheel.widget.WheelView>
+            android:layout_weight="1"></com.boredream.bdcodehelper.view.wheel.WheelView>
     </LinearLayout>
 
     <Button

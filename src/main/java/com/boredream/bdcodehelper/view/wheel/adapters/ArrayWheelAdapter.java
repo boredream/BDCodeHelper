@@ -17,41 +17,48 @@ package com.boredream.bdcodehelper.view.wheel.adapters;
 
 import android.content.Context;
 
+import com.boredream.bdcodehelper.entity.city.BaseAddressModel;
+
+import java.util.ArrayList;
+
 /**
  * The simple Array wheel adapter
+ *
  * @param <T> the element type
  */
 public class ArrayWheelAdapter<T> extends AbstractWheelTextAdapter {
-    
+
     // items
-    private T items[];
+    private ArrayList<T> items;
 
     /**
      * Constructor
+     *
      * @param context the current context
-     * @param items the items
+     * @param items   the items
      */
-    public ArrayWheelAdapter(Context context, T items[]) {
+    public ArrayWheelAdapter(Context context, ArrayList<T> items) {
         super(context);
-        
+
         //setEmptyItemResource(TEXT_VIEW_ITEM_RESOURCE);
         this.items = items;
     }
-    
+
     @Override
     public CharSequence getItemText(int index) {
-        if (index >= 0 && index < items.length) {
-            T item = items[index];
-            if (item instanceof CharSequence) {
-                return (CharSequence) item;
+        if (index >= 0 && index < items.size()) {
+            T item = items.get(index);
+            if (item instanceof BaseAddressModel) {
+                return ((BaseAddressModel) item).name;
+            } else if(item instanceof String) {
+                return item.toString();
             }
-            return item.toString();
         }
         return null;
     }
 
     @Override
     public int getItemsCount() {
-        return items.length;
+        return items.size();
     }
 }

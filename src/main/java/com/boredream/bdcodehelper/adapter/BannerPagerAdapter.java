@@ -1,6 +1,6 @@
 package com.boredream.bdcodehelper.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class BannerPagerAdapter extends PagerAdapter {
 
-    private Activity context;
+    private Context context;
     private ArrayList<? extends ImageUrlInterface> urls;
 
-    public BannerPagerAdapter(Activity context, ArrayList<? extends ImageUrlInterface> urls) {
+    public BannerPagerAdapter(Context context, ArrayList<? extends ImageUrlInterface> urls) {
         this.context = context;
         this.urls = urls;
     }

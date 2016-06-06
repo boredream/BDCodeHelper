@@ -6,7 +6,10 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.activity.ImageBrowserActivity;
 import com.boredream.bdcodehelper.entity.ImageUrlInterface;
 import com.bumptech.glide.Glide;
@@ -17,19 +20,19 @@ import java.util.ArrayList;
 public class BannerPagerAdapter extends PagerAdapter {
 
     private Context context;
-    private ArrayList<? extends ImageUrlInterface> urls;
+    private ArrayList<? extends ImageUrlInterface> images;
 
-    public BannerPagerAdapter(Context context, ArrayList<? extends ImageUrlInterface> urls) {
+    public BannerPagerAdapter(Context context, ArrayList<? extends ImageUrlInterface> images) {
         this.context = context;
-        this.urls = urls;
+        this.images = images;
     }
 
     @Override
     public int getCount() {
-        if (urls.size() > 1) {
+        if (images.size() > 1) {
             return Integer.MAX_VALUE;
         }
-        return urls.size();
+        return images.size();
     }
 
     @Override
@@ -44,12 +47,18 @@ public class BannerPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        final ImageView iv = new ImageView(context);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+        ImageUrlInterface image = images.get(position % images.size());
+
+        View view = View.inflate(context, R.layout.item_image_banner, null);
+        TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
+        final ImageView iv = (ImageView) view.findViewById(R.id.iv_image);
+
+        tv_title.setText(image.getImageTitle());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 container.getWidth(), container.getHeight());
         iv.setLayoutParams(params);
-        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        final String url = urls.get(position % urls.size()).getImageUrls();
+
+        final String url = image.getImageUrl();
 
         Glide.with(context)
                 .load(url)
@@ -64,14 +73,14 @@ public class BannerPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ImageBrowserActivity.class);
-                intent.putExtra("images", urls);
+                intent.putExtra("images", images);
                 intent.putExtra("position", position);
                 context.startActivity(intent);
             }
         });
 
-        container.addView(iv);
-        return iv;
+        container.addView(view);
+        return view;
     }
 
 }

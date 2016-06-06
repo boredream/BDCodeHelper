@@ -2,17 +2,18 @@
 <resources>
     <!-- basic -->
     <!-- 主色调 -->
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#8BC34A</color>
+    <color name="colorPrimaryDark">#76A63E</color>
+    <color name="colorPrimaryLight">#E8F3BD</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorSecondary">#ff9900</color>
     <color name="colorSecondaryDark">#d88200</color>
     <!-- 主体文字,标题/标签 -->
-    <color name="txt_black">#404040</color>
+    <color name="txt_black">#808080</color>
     <!-- 内容文字,正文 -->
-    <color name="txt_gray">#9c9c9c</color>
+    <color name="txt_gray">#808080</color>
     <!-- 辅助文字,提示 -->
-    <color name="txt_light_gray">#b3b3b3</color>
+    <color name="txt_light_gray">#CCCCCC</color>
     <!-- 背景色 -->
     <color name="bg_gray">#f1f1f1</color>
     <!-- 按下灰色 -->

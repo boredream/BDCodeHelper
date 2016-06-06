@@ -20,4 +20,7 @@
     <dimen name="txtsize_body">14sp</dimen>
     <dimen name="txtsize_caption">12sp</dimen>
 
+    <!-- other size -->
+    <dimen name="corner_radius">2dp</dimen>
+
 </resources>

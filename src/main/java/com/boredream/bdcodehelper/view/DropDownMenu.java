@@ -218,7 +218,6 @@ public class DropDownMenu extends LinearLayout {
      * @param target
      */
     private void switchMenu(View target) {
-        System.out.println(current_tab_position);
         for (int i = 0; i < tabMenuView.getChildCount(); i = i + 2) {
             if (target == tabMenuView.getChildAt(i)) {
                 if (current_tab_position == i) {

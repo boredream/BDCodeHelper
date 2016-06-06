@@ -58,7 +58,8 @@
     <style name="ButtonPrimary" parent="TextViewSubhead">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/txt_white2gray_sel</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/correct_primary2dark_sel</item>
     </style>

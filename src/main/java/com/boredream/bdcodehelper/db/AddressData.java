@@ -5,13 +5,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.boredream.bdcodehelper.entity.city.CityModel;
+import com.github.promeg.pinyinhelper.Pinyin;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class AddressData {
     public static ArrayList<String> mProvinceDatas = new ArrayList<>();
     public static HashMap<String, ArrayList<CityModel>> mCitisDatasMap = new HashMap<>();
+    public static ArrayList<CityModel> allCities = new ArrayList<>();
+    public static CityModel currentCity;
 
     public static void init(final Context context) {
         new Thread() {
@@ -37,6 +42,28 @@ public class AddressData {
                     city.id = cursorCity.getString(cursorCity.getColumnIndex("CitySort"));
                     city.name = cursorCity.getString(cursorCity.getColumnIndex("CityName"));
 
+                    if(!city.name.endsWith("市")) {
+                        continue;
+                    }
+
+                    city.name = city.name.substring(0, city.name.length() - 1);
+
+                    StringBuilder sbLetter = new StringBuilder();
+                    for(char c : city.name.toCharArray()) {
+                        String letter;
+                        if(c == '长') {
+                            letter = "CHANG";
+                        } else if(c == '重'){
+                            letter = "CHONG";
+                        } else {
+                            letter = Pinyin.toPinyin(c);
+                        }
+                        sbLetter.append(letter);
+                    }
+                    city.letter = sbLetter.toString();
+
+                    allCities.add(city);
+
                     if(!mProvinceDatas.contains(province)) {
                         mProvinceDatas.add(province);
                     }
@@ -51,6 +78,13 @@ public class AddressData {
                     }
 
                 } while (cursorCity.moveToNext());
+
+                Collections.sort(allCities, new Comparator<CityModel>() {
+                    @Override
+                    public int compare(CityModel cityModel, CityModel t1) {
+                        return cityModel.letter.compareTo(t1.letter);
+                    }
+                });
             }
         }.start();
 

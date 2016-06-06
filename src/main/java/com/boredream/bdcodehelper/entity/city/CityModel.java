@@ -2,6 +2,7 @@ package com.boredream.bdcodehelper.entity.city;
 
 public class CityModel extends BaseAddressModel {
 	public String province;
+	public String letter;
 
 	@Override
 	public boolean equals(Object o) {

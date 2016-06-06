@@ -51,7 +51,7 @@ public class ImageBrowserAdapter extends PagerAdapter {
         final ProgressBar pb_loading = (ProgressBar) rootView.findViewById(R.id.pb_loading);
         final ImageView iv_image_browser = (ImageView) rootView.findViewById(R.id.iv_image_browser);
         final PhotoViewAttacher pva = new PhotoViewAttacher(iv_image_browser);
-        String url = picUrls.get(index).getImageUrls();
+        String url = picUrls.get(index).getImageUrl();
 
         Glide.with(context)
                 .load(url)

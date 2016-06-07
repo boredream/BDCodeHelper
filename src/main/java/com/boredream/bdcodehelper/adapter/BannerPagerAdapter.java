@@ -3,10 +3,10 @@ package com.boredream.bdcodehelper.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.boredream.bdcodehelper.R;
@@ -53,10 +53,13 @@ public class BannerPagerAdapter extends PagerAdapter {
         TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
         final ImageView iv = (ImageView) view.findViewById(R.id.iv_image);
 
-        tv_title.setText(image.getImageTitle());
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                container.getWidth(), container.getHeight());
-        iv.setLayoutParams(params);
+        String title = image.getImageTitle();
+        if(TextUtils.isEmpty(title)) {
+            tv_title.setVisibility(View.GONE);
+        } else {
+            tv_title.setVisibility(View.VISIBLE);
+            tv_title.setText(title);
+        }
 
         final String url = image.getImageUrl();
 

@@ -1,6 +1,8 @@
 package com.boredream.bdcodehelper.entity;
 
-public interface ImageUrlInterface {
+import java.io.Serializable;
+
+public interface ImageUrlInterface extends Serializable {
     String getImageUrl();
     String getImageTitle();
 }

@@ -34,15 +34,15 @@ public class DropDownMenu extends LinearLayout {
     private int current_tab_position = -1;
 
     //分割线颜色
-    private int dividerColor = 0xffcccccc;
+    private int dividerColor = getResources().getColor(R.color.divider_gray);
     //tab选中颜色
-    private int textSelectedColor = 0xff890c85;
+    private int textSelectedColor = getResources().getColor(R.color.colorPrimary);
     //tab未选中颜色
-    private int textUnselectedColor = 0xff111111;
+    private int textUnselectedColor = getResources().getColor(R.color.txt_black);
     //遮罩颜色
     private int maskColor = 0x88888888;
     //tab字体大小
-    private int menuTextSize = 14;
+    private int menuTextSize = 12;
 
     //tab选中图标
     private int menuSelectedIcon;
@@ -146,12 +146,12 @@ public class DropDownMenu extends LinearLayout {
         tab.setSingleLine();
         tab.setEllipsize(TextUtils.TruncateAt.END);
         tab.setGravity(Gravity.CENTER);
-        tab.setTextSize(TypedValue.COMPLEX_UNIT_PX,menuTextSize);
+        tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, menuTextSize);
         tab.setLayoutParams(new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
         tab.setTextColor(textUnselectedColor);
         tab.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
         tab.setText(tabTexts.get(i));
-        tab.setPadding(dpTpPx(5), dpTpPx(12), dpTpPx(5), dpTpPx(12));
+        tab.setPadding(dpTpPx(48), dpTpPx(8), dpTpPx(48), dpTpPx(8));
         //添加点击事件
         tab.setOnClickListener(new OnClickListener() {
             @Override
@@ -163,7 +163,10 @@ public class DropDownMenu extends LinearLayout {
         //添加分割线
         if (i < tabTexts.size() - 1) {
             View view = new View(getContext());
-            view.setLayoutParams(new LayoutParams(dpTpPx(0.5f), ViewGroup.LayoutParams.MATCH_PARENT));
+            LayoutParams params = new LayoutParams(
+                    dpTpPx(0.5f), ViewGroup.LayoutParams.MATCH_PARENT);
+            params.setMargins(0, dpTpPx(4), 0, dpTpPx(4));
+            view.setLayoutParams(params);
             view.setBackgroundColor(dividerColor);
             tabMenuView.addView(view);
         }

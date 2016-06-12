@@ -2,6 +2,7 @@ package com.boredream.bdcodehelper.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.text.TextUtils;
 import android.view.View;
@@ -54,7 +55,7 @@ public class BannerPagerAdapter extends PagerAdapter {
         final ImageView iv = (ImageView) view.findViewById(R.id.iv_image);
 
         String title = image.getImageTitle();
-        if(TextUtils.isEmpty(title)) {
+        if (TextUtils.isEmpty(title)) {
             tv_title.setVisibility(View.GONE);
         } else {
             tv_title.setVisibility(View.VISIBLE);
@@ -62,7 +63,6 @@ public class BannerPagerAdapter extends PagerAdapter {
         }
 
         final String url = image.getImageUrl();
-
         Glide.with(context)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -72,13 +72,23 @@ public class BannerPagerAdapter extends PagerAdapter {
                 .crossFade()
                 .into(iv);
 
+        final String link = image.getImageLink();
+
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ImageBrowserActivity.class);
-                intent.putExtra("images", images);
-                intent.putExtra("position", position);
-                context.startActivity(intent);
+                if (!TextUtils.isEmpty(link)) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    Uri url = Uri.parse(link);
+                    intent.setData(url);
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, ImageBrowserActivity.class);
+                    intent.putExtra("images", images);
+                    intent.putExtra("position", position);
+                    context.startActivity(intent);
+                }
             }
         });
 

@@ -9,7 +9,7 @@
     <color name="colorSecondary">#ff9900</color>
     <color name="colorSecondaryDark">#d88200</color>
     <!-- 主体文字,标题/标签 -->
-    <color name="txt_black">#808080</color>
+    <color name="txt_black">#212121</color>
     <!-- 内容文字,正文 -->
     <color name="txt_gray">#808080</color>
     <!-- 辅助文字,提示 -->
@@ -21,7 +21,7 @@
     <!-- 高亮,红棕色 -->
     <color name="brown">#d54c1c</color>
     <!-- 分割线 -->
-    <color name="divider_gray">#d4d0cd</color>
+    <color name="divider_gray">#cbcbcb</color>
     <!-- other -->
     <color name="txt_link_blue">#1ea5ff</color>
 
@@ -32,11 +32,15 @@
     <color name="white">#ffffff</color>
     <color name="gray">#cccccc</color>
 
-    <color name="drop_down_selected">#7B1FA2</color>
-    <color name="drop_down_unselected">#111111</color>
+    <color name="drop_down_selected">#8BC34A</color>
+    <color name="drop_down_unselected">#808080</color>
 
     <color name="mask_color">#88888888</color>
-    <color name="check_bg">#f2f2f2</color>
-    <color name="un_press_color">#9C27B0</color>
+    <color name="check_bg">#f1f1f1</color>
+    <color name="un_press_color">#8BC34A</color>
+
+    <!-- position bar -->
+    <color name="bg_position_bar_up">#0D8BC34A</color>
+    <color name="bg_position_bar_down">#1A8BC34A</color>
 
 </resources>

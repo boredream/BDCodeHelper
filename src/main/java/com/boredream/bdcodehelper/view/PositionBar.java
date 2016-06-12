@@ -28,6 +28,7 @@ public class PositionBar extends LinearLayout {
 		super(context, attrs);
 		
 		setOrientation(VERTICAL);
+		setBackgroundResource(R.drawable.cirrect_5a_primary_solid);
 	}
 	
 	public void setItems(String[] items) {
@@ -60,18 +61,21 @@ public class PositionBar extends LinearLayout {
 
 		switch (action & MotionEvent.ACTION_MASK) {
 		case MotionEvent.ACTION_DOWN:
+			setBackgroundResource(R.drawable.cirrect_10a_primary_solid);
 			child = findChildByLocation(ev.getX(), ev.getY());
 			if (listener != null) {
 				listener.onPositionSelected(child==null?"":child.getText().toString());
 			}
 			break;
 		case MotionEvent.ACTION_MOVE:
+			setBackgroundResource(R.drawable.cirrect_10a_primary_solid);
 			child = findChildByLocation(ev.getX(), ev.getY());
 			if (listener != null) {
 				listener.onPositionSelected(child==null?"":child.getText().toString());
 			}
 			break;
 		case MotionEvent.ACTION_UP:
+			setBackgroundResource(R.drawable.cirrect_5a_primary_solid);
 			if (listener != null) {
 				listener.onPositionSelected("");
 			}

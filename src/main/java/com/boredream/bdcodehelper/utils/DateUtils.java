@@ -21,7 +21,7 @@ public class DateUtils {
     public static final int DAY_OF_YEAR = 365;
 
     // 日期格式为 2016-02-03 17:04:58
-    public static final String PATTERN_DATE = "yyyy-MM-dd";
+    public static final String PATTERN_DATE = "yyyy年MM月dd日";
     public static final String PATTERN_TIME = "HH:mm:ss";
     public static final String PATTERN_SPLIT = " ";
     public static final String PATTERN = PATTERN_DATE + PATTERN_SPLIT + PATTERN_TIME;

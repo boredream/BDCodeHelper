@@ -7,7 +7,14 @@ import android.view.View;
 
 import com.boredream.bdcodehelper.R;
 
+import java.text.DecimalFormat;
+
 public class StringUtils {
+
+    public static String getMoney(float cost) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return "￥" + decimalFormat.format(cost);
+    }
 
     public static class PrimaryClickableSpan extends ClickableSpan {
 

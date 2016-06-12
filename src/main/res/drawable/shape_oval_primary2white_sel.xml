@@ -3,6 +3,6 @@
 
     <item android:drawable="@drawable/oval_primary_solid" android:state_checked="true" />
 
-    <item android:drawable="@drawable/shape_oval_primary_stroke" />
+    <item android:drawable="@drawable/shape_oval_white_solid" />
 
 </selector>

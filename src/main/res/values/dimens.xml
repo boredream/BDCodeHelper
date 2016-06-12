@@ -22,5 +22,6 @@
 
     <!-- other size -->
     <dimen name="corner_radius">2dp</dimen>
+    <dimen name="banner_height">136dp</dimen>
 
 </resources>

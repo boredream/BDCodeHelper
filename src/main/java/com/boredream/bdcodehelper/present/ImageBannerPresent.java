@@ -85,7 +85,7 @@ public class ImageBannerPresent {
     }
 
     private void setIndicator() {
-        if (images.size() == 0) {
+        if (images.size() <= 1) {
             rg_indicator.setVisibility(View.GONE);
             return;
         }
@@ -121,7 +121,7 @@ public class ImageBannerPresent {
             }
             rb.setLayoutParams(params);
             rb.setButtonDrawable(new ColorDrawable());
-            rb.setBackgroundResource(R.drawable.shape_oval_primary_stroke2solid_sel);
+            rb.setBackgroundResource(R.drawable.shape_oval_primary2white_sel);
             rb.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {

@@ -11,7 +11,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
-        <item name="android:windowBackground">@color/bg_gray</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="TextViewHeadline" parent="TextAppearance.AppCompat.Headline">
@@ -50,14 +50,14 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:textColorHint">@color/txt_light_gray</item>
-        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:textColor">@color/txt_gray</item>
         <item name="android:textSize">@dimen/txtsize_subhead</item>
         <item name="android:singleLine">true</item>
     </style>
 
     <style name="ButtonPrimary" parent="TextViewSubhead">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/txt_white2gray_sel</item>
         <item name="android:gravity">center</item>

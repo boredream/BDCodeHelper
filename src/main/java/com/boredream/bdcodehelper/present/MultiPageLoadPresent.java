@@ -28,6 +28,10 @@ public class MultiPageLoadPresent {
     private SwipeRefreshLayout srl;
     private RecyclerView rv;
 
+    public RecyclerView getRv() {
+        return rv;
+    }
+
     public MultiPageLoadPresent(Activity activity, View include_refresh_list) {
         this.activity = activity;
         this.srl = (SwipeRefreshLayout) include_refresh_list;
@@ -47,6 +51,16 @@ public class MultiPageLoadPresent {
     private PageIndex pageIndex;
     private MultiPageRequest request;
     private Subscriber subscriber;
+
+    public void setDatas(ArrayList datas) {
+        this.datas = datas;
+        rv.post(new Runnable() {
+            @Override
+            public void run() {
+                loadMoreAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 
     public <T> void load(RecyclerView.Adapter adapter, ArrayList datas,
                      final PageIndex pageIndex, MultiPageRequest<T> request, Subscriber<T> subscriber) {
@@ -110,7 +124,7 @@ public class MultiPageLoadPresent {
 
                     @Override
                     public void onError(Throwable throwable) {
-                        subscriber.onNext(throwable);
+                        subscriber.onError(throwable);
                         setRefreshing(false);
                     }
                 });

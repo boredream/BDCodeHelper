@@ -29,6 +29,10 @@ public class PageIndex {
      */
     private int countPerPage;
 
+    public int getStartPage() {
+        return startPage;
+    }
+
     /**
      * 页数索引
      *

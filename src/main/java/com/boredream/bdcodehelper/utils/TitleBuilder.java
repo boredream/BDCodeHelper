@@ -26,6 +26,30 @@ public class TitleBuilder {
     private TextView tvLeft;
     private TextView tvRight;
 
+    public View getViewTitle() {
+        return viewTitle;
+    }
+
+    public TextView getTvTitle() {
+        return tvTitle;
+    }
+
+    public ImageView getIvLeft() {
+        return ivLeft;
+    }
+
+    public ImageView getIvRight() {
+        return ivRight;
+    }
+
+    public TextView getTvLeft() {
+        return tvLeft;
+    }
+
+    public TextView getTvRight() {
+        return tvRight;
+    }
+
     /**
      * Activity中使用这个构造方法
      */

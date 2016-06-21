@@ -2,7 +2,6 @@ package com.boredream.bdcodehelper.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.activity.ImageBrowserActivity;
+import com.boredream.bdcodehelper.activity.WebViewActivity;
 import com.boredream.bdcodehelper.entity.ImageUrlInterface;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -48,7 +48,7 @@ public class BannerPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        ImageUrlInterface image = images.get(position % images.size());
+        final ImageUrlInterface image = images.get(position % images.size());
 
         View view = View.inflate(context, R.layout.item_image_banner, null);
         TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
@@ -72,16 +72,18 @@ public class BannerPagerAdapter extends PagerAdapter {
                 .crossFade()
                 .into(iv);
 
-        final String link = image.getImageLink();
-
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(link)) {
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    Uri url = Uri.parse(link);
-                    intent.setData(url);
+                if (!TextUtils.isEmpty(image.getImageLink())) {
+//                    Intent intent = new Intent();
+//                    intent.setAction(Intent.ACTION_VIEW);
+//                    Uri url = Uri.parse(link);
+//                    intent.setData(url);
+//                    context.startActivity(intent);
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra("title", image.getImageTitle());
+                    intent.putExtra("url", image.getImageLink());
                     context.startActivity(intent);
                 } else {
                     Intent intent = new Intent(context, ImageBrowserActivity.class);

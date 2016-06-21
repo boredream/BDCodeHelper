@@ -2,8 +2,7 @@ package com.boredream.bdcodehelper.present;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
-import android.os.Message;
+import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +24,7 @@ public class ImageBannerPresent {
     private int currentState;
 
     private Context context;
+    private final CountDownTimer countDownTimer;
 
     private ArrayList<? extends ImageUrlInterface> images;
     private ViewPager vp_banner;
@@ -41,13 +41,27 @@ public class ImageBannerPresent {
         vp_banner.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-                    stopAutoScroll();
-                } else {
-                    startAutoScroll();
-                }
+                // FIXME
+//                if (state == ViewPager.SCROLL_STATE_DRAGGING) {
+//                    stopAutoScroll();
+//                } else {
+//                    startAutoScroll();
+//                }
             }
         });
+
+        countDownTimer = new CountDownTimer(
+                Long.MAX_VALUE, AUTO_SCROLL_GAP_TIME) {
+            @Override
+            public void onTick(long l) {
+                vp_banner.setCurrentItem(vp_banner.getCurrentItem() + 1);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
     }
 
     public void load(ArrayList<? extends ImageUrlInterface> images) {
@@ -60,28 +74,18 @@ public class ImageBannerPresent {
         startAutoScroll();
     }
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            vp_banner.setCurrentItem(vp_banner.getCurrentItem() + 1);
-            handler.sendEmptyMessageDelayed(110, AUTO_SCROLL_GAP_TIME);
-        }
-    };
-
-    private void startAutoScroll() {
+    public void startAutoScroll() {
         if (currentState == STATE_AUTO_SCROLLING) {
             return;
         }
 
-        handler.sendEmptyMessageDelayed(110, AUTO_SCROLL_GAP_TIME);
         currentState = STATE_AUTO_SCROLLING;
+        countDownTimer.start();
     }
 
-    private void stopAutoScroll() {
+    public void stopAutoScroll() {
         currentState = STATE_STOP;
-        handler.removeMessages(110);
+        countDownTimer.cancel();
     }
 
     private void setIndicator() {
@@ -134,5 +138,4 @@ public class ImageBannerPresent {
 
         ((RadioButton) rg_indicator.getChildAt(0)).setChecked(true);
     }
-
 }

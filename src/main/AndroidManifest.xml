@@ -6,6 +6,7 @@
         android:supportsRtl="true">
 
         <activity android:name=".activity.ImageBrowserActivity" />
+        <activity android:name=".activity.WebViewActivity" />
 
     </application>
 

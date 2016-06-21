@@ -14,7 +14,7 @@ import com.boredream.bdcodehelper.R;
 public class DialogUtils {
 
     public static Dialog createProgressDialog(Context context) {
-        return createProgressDialog(context, false);
+        return createProgressDialog(context, true);
     }
 
     public static Dialog createProgressDialog(Context context, boolean needCancle) {

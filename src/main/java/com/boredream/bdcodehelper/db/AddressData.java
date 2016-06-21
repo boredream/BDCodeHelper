@@ -55,6 +55,8 @@ public class AddressData {
                             letter = "CHANG";
                         } else if(c == '重'){
                             letter = "CHONG";
+                        } else if(c == '厦'){
+                            letter = "XIA";
                         } else {
                             letter = Pinyin.toPinyin(c);
                         }
@@ -75,6 +77,11 @@ public class AddressData {
                         mCitisDatasMap.put(province, cities);
                     } else {
                         cities.add(city);
+                    }
+
+                    // 默认城市
+                    if(city.name.equals("上海")) {
+                        currentCity = city;
                     }
 
                 } while (cursorCity.moveToNext());

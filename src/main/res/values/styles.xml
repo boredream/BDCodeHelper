@@ -50,7 +50,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:textColorHint">@color/txt_light_gray</item>
-        <item name="android:textColor">@color/txt_gray</item>
+        <item name="android:textColor">@color/txt_black</item>
         <item name="android:textSize">@dimen/txtsize_subhead</item>
         <item name="android:singleLine">true</item>
     </style>
@@ -70,6 +70,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">@dimen/margin_small</item>
     </style>
 
     <style name="AbsListViewCommon" parent="Widget.AppCompat.ListView">

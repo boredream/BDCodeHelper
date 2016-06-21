@@ -21,7 +21,7 @@ public class NetUtils {
         ConnectivityManager cm = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (null != cm) {
+        if (null == cm) {
             return false;
         }
 
@@ -41,7 +41,7 @@ public class NetUtils {
         ConnectivityManager cm = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (cm == null) {
+        if (null == cm) {
             return false;
         }
 

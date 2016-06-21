@@ -27,6 +27,7 @@ public class MultiPageLoadPresent {
 
     private SwipeRefreshLayout srl;
     private RecyclerView rv;
+    private RecyclerView.ItemDecoration itemDecoration;
 
     public RecyclerView getRv() {
         return rv;
@@ -39,12 +40,22 @@ public class MultiPageLoadPresent {
     }
 
     private void initView() {
+        srl.setColorSchemeColors(activity.getResources().getColor(R.color.colorPrimary));
         rv = (RecyclerView) srl.findViewById(R.id.rv);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 activity, StaggeredGridLayoutManager.VERTICAL, false);
         rv.setLayoutManager(layoutManager);
-        rv.addItemDecoration(new DividerItemDecoration(activity));
+        itemDecoration = new DividerItemDecoration(activity);
+        rv.addItemDecoration(itemDecoration);
+    }
+
+    public void setItemDecoration(RecyclerView.ItemDecoration itemDecoration) {
+        rv.removeItemDecoration(this.itemDecoration);
+        this.itemDecoration = itemDecoration;
+        if(this.itemDecoration != null) {
+            rv.addItemDecoration(this.itemDecoration);
+        }
     }
 
     private ArrayList datas;

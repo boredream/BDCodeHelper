@@ -28,6 +28,6 @@ Item通用样式为：左侧图标、中间文字、右侧文字、右侧图标�
 封装了一些有用的自定义控件
 * **BottomTabRadioButton** 底部导航栏选项卡RadioButton
 利用onDraw绘制红色圆点、带数字的红色圆圈，提供各种自定义attrs属性可以对红点的颜色、数字大小、数字颜色等进行配置。
-感谢[燕姐（女！）大神](https://github.com/xiaoxuyan)的贡献，我在他代码基础上做了简单修改。
+感谢[程序媛大神燕姐](https://github.com/xiaoxuyan)的贡献，我在他代码基础上做了简单修改。
 
 

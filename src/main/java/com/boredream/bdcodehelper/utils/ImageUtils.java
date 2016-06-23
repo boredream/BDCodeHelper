@@ -1,5 +1,6 @@
 package com.boredream.bdcodehelper.utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -22,17 +23,17 @@ public class ImageUtils {
     /**
      * 拍照
      */
-    public static final int REQUEST_CODE_FROM_CAMERA = 5001;
+    public static final int REQUEST_CODE_FROM_CAMERA = 1 << 10;
 
     /**
      * 相册
      */
-    public static final int REQUEST_CODE_FROM_ALBUM = 5002;
+    public static final int REQUEST_CODE_FROM_ALBUM = 1 << 12;
 
     /**
      * 裁剪
      */
-    public static final int REQUEST_CODE_CROP_IMAGE = 5003;
+    public static final int REQUEST_CODE_CROP_IMAGE = 1 << 14;
 
     /**
      * 存放拍照图片的uri地址
@@ -48,6 +49,13 @@ public class ImageUtils {
      * 显示获取照片不同方式对话框
      */
     public static void showImagePickDialog(final Activity activity) {
+        showImagePickDialog(activity, 0);
+    }
+
+    /**
+     * 显示获取照片不同方式对话框
+     */
+    public static void showImagePickDialog(final Activity activity, final int addRequest) {
         String title = "选择获取图片方式";
         String[] items = new String[]{"拍照", "相册"};
         new AlertDialog.Builder(activity)
@@ -58,10 +66,10 @@ public class ImageUtils {
                         dialog.dismiss();
                         switch (which) {
                             case 0:
-                                pickImageFromCamera(activity);
+                                pickImageFromCamera(activity, addRequest);
                                 break;
                             case 1:
-                                pickImageFromAlbum(activity);
+                                pickImageFromAlbum(activity, addRequest);
                                 break;
                             default:
                                 break;
@@ -75,24 +83,40 @@ public class ImageUtils {
     /**
      * 打开相机拍照获取图片
      */
-    public static void pickImageFromCamera(final Activity activity) {
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static void pickImageFromCamera(final Activity activity, int addRequest) {
         // 先生成一个uri地址用于存放拍照获取的图片
         imageUriFromCamera = createImageUri(activity);
 
         Intent intent = new Intent();
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriFromCamera);
-        activity.startActivityForResult(intent, REQUEST_CODE_FROM_CAMERA);
+        activity.startActivityForResult(intent, REQUEST_CODE_FROM_CAMERA + addRequest);
+    }
+
+    /**
+     * 打开相机拍照获取图片
+     */
+    public static void pickImageFromCamera(final Activity activity) {
+        pickImageFromCamera(activity, 0);
+    }
+
+    /**
+     * 打开本地相册选取图片
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static void pickImageFromAlbum(final Activity activity, int addRequest) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        activity.startActivityForResult(intent, REQUEST_CODE_FROM_ALBUM + addRequest);
     }
 
     /**
      * 打开本地相册选取图片
      */
     public static void pickImageFromAlbum(final Activity activity) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        activity.startActivityForResult(intent, REQUEST_CODE_FROM_ALBUM);
+        pickImageFromAlbum(activity, 0);
     }
 
     /**

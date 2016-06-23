@@ -18,4 +18,20 @@
         <attr name="ddmenuUnselectedIcon" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="BottomTabRadioButton">
+        <attr name="hint_mode" format="enum">
+            <enum name="none" value="0" />
+            <enum name="point" value="1" />
+            <enum name="num" value="2" />
+        </attr>
+        <attr name="hint_color" format="color" />
+        <attr name="hint_toppadding" format="dimension" />
+        <attr name="hint_rightpadding" format="dimension" />
+        <attr name="point_radius" format="dimension" />
+        <attr name="num" format="integer" />
+        <attr name="num_radius" format="dimension" />
+        <attr name="num_size" format="dimension" />
+        <attr name="num_color" format="color" />
+    </declare-styleable>
+
 </resources>

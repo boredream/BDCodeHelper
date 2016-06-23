@@ -1,8 +1,10 @@
 package com.boredream.bdcodehelper.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.RadioButton;
 
@@ -11,13 +13,31 @@ import com.boredream.bdcodehelper.R;
 
 public class DrawableRadioButton extends RadioButton {
 
-    private final int widthPx;
-    private final int heightPx;
+    private int widthPx;
+    private int heightPx;
 
-    public DrawableRadioButton(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public DrawableRadioButton(Context context) {
+        super(context);
+    }
 
-        TypedArray ta = context.obtainStyledAttributes(attrs,
+    public DrawableRadioButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initView(attrs);
+    }
+
+    public DrawableRadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initView(attrs);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public DrawableRadioButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        initView(attrs);
+    }
+
+    private void initView(AttributeSet attrs) {
+        TypedArray ta = getContext().obtainStyledAttributes(attrs,
                 R.styleable.DrawableTextView);
 
         widthPx = ta.getDimensionPixelSize(
@@ -54,14 +74,6 @@ public class DrawableRadioButton extends RadioButton {
 
         // 将图片放回到TextView中
         setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawables[3]);
-    }
-
-    public DrawableRadioButton(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public DrawableRadioButton(Context context) {
-        this(context, null);
     }
 
 }

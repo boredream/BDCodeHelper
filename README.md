@@ -24,5 +24,10 @@ Item通用样式为：左侧图标、中间文字、右侧文字、右侧图标�
 使用构造器模式设置标题栏，结合layout中的include_titlebar.xml一起使用，先在布局中include引入标题栏布局，  
 再于Activity或Fragment中使用TitleBuilder设置标题栏内容，标题栏格式为：标题文字、左右各自是文字/图片按钮。
 
+####views包
+封装了一些有用的自定义控件
+* **BottomTabRadioButton** 底部导航栏选项卡RadioButton
+利用onDraw绘制红色圆点、带数字的红色圆圈，提供各种自定义attrs属性可以对红点的颜色、数字大小、数字颜色等进行配置。
+感谢[程序媛大神燕姐](https://github.com/xiaoxuyan)的贡献，我在他代码基础上做了简单修改。
 
 

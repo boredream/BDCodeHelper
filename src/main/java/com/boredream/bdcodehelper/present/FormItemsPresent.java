@@ -45,6 +45,7 @@ public class FormItemsPresent {
                 // input
                 itemView = View.inflate(context, R.layout.formitem_input, null);
                 EditText tv_mid = (EditText) itemView.findViewById(R.id.tv_mid);
+                tv_mid.setInputType(formItem.inputType);
                 tv_mid.setHint(formItem.midText);
             } else {
                 // select

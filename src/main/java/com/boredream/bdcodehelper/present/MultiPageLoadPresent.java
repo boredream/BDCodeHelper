@@ -121,7 +121,9 @@ public class MultiPageLoadPresent {
                 new Subscriber<ListResponse>() {
                     @Override
                     public void onNext(ListResponse response) {
-                        subscriber.onNext(response);
+                        if(subscriber != null) {
+                            subscriber.onNext(response);
+                        }
                         setRefreshing(false);
 
                         // 加载成功后更新数据
@@ -130,12 +132,16 @@ public class MultiPageLoadPresent {
 
                     @Override
                     public void onCompleted() {
-                        subscriber.onCompleted();
+                        if(subscriber != null) {
+                            subscriber.onCompleted();
+                        }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
-                        subscriber.onError(throwable);
+                        if(subscriber != null) {
+                            subscriber.onError(throwable);
+                        }
                         setRefreshing(false);
                     }
                 });

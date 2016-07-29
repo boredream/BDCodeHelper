@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 
 public class MultiPageLoadPresent {
 
@@ -33,9 +34,10 @@ public class MultiPageLoadPresent {
         return rv;
     }
 
-    public MultiPageLoadPresent(Activity activity, View include_refresh_list) {
+    public MultiPageLoadPresent(Activity activity, View include_refresh_list, PageIndex pageIndex) {
         this.activity = activity;
         this.srl = (SwipeRefreshLayout) include_refresh_list;
+        this.pageIndex = pageIndex;
         initView();
     }
 
@@ -53,7 +55,7 @@ public class MultiPageLoadPresent {
     public void setItemDecoration(RecyclerView.ItemDecoration itemDecoration) {
         rv.removeItemDecoration(this.itemDecoration);
         this.itemDecoration = itemDecoration;
-        if(this.itemDecoration != null) {
+        if (this.itemDecoration != null) {
             rv.addItemDecoration(this.itemDecoration);
         }
     }
@@ -73,15 +75,13 @@ public class MultiPageLoadPresent {
         });
     }
 
-    public <T> void load(RecyclerView.Adapter adapter, ArrayList datas,
-                     final PageIndex pageIndex, MultiPageRequest<T> request, Subscriber<T> subscriber) {
+    public <T> Subscription load(RecyclerView.Adapter adapter,
+                                 ArrayList datas,
+                                 MultiPageRequest<T> request,
+                                 Subscriber<T> subscriber) {
         this.datas = datas;
-        this.pageIndex = pageIndex;
         this.request = request;
         this.subscriber = subscriber;
-
-        setRefreshing(true);
-        loadData(this.pageIndex.toStartPage());
 
         loadMoreAdapter = new LoadMoreAdapter(rv, adapter,
                 new LoadMoreAdapter.OnLoadMoreListener() {
@@ -99,6 +99,28 @@ public class MultiPageLoadPresent {
                 loadData(pageIndex.toStartPage());
             }
         });
+
+        return loadData(this.pageIndex.toStartPage());
+    }
+
+    public void setStatus(int status) {
+        if(loadMoreAdapter != null) {
+            loadMoreAdapter.setStatus(status);
+        }
+    }
+
+    public void notifyDataSetChanged() {
+        if(loadMoreAdapter != null) {
+            loadMoreAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void initPage() {
+        pageIndex.init();
+    }
+
+    public boolean isRefreshing() {
+        return srl.isRefreshing();
     }
 
     public void setRefreshing(final boolean refreshing) {
@@ -115,13 +137,13 @@ public class MultiPageLoadPresent {
      *
      * @param page 页数
      */
-    private void loadData(final int page) {
+    private Subscription loadData(final int page) {
         Observable observable = this.request.request(page);
-        ObservableDecorator.decorate(activity, observable).subscribe(
+        return ObservableDecorator.decorate(activity, observable).subscribe(
                 new Subscriber<ListResponse>() {
                     @Override
                     public void onNext(ListResponse response) {
-                        if(subscriber != null) {
+                        if (subscriber != null) {
                             subscriber.onNext(response);
                         }
                         setRefreshing(false);
@@ -132,14 +154,14 @@ public class MultiPageLoadPresent {
 
                     @Override
                     public void onCompleted() {
-                        if(subscriber != null) {
+                        if (subscriber != null) {
                             subscriber.onCompleted();
                         }
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
-                        if(subscriber != null) {
+                        if (subscriber != null) {
                             subscriber.onError(throwable);
                         }
                         setRefreshing(false);

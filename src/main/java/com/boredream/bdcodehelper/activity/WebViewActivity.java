@@ -13,10 +13,11 @@ import com.boredream.bdcodehelper.utils.TitleBuilder;
 
 public class WebViewActivity extends BoreBaseActivity {
 
+    public static final String EXTRA_TITLE = "title";
+    public static final String EXTRA_URL = "url";
+
     private WebView webview;
-    private WebSettings settings;
     private String title;
-    private String url;
     private TitleBuilder titleBuilder;
 
     @Override
@@ -24,8 +25,8 @@ public class WebViewActivity extends BoreBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
 
-        title = getIntent().getStringExtra("title");
-        url = getIntent().getStringExtra("url");
+        title = getIntent().getStringExtra(EXTRA_TITLE);
+        String url = getIntent().getStringExtra(EXTRA_URL);
 
         initView();
 
@@ -40,7 +41,7 @@ public class WebViewActivity extends BoreBaseActivity {
         webview = (WebView) findViewById(R.id.webview);
         webview.setWebViewClient(new MyWebClient());
 
-        settings = webview.getSettings();
+        WebSettings settings = webview.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(false);
         settings.setBuiltInZoomControls(false);

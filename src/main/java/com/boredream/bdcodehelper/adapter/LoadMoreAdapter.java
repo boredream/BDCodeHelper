@@ -152,7 +152,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
                 @Override
                 public int getSpanSize(int position) {
                     int spanSize = 1;
-                    if (mAdapter.getItemViewType(position) == ITEM_VIEW_TYPE_FOOTER) {
+                    if (getItemViewType(position) == ITEM_VIEW_TYPE_FOOTER) {
                         spanSize = manager.getSpanCount();
                     }
                     return spanSize;

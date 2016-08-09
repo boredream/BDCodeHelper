@@ -1,5 +1,7 @@
 package com.boredream.bdcodehelper.utils;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -97,4 +99,11 @@ public class AppUtils {
         promptInstall.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(promptInstall);
     }
+
+    public static void copy2clipboard(Context context, String text){
+        ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("clip", text);
+        cm.setPrimaryClip(clip);
+    }
+
 }

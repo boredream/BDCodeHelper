@@ -73,6 +73,7 @@
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingBottom">@dimen/margin_small</item>
+        <item name="android:paddingTop">@dimen/margin_small</item>
     </style>
 
     <style name="AbsListViewCommon" parent="Widget.AppCompat.ListView">

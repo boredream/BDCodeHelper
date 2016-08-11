@@ -13,7 +13,7 @@ import rx.schedulers.Schedulers;
  */
 public class ObservableDecorator {
 
-    public static <T> Observable<T> decorate(final Context context, Observable<T> observable) {
+    public static <T> Observable<T> decorate(Observable<T> observable) {
         return observable
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

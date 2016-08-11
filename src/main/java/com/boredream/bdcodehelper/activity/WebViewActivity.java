@@ -40,7 +40,7 @@ public class WebViewActivity extends BoreBaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
         titleBuilder = initBackTitle(title);
-        titleBuilder.getTvTitle().setOnLongClickListener(new View.OnLongClickListener() {
+        titleBuilder.getRootView().setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 String url = webview.getUrl();

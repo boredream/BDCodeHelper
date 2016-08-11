@@ -139,7 +139,7 @@ public class MultiPageLoadPresent {
      */
     private Subscription loadData(final int page) {
         Observable observable = this.request.request(page);
-        return ObservableDecorator.decorate(activity, observable).subscribe(
+        return ObservableDecorator.decorate(observable).subscribe(
                 new Subscriber<ListResponse>() {
                     @Override
                     public void onNext(ListResponse response) {

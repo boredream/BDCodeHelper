@@ -173,7 +173,7 @@ public class ImageUtils {
      * 删除一条图片
      */
     public static void deleteImageUri(Context context, Uri uri) {
-        context.getContentResolver().delete(imageUriFromCamera, null, null);
+        context.getContentResolver().delete(uri, null, null);
     }
 
     /**

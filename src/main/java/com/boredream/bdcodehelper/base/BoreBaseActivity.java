@@ -23,15 +23,19 @@ public class BoreBaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setScreenOrientation();
         super.onCreate(savedInstanceState);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         init();
     }
 
     private void init() {
         TAG = getClass().getSimpleName();
         progressDialog = DialogUtils.createProgressDialog(this);
+    }
+
+    protected void setScreenOrientation() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**

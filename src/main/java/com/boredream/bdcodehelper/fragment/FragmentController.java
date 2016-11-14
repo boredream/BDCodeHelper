@@ -15,6 +15,7 @@ public class FragmentController {
     private int containerId;
     private FragmentManager fm;
     private ArrayList<Fragment> fragments;
+    private int curPosition;
 
     public FragmentController(AppCompatActivity activity, int containerId, ArrayList<Fragment> fragments) {
         this.containerId = containerId;
@@ -32,6 +33,7 @@ public class FragmentController {
     }
 
     public void showFragment(int position) {
+        curPosition = position;
         hideFragments();
         Fragment fragment = fragments.get(position);
         FragmentTransaction ft = fm.beginTransaction();
@@ -47,6 +49,10 @@ public class FragmentController {
             }
         }
         ft.commit();
+    }
+
+    public int getCurPosition() {
+        return curPosition;
     }
 
     public Fragment getFragment(int position) {

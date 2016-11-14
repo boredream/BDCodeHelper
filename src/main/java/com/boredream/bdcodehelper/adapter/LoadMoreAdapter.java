@@ -151,11 +151,7 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
             manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    int spanSize = 1;
-                    if (getItemViewType(position) == ITEM_VIEW_TYPE_FOOTER) {
-                        spanSize = manager.getSpanCount();
-                    }
-                    return spanSize;
+                    return getLoadMoreSpanSize(position, manager);
                 }
             });
         }
@@ -179,6 +175,15 @@ public class LoadMoreAdapter extends RecyclerView.Adapter {
                 holder.itemView.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    protected int getLoadMoreSpanSize(int position, GridLayoutManager manager) {
+        int spanSize = 1;
+
+        if (getItemViewType(position) == ITEM_VIEW_TYPE_FOOTER) {
+            spanSize = manager.getSpanCount();
+        }
+        return spanSize;
     }
 
     /**

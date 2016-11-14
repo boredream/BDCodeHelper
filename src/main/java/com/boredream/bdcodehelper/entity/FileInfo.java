@@ -4,7 +4,7 @@ import com.boredream.bdcodehelper.base.BoreBaseEntity;
 
 public class FileInfo extends BoreBaseEntity {
     private String cdn;
-    private String fiilename;
+    private String filename;
     private String url;
 
     public String getCdn() {
@@ -15,12 +15,12 @@ public class FileInfo extends BoreBaseEntity {
         this.cdn = cdn;
     }
 
-    public String getFiilename() {
-        return fiilename;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setFiilename(String fiilename) {
-        this.fiilename = fiilename;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getUrl() {

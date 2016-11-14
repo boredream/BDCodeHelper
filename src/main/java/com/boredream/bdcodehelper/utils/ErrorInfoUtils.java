@@ -1,7 +1,5 @@
 package com.boredream.bdcodehelper.utils;
 
-import android.text.TextUtils;
-
 import com.boredream.bdcodehelper.entity.ErrorResponse;
 import com.boredream.bdcodehelper.net.ErrorConstants;
 import com.google.gson.Gson;
@@ -52,7 +50,7 @@ public class ErrorInfoUtils {
      */
     private static String getLocalErrorInfo(ErrorResponse error) {
         String s = ErrorConstants.errors.get(error.getCode());
-        if (TextUtils.isEmpty(s)) {
+        if (StringUtils.isEmpty(s)) {
             return error.getError();
         } else {
             return s;

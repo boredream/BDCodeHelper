@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class ImageBannerPresent {
 
+    private static final String TAG = ImageBannerPresent.class.getSimpleName();
+
     private static final int AUTO_SCROLL_GAP_TIME = 4000;
     private static final int STATE_STOP = 0;
     private static final int STATE_AUTO_SCROLLING = 1;
@@ -37,18 +39,6 @@ public class ImageBannerPresent {
 
         vp_banner = (ViewPager) include_banner_with_indicator.findViewById(R.id.vp_banner);
         rg_indicator = (RadioGroup) include_banner_with_indicator.findViewById(R.id.rg_indicator);
-
-        vp_banner.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                // FIXME
-//                if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-//                    stopAutoScroll();
-//                } else {
-//                    startAutoScroll();
-//                }
-            }
-        });
 
         countDownTimer = new CountDownTimer(
                 Long.MAX_VALUE, AUTO_SCROLL_GAP_TIME) {
@@ -75,6 +65,8 @@ public class ImageBannerPresent {
     }
 
     public void startAutoScroll() {
+        stopAutoScroll();
+
         if (currentState == STATE_AUTO_SCROLLING) {
             return;
         }
@@ -85,7 +77,9 @@ public class ImageBannerPresent {
 
     public void stopAutoScroll() {
         currentState = STATE_STOP;
-        countDownTimer.cancel();
+        if(countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 
     private void setIndicator() {

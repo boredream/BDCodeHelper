@@ -34,14 +34,21 @@ public class FragmentController {
 
     public void showFragment(int position) {
         curPosition = position;
-        hideFragments();
-        Fragment fragment = fragments.get(position);
+
         FragmentTransaction ft = fm.beginTransaction();
-        ft.show(fragment);
+        for (int i = 0; i < fragments.size(); i++) {
+            if (i == position) {
+                // hide其他的fragment
+                ft.hide(fragments.get(i));
+            } else {
+                // 显示position对应fragment
+                ft.show(fragments.get(i));
+            }
+        }
         ft.commit();
     }
 
-    public void hideFragments() {
+    private void hideFragments() {
         FragmentTransaction ft = fm.beginTransaction();
         for (Fragment fragment : fragments) {
             if (fragment != null) {

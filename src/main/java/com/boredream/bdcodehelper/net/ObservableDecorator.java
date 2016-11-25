@@ -20,7 +20,6 @@ public class ObservableDecorator {
                     .observeOn(Schedulers.immediate());
         } else {
             newObservable = observable.subscribeOn(Schedulers.newThread())
-                    .delay(300, TimeUnit.MILLISECONDS) // FIXME 手动延迟查看loading效果
                     .observeOn(AndroidSchedulers.mainThread());
         }
         return newObservable;

@@ -26,12 +26,22 @@ public class DialogUtils {
     }
 
     public static Dialog showCommonDialog(Context context, String message,
-                                          DialogInterface.OnClickListener listener) {
+                                        String posBtn, String rightBtn,
+                                        DialogInterface.OnClickListener posListener) {
         return new AlertDialog.Builder(context)
                 .setMessage(message)
-                .setPositiveButton(context.getString(R.string.dialog_positive), listener)
-                .setNegativeButton(context.getString(R.string.dialog_negative), null)
+                .setPositiveButton(posBtn, posListener)
+                .setNegativeButton(rightBtn, null)
                 .show();
+    }
+
+    public static Dialog showCommonDialog(Context context, String message,
+                                          DialogInterface.OnClickListener listener) {
+        return showCommonDialog(context,
+                message,
+                context.getString(R.string.dialog_positive),
+                context.getString(R.string.dialog_negative),
+                listener);
     }
 
     public static Dialog showConfirmDialog(Context context, String message,

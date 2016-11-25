@@ -14,20 +14,32 @@ import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.utils.DisplayUtils;
 
 public class IndicatorRadioGroup extends RadioGroup {
+
+    private int indicatorRes;
+
+    public void setIndicatorRes(int indicatorRes) {
+        this.indicatorRes = indicatorRes;
+    }
+
     public IndicatorRadioGroup(Context context) {
         super(context);
+        init(context);
     }
 
     public IndicatorRadioGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
     }
 
-    public void setViewPager(ViewPager vp) {
+    private void init(Context context) {
+        indicatorRes = R.drawable.shape_oval_primary_stroke2solid_sel;
+    }
+
+    public void setViewPager(ViewPager vp, final int count) {
         if(vp == null || vp.getAdapter() == null) {
             return;
         }
-        
-        final int count = vp.getAdapter().getCount();
+
         if (count <= 1) {
             setVisibility(View.GONE);
             return;
@@ -64,7 +76,7 @@ public class IndicatorRadioGroup extends RadioGroup {
             }
             rb.setLayoutParams(params);
             rb.setButtonDrawable(new ColorDrawable());
-            rb.setBackgroundResource(R.drawable.shape_oval_primary_stroke2solid_sel);
+            rb.setBackgroundResource(indicatorRes);
             rb.setOnTouchListener(new OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {

@@ -1,6 +1,7 @@
 package com.boredream.bdcodehelper.utils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -51,6 +52,10 @@ public class MockUtils {
     private static <T> void setValue(Object object, Class<T> clazz) throws IllegalAccessException {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
+            if(Modifier.isFinal(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+
             Object value = getFieldMockValue(field);
             if (value != null) {
                 field.setAccessible(true);

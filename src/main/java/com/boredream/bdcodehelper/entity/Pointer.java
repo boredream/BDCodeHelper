@@ -12,6 +12,8 @@ public class Pointer implements Serializable {
     protected String objectId;
 
     public Pointer() {
+        this.__type = TYPE;
+        this.className = getClass().getSimpleName();
     }
 
     public Pointer(String className, String objectId) {

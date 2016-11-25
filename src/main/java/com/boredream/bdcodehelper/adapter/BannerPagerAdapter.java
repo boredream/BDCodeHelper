@@ -18,12 +18,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
-public class BannerPagerAdapter extends PagerAdapter {
+public class BannerPagerAdapter<T extends ImageUrlInterface> extends PagerAdapter {
 
     private Context context;
-    private ArrayList<? extends ImageUrlInterface> images;
+    private ArrayList<T> images;
 
-    public BannerPagerAdapter(Context context, ArrayList<? extends ImageUrlInterface> images) {
+    public ArrayList<T> getImages() {
+        return images;
+    }
+
+    public BannerPagerAdapter(Context context, ArrayList<T> images) {
         this.context = context;
         this.images = images;
     }
@@ -66,8 +70,6 @@ public class BannerPagerAdapter extends PagerAdapter {
         Glide.with(context)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .placeholder(R.mipmap.ic_account_circle_grey600_24dp)
-//                .error(R.mipmap.ic_account_circle_grey600_24dp)
                 .centerCrop()
                 .crossFade()
                 .into(iv);
@@ -75,27 +77,36 @@ public class BannerPagerAdapter extends PagerAdapter {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(image.getImageLink())) {
-//                    Intent intent = new Intent();
-//                    intent.setAction(Intent.ACTION_VIEW);
-//                    Uri url = Uri.parse(link);
-//                    intent.setData(url);
-//                    context.startActivity(intent);
-                    Intent intent = new Intent(context, WebViewActivity.class);
-                    intent.putExtra("title", image.getImageTitle());
-                    intent.putExtra("url", image.getImageLink());
-                    context.startActivity(intent);
+                if(onBannerClickListener != null) {
+                    onBannerClickListener.onOnClick(position % images.size());
                 } else {
-                    Intent intent = new Intent(context, ImageBrowserActivity.class);
-                    intent.putExtra("images", images);
-                    intent.putExtra("position", position);
-                    context.startActivity(intent);
+                    if (!TextUtils.isEmpty(image.getImageLink())) {
+                        Intent intent = new Intent(context, WebViewActivity.class);
+                        intent.putExtra("title", image.getImageTitle());
+                        intent.putExtra("url", image.getImageLink());
+                        context.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(context, ImageBrowserActivity.class);
+                        intent.putExtra("images", images);
+                        intent.putExtra("position", position % images.size());
+                        context.startActivity(intent);
+                    }
                 }
             }
         });
 
         container.addView(view);
         return view;
+    }
+
+    private OnBannerClickListener onBannerClickListener;
+
+    public void setOnBannerClickListener(OnBannerClickListener onBannerClickListener) {
+        this.onBannerClickListener = onBannerClickListener;
+    }
+
+    public static interface OnBannerClickListener {
+        void onOnClick(int position);
     }
 
 }

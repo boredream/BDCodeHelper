@@ -10,7 +10,7 @@
         android:layout_height="@dimen/banner_height">
     </android.support.v4.view.ViewPager>
 
-    <com.diandian.childrenread.view.IndicatorRadioGroup
+    <com.boredream.bdcodehelper.view.IndicatorRadioGroup
         android:id="@+id/rg_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

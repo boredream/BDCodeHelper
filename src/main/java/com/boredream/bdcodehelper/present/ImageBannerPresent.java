@@ -1,22 +1,18 @@
 package com.boredream.bdcodehelper.present;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.adapter.BannerPagerAdapter;
 import com.boredream.bdcodehelper.entity.ImageUrlInterface;
-import com.boredream.bdcodehelper.utils.DisplayUtils;
+import com.boredream.bdcodehelper.view.IndicatorRadioGroup;
 
 import java.util.ArrayList;
 
-public class ImageBannerPresent {
+public class ImageBannerPresent<T extends ImageUrlInterface> {
 
     private static final String TAG = ImageBannerPresent.class.getSimpleName();
 
@@ -28,17 +24,19 @@ public class ImageBannerPresent {
     private Context context;
     private final CountDownTimer countDownTimer;
 
-    private ArrayList<? extends ImageUrlInterface> images;
     private ViewPager vp_banner;
+    private IndicatorRadioGroup rg_indicator;
+    private BannerPagerAdapter<T> adapter;
 
-    private RadioGroup rg_indicator;
-    private BannerPagerAdapter adapter;
+    public void setIndicatorRes(int indicatorRes) {
+        rg_indicator.setIndicatorRes(indicatorRes);
+    }
 
-    public ImageBannerPresent(Context context, View include_banner_with_indicator) {
-        this.context = context;
+    public ImageBannerPresent(View include_banner_with_indicator) {
+        this.context = include_banner_with_indicator.getContext();
 
         vp_banner = (ViewPager) include_banner_with_indicator.findViewById(R.id.vp_banner);
-        rg_indicator = (RadioGroup) include_banner_with_indicator.findViewById(R.id.rg_indicator);
+        rg_indicator = (IndicatorRadioGroup) include_banner_with_indicator.findViewById(R.id.rg_indicator);
 
         countDownTimer = new CountDownTimer(
                 Long.MAX_VALUE, AUTO_SCROLL_GAP_TIME) {
@@ -54,14 +52,19 @@ public class ImageBannerPresent {
         };
     }
 
-    public void load(ArrayList<? extends ImageUrlInterface> images) {
-        this.images = images;
-
-        adapter = new BannerPagerAdapter(context, images);
+    public void load(ArrayList<T> images, BannerPagerAdapter.OnBannerClickListener listener) {
+        adapter = new BannerPagerAdapter<>(context, images);
         vp_banner.setAdapter(adapter);
+        adapter.setOnBannerClickListener(listener);
 
-        setIndicator();
+        rg_indicator.setViewPager(vp_banner, adapter.getImages().size());
+
         startAutoScroll();
+    }
+
+    public void notifyDataSetChanged() {
+        adapter.notifyDataSetChanged();
+        rg_indicator.setViewPager(vp_banner, adapter.getImages().size());
     }
 
     public void startAutoScroll() {
@@ -82,54 +85,4 @@ public class ImageBannerPresent {
         }
     }
 
-    private void setIndicator() {
-        if (images.size() <= 1) {
-            rg_indicator.setVisibility(View.GONE);
-            return;
-        }
-
-        rg_indicator.setVisibility(View.VISIBLE);
-
-        vp_banner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (rg_indicator.getChildCount() > 1) {
-                    ((RadioButton) rg_indicator.getChildAt(position % images.size())).setChecked(true);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        rg_indicator.removeAllViews();
-        for (int i = 0; i < images.size(); i++) {
-            RadioButton rb = new RadioButton(context);
-            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
-                    DisplayUtils.dp2px(context, 8), DisplayUtils.dp2px(context, 8));
-            if (i > 0) {
-                params.setMargins(DisplayUtils.dp2px(context, 8), 0, 0, 0);
-            }
-            rb.setLayoutParams(params);
-            rb.setButtonDrawable(new ColorDrawable());
-            rb.setBackgroundResource(R.drawable.shape_oval_primary2white_sel);
-            rb.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    // do nothing
-                    return true;
-                }
-            });
-            rg_indicator.addView(rb);
-        }
-
-        ((RadioButton) rg_indicator.getChildAt(0)).setChecked(true);
-    }
 }

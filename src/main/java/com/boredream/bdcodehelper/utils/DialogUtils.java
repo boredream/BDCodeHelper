@@ -28,12 +28,20 @@ public class DialogUtils {
     public static Dialog showCommonDialog(Context context, String message,
                                         String posBtn, String rightBtn,
                                         DialogInterface.OnClickListener posListener) {
+        return showCommonDialog(context, message, posBtn, rightBtn, posListener, null);
+    }
+
+    public static Dialog showCommonDialog(Context context, String message,
+                                          String posBtn, String rightBtn,
+                                          DialogInterface.OnClickListener posListener,
+                                          DialogInterface.OnClickListener negListener) {
         return new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setPositiveButton(posBtn, posListener)
-                .setNegativeButton(rightBtn, null)
+                .setNegativeButton(rightBtn, negListener)
                 .show();
     }
+
 
     public static Dialog showCommonDialog(Context context, String message,
                                           DialogInterface.OnClickListener listener) {

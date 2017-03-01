@@ -49,6 +49,7 @@ public class ErrorInfoUtils {
      * 获取本地预设错误信息
      */
     private static String getLocalErrorInfo(ErrorResponse error) {
+        // FIXME: 2016/12/19 有error code重复的情况
         String s = ErrorConstants.errors.get(error.getCode());
         if (StringUtils.isEmpty(s)) {
             return error.getError();

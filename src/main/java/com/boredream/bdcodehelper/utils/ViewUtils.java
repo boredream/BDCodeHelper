@@ -26,7 +26,6 @@ public class ViewUtils {
 //        rg_indicator.removeAllViews();
 //        for (int i = 0; i < size; i++) {
 //            RadioButton rb = new RadioButton(context);
-//            // TODO 圆形大小
 //            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
 //                    DisplayUtils.dp2px(context, 8), DisplayUtils.dp2px(context, 8));
 //            if (i > 0) {

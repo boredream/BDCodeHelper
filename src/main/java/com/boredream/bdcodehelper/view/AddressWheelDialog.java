@@ -17,12 +17,12 @@ import java.util.ArrayList;
 
 public class AddressWheelDialog extends Dialog implements OnWheelChangedListener {
 
-    private String mCurrentProvice;
-    private CityModel mCurrentCity;
+    private String mCurrentProvince;
 
     private WheelView mViewProvince;
     private WheelView mViewCity;
     private Button mBtnConfirm;
+    private ArrayWheelAdapter<CityModel> cityAdapter;
 
     public AddressWheelDialog(Context context) {
         super(context);
@@ -34,6 +34,8 @@ public class AddressWheelDialog extends Dialog implements OnWheelChangedListener
     private void initViews() {
         setContentView(R.layout.wheel_dialog_address);
 
+        setTitle("请选择地址");
+
         mViewProvince = (WheelView) findViewById(R.id.id_province);
         mViewCity = (WheelView) findViewById(R.id.id_city);
         mBtnConfirm = (Button) findViewById(R.id.btn_confirm);
@@ -44,8 +46,9 @@ public class AddressWheelDialog extends Dialog implements OnWheelChangedListener
             @Override
             public void onClick(View view) {
                 if(onAddressSelectListener != null) {
-                    CityModel address = new CityModel();
-                    onAddressSelectListener.onAddressSelected(address);
+                    int curCityItem = mViewCity.getCurrentItem();
+                    CityModel city = AddressData.mCitisDatasMap.get(mCurrentProvince).get(curCityItem);
+                    onAddressSelectListener.onAddressSelected(city);
                 }
             }
         });
@@ -67,12 +70,13 @@ public class AddressWheelDialog extends Dialog implements OnWheelChangedListener
 
     private void updateCities() {
         int pCurrent = mViewProvince.getCurrentItem();
-        mCurrentProvice = AddressData.mProvinceDatas.get(pCurrent);
-        ArrayList<CityModel> cities = AddressData.mCitisDatasMap.get(mCurrentProvice);
+        mCurrentProvince = AddressData.mProvinceDatas.get(pCurrent);
+        ArrayList<CityModel> cities = AddressData.mCitisDatasMap.get(mCurrentProvince);
         if (cities == null) {
             cities = new ArrayList<>();
         }
-        mViewCity.setViewAdapter(new ArrayWheelAdapter<>(getContext(), cities));
+        cityAdapter = new ArrayWheelAdapter<>(getContext(), cities);
+        mViewCity.setViewAdapter(cityAdapter);
         mViewCity.setCurrentItem(0);
     }
 

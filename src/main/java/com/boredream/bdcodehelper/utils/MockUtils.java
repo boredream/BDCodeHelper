@@ -80,7 +80,6 @@ public class MockUtils {
             value = new Random().nextDouble();
         } else if (clazzType == String.class) {
             String name = field.getName();
-            // TODO: 2016/11/14 判断规则可配置
             if(name.toLowerCase().contains("img") || name.toLowerCase().contains("url")) {
                 value = getImgUrl();
             } else {

@@ -38,7 +38,7 @@ public class BoreBaseEntity extends Pointer {
     public boolean equals(Object o) {
         if (o instanceof BoreBaseEntity) {
             BoreBaseEntity oEntity = (BoreBaseEntity) o;
-            return this.objectId.equals(oEntity.objectId);
+            return this.objectId != null ? this.objectId.equals(oEntity.objectId) : false;
         }
         return super.equals(o);
     }

@@ -66,4 +66,20 @@ public class Pointer implements Serializable {
         }
         return t;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pointer pointer = (Pointer) o;
+
+        return !(objectId != null ? !objectId.equals(pointer.objectId) : pointer.objectId != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return objectId != null ? objectId.hashCode() : 0;
+    }
 }

@@ -4,7 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/include_titlebar" />
+    <com.boredream.bdcodehelper.view.TitlebarView
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+    </com.boredream.bdcodehelper.view.TitlebarView>
 
     <WebView
         android:id="@+id/webview"

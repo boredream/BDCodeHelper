@@ -21,10 +21,48 @@ public class DateUtils {
     public static final int DAY_OF_YEAR = 365;
 
     // 日期格式为 2016-02-03 17:04:58
-    public static final String PATTERN_DATE = "yyyy年MM月dd日";
+    public static final String PATTERN_DATE = "yyyy-MM-dd";
     public static final String PATTERN_TIME = "HH:mm:ss";
     public static final String PATTERN_SPLIT = " ";
     public static final String PATTERN = PATTERN_DATE + PATTERN_SPLIT + PATTERN_TIME;
+
+    /**
+     * 计算年龄
+     */
+    public static int getAge(Date birthDay) {
+        Calendar cal = Calendar.getInstance();
+
+        if (birthDay == null || cal.before(birthDay)) {
+            // 当前时间早于出生日期
+            return 0;
+        }
+
+        // 当前时间
+        int yearNow = cal.get(Calendar.YEAR);
+        int monthNow = cal.get(Calendar.MONTH);
+        int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH);
+
+        // 生日时间
+        cal.setTime(birthDay);
+        int yearBirth = cal.get(Calendar.YEAR);
+        int monthBirth = cal.get(Calendar.MONTH);
+        int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
+
+        // 根据年份差计算年龄
+        int age = yearNow - yearBirth;
+
+        // 再判断是否过生日
+        if (monthNow < monthBirth || (monthNow == monthBirth && dayOfMonthNow < dayOfMonthBirth)) {
+            // 没到月，或者同月没到日，age-1
+            age--;
+        }
+
+        if (age < 0) {
+            return 0;
+        }
+
+        return age;
+    }
 
     public static String getShortTime(String dateStr) {
         String str;

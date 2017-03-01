@@ -9,6 +9,7 @@ import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.adapter.BannerPagerAdapter;
 import com.boredream.bdcodehelper.entity.ImageUrlInterface;
 import com.boredream.bdcodehelper.view.IndicatorRadioGroup;
+import com.boredream.bdcodehelper.view.LineIndicatorRadioGroup;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class ImageBannerPresent<T extends ImageUrlInterface> {
 
     private static final String TAG = ImageBannerPresent.class.getSimpleName();
 
-    private static final int AUTO_SCROLL_GAP_TIME = 4000;
+    private static final int AUTO_SCROLL_GAP_TIME = 8000;
     private static final int STATE_STOP = 0;
     private static final int STATE_AUTO_SCROLLING = 1;
     private int currentState;
@@ -25,18 +26,14 @@ public class ImageBannerPresent<T extends ImageUrlInterface> {
     private final CountDownTimer countDownTimer;
 
     private ViewPager vp_banner;
-    private IndicatorRadioGroup rg_indicator;
+    private LineIndicatorRadioGroup rg_indicator;
     private BannerPagerAdapter<T> adapter;
-
-    public void setIndicatorRes(int indicatorRes) {
-        rg_indicator.setIndicatorRes(indicatorRes);
-    }
 
     public ImageBannerPresent(View include_banner_with_indicator) {
         this.context = include_banner_with_indicator.getContext();
 
         vp_banner = (ViewPager) include_banner_with_indicator.findViewById(R.id.vp_banner);
-        rg_indicator = (IndicatorRadioGroup) include_banner_with_indicator.findViewById(R.id.rg_indicator);
+        rg_indicator = (LineIndicatorRadioGroup) include_banner_with_indicator.findViewById(R.id.rg_indicator);
 
         countDownTimer = new CountDownTimer(
                 Long.MAX_VALUE, AUTO_SCROLL_GAP_TIME) {

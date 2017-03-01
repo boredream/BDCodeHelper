@@ -21,7 +21,7 @@
     <dimen name="txtsize_caption">12sp</dimen>
 
     <!-- other size -->
-    <dimen name="corner_radius">2dp</dimen>
-    <dimen name="banner_height">136dp</dimen>
+    <dimen name="btn_corner_radius">999dp</dimen>
+    <dimen name="banner_height">180dp</dimen>
 
 </resources>

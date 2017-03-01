@@ -4,6 +4,6 @@
 
     <solid android:color="@color/colorPrimaryLight" />
 
-    <corners android:radius="@dimen/corner_radius" />
+    <corners android:radius="@dimen/btn_corner_radius" />
 
 </shape>

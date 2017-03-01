@@ -1,8 +1,8 @@
 package com.boredream.bdcodehelper.entity;
 
-import com.boredream.bdcodehelper.base.BoreBaseEntity;
+import com.boredream.bdcodehelper.base.CommonBaseEntity;
 
-public class AppUpdateInfo extends BoreBaseEntity {
+public class AppUpdateInfo extends CommonBaseEntity {
     private int version;
     private String versionName;
     private String fileUrl;

@@ -99,7 +99,7 @@ public class AssetsDatabaseManager {
                 return null;
             }
 
-            dbs.edit().putBoolean(dbfile, true).commit();
+            dbs.edit().putBoolean(dbfile, true).apply();
         }
 
         SQLiteDatabase db = SQLiteDatabase.openDatabase(sfile, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);

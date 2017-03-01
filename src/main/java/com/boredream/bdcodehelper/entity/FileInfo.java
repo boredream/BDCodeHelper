@@ -1,8 +1,8 @@
 package com.boredream.bdcodehelper.entity;
 
-import com.boredream.bdcodehelper.base.BoreBaseEntity;
+import com.boredream.bdcodehelper.base.CommonBaseEntity;
 
-public class FileInfo extends BoreBaseEntity {
+public class FileInfo extends CommonBaseEntity {
     private String cdn;
     private String filename;
     private String url;

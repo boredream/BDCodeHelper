@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.adapter.ImageBrowserAdapter;
-import com.boredream.bdcodehelper.base.BoreBaseActivity;
+import com.boredream.bdcodehelper.base.CommonBaseActivity;
 import com.boredream.bdcodehelper.entity.ImageUrlInterface;
 
 import java.util.ArrayList;
 
-public class ImageBrowserActivity extends BoreBaseActivity {
+public class ImageBrowserActivity extends CommonBaseActivity {
 
     private ViewPager vp_image_brower;
     private TextView tv_image_index;

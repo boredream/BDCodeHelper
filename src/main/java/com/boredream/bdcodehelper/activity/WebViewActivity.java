@@ -8,9 +8,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.boredream.bdcodehelper.R;
-import com.boredream.bdcodehelper.base.BoreBaseActivity;
+import com.boredream.bdcodehelper.base.CommonBaseActivity;
+import com.boredream.bdcodehelper.view.TitlebarView;
 
-public class WebViewActivity extends BoreBaseActivity {
+public class WebViewActivity extends CommonBaseActivity {
 
     public static final String EXTRA_TITLE = "title";
     public static final String EXTRA_URL = "url";
@@ -18,6 +19,7 @@ public class WebViewActivity extends BoreBaseActivity {
     // FIXME: 2017/2/28 title
 
     private WebView webview;
+    private TitlebarView titlebar;
     private String title;
 
     @Override
@@ -36,19 +38,7 @@ public class WebViewActivity extends BoreBaseActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
-//        titleBuilder = initBackTitle(title);
-//        titleBuilder.getRootView().setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                String url = webview.getUrl();
-//                if(!TextUtils.isEmpty(url)) {
-//                    AppUtils.copy2clipboard(WebViewActivity.this, url);
-//                    showToast("网址已经复制到剪贴板");
-//                }
-//                return false;
-//            }
-//        });
-
+        titlebar = (TitlebarView) findViewById(R.id.title);
         webview = (WebView) findViewById(R.id.webview);
         webview.setWebViewClient(new MyWebClient());
 
@@ -69,7 +59,7 @@ public class WebViewActivity extends BoreBaseActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-//            titleBuilder.setTitleText(view.getTitle());
+            titlebar.setTitleText(view.getTitle());
             dismissProgressDialog();
         }
 

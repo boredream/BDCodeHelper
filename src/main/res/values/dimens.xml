@@ -23,5 +23,6 @@
     <!-- other size -->
     <dimen name="btn_corner_radius">999dp</dimen>
     <dimen name="banner_height">180dp</dimen>
+    <dimen name="corner_radius">4dp</dimen>
 
 </resources>

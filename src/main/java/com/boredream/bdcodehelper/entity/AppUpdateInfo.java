@@ -3,10 +3,18 @@ package com.boredream.bdcodehelper.entity;
 import com.boredream.bdcodehelper.base.CommonBaseEntity;
 
 public class AppUpdateInfo extends CommonBaseEntity {
+
+    public static AppUpdateInfo get(String appName) {
+        AppUpdateInfo appUpdateInfo = new AppUpdateInfo();
+        appUpdateInfo.setAppName(appName);
+        return appUpdateInfo;
+    }
+
     private int version;
     private String versionName;
-    private String fileUrl;
+    private FileInfo apkFile;
     private String updateInfo;
+    private String appName;
 
     public int getVersion() {
         return version;
@@ -24,12 +32,12 @@ public class AppUpdateInfo extends CommonBaseEntity {
         this.versionName = versionName;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public FileInfo getApkFile() {
+        return apkFile;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setApkFile(FileInfo apkFile) {
+        this.apkFile = apkFile;
     }
 
     public String getUpdateInfo() {
@@ -38,5 +46,13 @@ public class AppUpdateInfo extends CommonBaseEntity {
 
     public void setUpdateInfo(String updateInfo) {
         this.updateInfo = updateInfo;
+    }
+
+    public String getAppName() {
+        return appName + "_" + versionName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
     }
 }

@@ -13,6 +13,7 @@ import com.boredream.bdcodehelper.view.LineIndicatorRadioGroup;
 
 import java.util.ArrayList;
 
+// TODO: 2017/3/13 和view分离的p
 public class ImageBannerPresent<T extends ImageUrlInterface> {
 
     private static final String TAG = ImageBannerPresent.class.getSimpleName();

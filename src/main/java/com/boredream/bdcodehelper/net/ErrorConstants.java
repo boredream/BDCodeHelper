@@ -1,7 +1,20 @@
 package com.boredream.bdcodehelper.net;
 
+import android.text.TextUtils;
+
+import com.boredream.bdcodehelper.entity.ErrorResponse;
+import com.boredream.bdcodehelper.utils.StringUtils;
+import com.google.gson.Gson;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.ResponseBody;
+
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import retrofit.HttpException;
 
 public class ErrorConstants {
     public static Map<Integer, String> errors;
@@ -101,5 +114,55 @@ public class ErrorConstants {
         errors.put(10011, "该账户无可用的发送短信条数");
         errors.put(10012, "身份信息必须审核通过才能使用该功能");
         errors.put(10013, "非法短信内容");
+    }
+
+    /**
+     * 解析服务器错误信息
+     */
+    public static String parseHttpErrorInfo(Throwable throwable) {
+        String errorInfo = throwable.getMessage();
+
+        if (throwable instanceof HttpException) {
+            // 如果是Retrofit的Http错误,则转换类型,获取信息
+            HttpException exception = (HttpException) throwable;
+            ResponseBody responseBody = exception.response().errorBody();
+            MediaType type = responseBody.contentType();
+
+            // 如果是application/json类型数据,则解析返回内容
+            if (type.type().equals("application") && type.subtype().equals("json")) {
+                try {
+                    // 这里的返回内容是Bmob/AVOS/Parse等RestFul API文档中的错误代码和错误信息对象
+                    ErrorResponse errorResponse = new Gson().fromJson(
+                            responseBody.string(), ErrorResponse.class);
+
+                    errorInfo = getLocalErrorInfo(errorResponse);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            if (throwable instanceof UnknownHostException) {
+                errorInfo = "无法连接到服务器";
+            }
+        }
+
+        return errorInfo;
+    }
+
+    /**
+     * 获取本地预设错误信息
+     */
+    private static String getLocalErrorInfo(ErrorResponse error) {
+        String regEx = "[\u4e00-\u9fa5]+";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(error.getError()+"");
+
+        String s = ErrorConstants.errors.get(error.getCode());
+        if (m.find() || StringUtils.isEmpty(s)) {
+            // 如果错误信息中有中文，或者没中文时无匹配错误码，则直接用错误信息
+            return error.getError();
+        } else {
+            return s;
+        }
     }
 }

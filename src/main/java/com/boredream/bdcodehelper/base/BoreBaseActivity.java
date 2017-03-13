@@ -15,46 +15,52 @@ import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.utils.DialogUtils;
 import com.boredream.bdcodehelper.utils.ToastUtils;
 
-public class BoreBaseActivity extends AppCompatActivity {
+public class BoreBaseActivity extends AppCompatActivity implements BaseView{
 
     protected String TAG;
     private Dialog progressDialog;
+    private boolean isActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setScreenOrientation();
         super.onCreate(savedInstanceState);
 
-        init();
-    }
-
-    private void init() {
         TAG = getClass().getSimpleName();
         progressDialog = DialogUtils.createProgressDialog(this);
+        isActive = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        isActive = false;
+    }
+
+    @Override
+    public boolean isActive() {
+        return isActive;
+    }
+
+    @Override
+    public void showTip(String msg) {
+        showToast(msg);
+    }
+
+    @Override
+    public void showProgress() {
+        showProgressDialog();
+    }
+
+    @Override
+    public void dismissProgress() {
+        dismissProgressDialog();
     }
 
     protected void setScreenOrientation() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
-
-    /**
-     * fixme
-     * 左侧有返回键的标题栏
-     * <p>如果在此基础上还要加其他内容,比如右侧有文字按钮,可以获取该方法返回值继续设置其他内容
-     *
-     * @param title 标题
-     */
-//    protected TitleBuilder initBackTitle(String title) {
-//        return new TitleBuilder(this)
-//                .setTitleText(title)
-//                .setLeftImage(R.mipmap.ic_back)
-//                .setLeftOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        finish();
-//                    }
-//                });
-//    }
 
     /**
      * 跳转页面,无extra简易型

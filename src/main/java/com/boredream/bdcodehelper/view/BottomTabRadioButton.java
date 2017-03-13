@@ -15,7 +15,7 @@ import android.widget.RadioButton;
 
 import com.boredream.bdcodehelper.R;
 
-public class BottomTabRadioButton extends RadioButton {
+public class BottomTabRadioButton extends DrawableRadioButton {
 
     /**
      * 提示模式 - 无提示

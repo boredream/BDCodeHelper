@@ -1,9 +1,9 @@
 package com.boredream.bdcodehelper.db;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.boredream.bdcodehelper.base.AppKeeper;
 import com.boredream.bdcodehelper.entity.city.CityModel;
 import com.github.promeg.pinyinhelper.Pinyin;
 
@@ -18,12 +18,14 @@ public class AddressData {
     public static ArrayList<CityModel> allCities = new ArrayList<>();
     public static CityModel currentCity;
 
-    public static void init(final Context context) {
+    public static void init() {
+        AppKeeper.checkInit();
+
         new Thread() {
             @Override
             public void run() {
                 // 初始化，只需要调用一次
-                AssetsDatabaseManager.initManager(context);
+                AssetsDatabaseManager.initManager(AppKeeper.app);
                 // 获取管理对象，因为数据库需要通过管理对象才能够获取
                 AssetsDatabaseManager adm = AssetsDatabaseManager.getManager();
                 // 通过管理对象获取数据库
@@ -92,6 +94,8 @@ public class AddressData {
                         return cityModel.letter.compareTo(t1.letter);
                     }
                 });
+
+                cursorCity.close();
             }
         }.start();
 

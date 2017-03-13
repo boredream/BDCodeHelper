@@ -21,6 +21,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 
+// TODO: 2017/3/13 和view分离的p
 public class MultiPageLoadPresent {
 
     private Activity activity;

@@ -8,10 +8,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.boredream.bdcodehelper.R;
-import com.boredream.bdcodehelper.base.CommonBaseActivity;
+import com.boredream.bdcodehelper.base.BoreBaseActivity;
 import com.boredream.bdcodehelper.view.TitlebarView;
 
-public class WebViewActivity extends CommonBaseActivity {
+public class WebViewActivity extends BoreBaseActivity {
 
     public static final String EXTRA_TITLE = "title";
     public static final String EXTRA_URL = "url";

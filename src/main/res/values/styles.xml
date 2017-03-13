@@ -67,15 +67,17 @@
     </style>
 
     <style name="RadioButtonBottomTab">
-        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="drawableHeight">50dp</item>
-        <item name="drawableWidth">50dp</item>
+        <item name="android:paddingTop">@dimen/margin_tiny</item>
+        <item name="drawableHeight">32dp</item>
+        <item name="drawableWidth">32dp</item>
         <item name="android:textSize">9sp</item>
         <item name="android:textColor">@color/txt_black</item>
         <item name="android:button">@null</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:gravity">center_horizontal</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="RecyclerView">

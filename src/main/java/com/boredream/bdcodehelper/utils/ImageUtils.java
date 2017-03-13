@@ -205,7 +205,7 @@ public class ImageUtils {
      * 创建一条图片uri,用于保存拍照后的照片
      */
     private static Uri createImageUri(Context context) {
-        String name = "boreImg" + System.currentTimeMillis();
+        String name = "img_" + System.currentTimeMillis();
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, name);
         values.put(MediaStore.Images.Media.DISPLAY_NAME, name + ".jpeg");
@@ -234,7 +234,7 @@ public class ImageUtils {
     /**
      * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
      */
-    public static String getImageAbsolutePath19(Context context, Uri imageUri) {
+    public static String getImageAbsolutePath(Context context, Uri imageUri) {
         if (context == null || imageUri == null)
             return null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT

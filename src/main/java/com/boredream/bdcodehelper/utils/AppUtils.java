@@ -20,7 +20,7 @@ import java.io.File;
 public class AppUtils {
 
     /**
-     * 获取版本名称
+     * 获取版本名称 1.0.0
      */
     public static String getAppVersionName(Context context) {
         String versionName = "";
@@ -39,7 +39,7 @@ public class AppUtils {
     }
 
     /**
-     * 获取版本号
+     * 获取版本号 100
      */
     public static int getAppVersionCode(Context context) {
         int versioncode = -1;

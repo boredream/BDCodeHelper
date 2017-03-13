@@ -56,7 +56,10 @@ public class IndicatorRadioGroup extends RadioGroup {
             @Override
             public void onPageSelected(int position) {
                 if (getChildCount() > 1) {
-                    ((RadioButton) getChildAt(position % count)).setChecked(true);
+                    View child = getChildAt(position % count);
+                    if (child != null && child instanceof RadioButton) {
+                        ((RadioButton) child).setChecked(true);
+                    }
                 }
             }
 

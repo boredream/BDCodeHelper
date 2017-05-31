@@ -65,8 +65,8 @@ dependencies {
 
     // Others
     compile "com.commit451:PhotoView:$rootProject.photoviewVersion"
-    compile "org.greenrobot:eventbus:$rootProject.eventbus"
-    compile "com.github.promeg:tinypinyin:1.0.0"
+    compile "org.greenrobot:eventbus:$rootProject.eventbusVersion"
+    compile "com.github.promeg:tinypinyin:$rootProject.pinyinVersion"
 }
 
 // copy to rootProject build.gradle
@@ -95,5 +95,6 @@ dependencies {
 //    glideVersion = '3.6.1'
 //    glideokhttpVersion = '1.3.1'
 //    photoviewVersion = '1.2.4'
-//    eventbus = '3.0.0'
+//    eventbusVersion = '3.0.0'
+//    pinyinVersion = '1.0.0'
 //}

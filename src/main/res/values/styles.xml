@@ -16,6 +16,13 @@
         <item name="android:windowBackground">@color/bg_gray</item>
     </style>
 
+    <style name="TextViewDisplay1" parent="TextAppearance.AppCompat.Display1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/txt_black</item>
+    </style>
+
     <style name="TextViewHeadline" parent="TextAppearance.AppCompat.Headline">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

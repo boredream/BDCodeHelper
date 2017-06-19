@@ -99,12 +99,12 @@ public class MockUtils {
         } else if (clazzType == String.class) {
             String name = field.getName();
             // TODO: 可添加修改更多规则
-            if (name.toLowerCase().contains("img") || name.toLowerCase().contains("url")) {
-                value = getImgUrl();
-            } else if (name.toLowerCase().contains("video")) {
+            if (name.toLowerCase().contains("video")) {
                 value = getVideoUrl();
             } else if (name.toLowerCase().contains("music") || name.toLowerCase().contains("audio")) {
                 value = getMusicUrl();
+            } else if (name.toLowerCase().contains("img") || name.toLowerCase().contains("url")) {
+                value = getImgUrl();
             } else {
                 value = name + "_" + new Random().nextInt(100);
             }

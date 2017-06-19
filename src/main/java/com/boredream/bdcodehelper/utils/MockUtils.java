@@ -104,7 +104,7 @@ public class MockUtils {
             } else if (name.toLowerCase().contains("video")) {
                 value = getVideoUrl();
             } else if (name.toLowerCase().contains("music") || name.toLowerCase().contains("audio")) {
-                value = getVideoUrl();
+                value = getMusicUrl();
             } else {
                 value = name + "_" + new Random().nextInt(100);
             }

@@ -23,6 +23,24 @@ public class MockUtils {
         return imgs.get(new Random().nextInt(imgs.size()));
     }
 
+    private static String getVideoUrl() {
+        List<String> imgs = new ArrayList<>();
+        imgs.add("http://baobab.wdjcdn.com/1455782903700jy.mp4");
+        imgs.add("http://baobab.wdjcdn.com/145076769089714.mp4");
+        imgs.add("http://baobab.wdjcdn.com/14564977406580.mp4");
+        return imgs.get(new Random().nextInt(imgs.size()));
+    }
+
+    private static String getMusicUrl() {
+        List<String> imgs = new ArrayList<>();
+        imgs.add("http://om5.alicdn.com/450/10450/56300/1073345_73731_l.mp3?auth_key=1d4f10afb733a4165686066a7f0852f8-1498446000-0-null");
+        imgs.add("http://audio.xmcdn.com/group11/M08/3A/55/wKgDbVWbJuzz1oTfACgSj0ux7aQ198.m4a");
+        imgs.add("http://116.224.86.38/m10.music.126.net/20170619145949/6cca39eb432ce464b14a3cf38569a135/ymusic/f171/0330/08ff/fbec8c9301dcaa80924033ea229d600c.mp3");
+        imgs.add("http://116.224.86.36/m10.music.126.net/20170619151520/c4282deb88ece1d69c2c282b25ab1e64/ymusic/0b23/006a/51bf/0d8255acc1634702e1a184d446f91b88.mp3");
+        imgs.add("http://116.224.86.21/m10.music.126.net/20170619151622/6d07119b03a7beb784e4f9f00e34ac2b/ymusic/ed04/efbf/0bef/e9c8fd8c545072fd0ddcf377582c6f8f.mp3");
+        return imgs.get(new Random().nextInt(imgs.size()));
+    }
+
     public static <T> T mockData(Class<T> clazz) {
         T t = null;
         try {
@@ -52,7 +70,7 @@ public class MockUtils {
     private static <T> void setValue(Object object, Class<T> clazz) throws IllegalAccessException {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
-            if(Modifier.isFinal(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
+            if (Modifier.isFinal(field.getModifiers()) || Modifier.isStatic(field.getModifiers())) {
                 continue;
             }
 
@@ -80,8 +98,13 @@ public class MockUtils {
             value = new Random().nextDouble();
         } else if (clazzType == String.class) {
             String name = field.getName();
-            if(name.toLowerCase().contains("img") || name.toLowerCase().contains("url")) {
+            // TODO: 可添加修改更多规则
+            if (name.toLowerCase().contains("img") || name.toLowerCase().contains("url")) {
                 value = getImgUrl();
+            } else if (name.toLowerCase().contains("video")) {
+                value = getVideoUrl();
+            } else if (name.toLowerCase().contains("music") || name.toLowerCase().contains("audio")) {
+                value = getVideoUrl();
             } else {
                 value = name + "_" + new Random().nextInt(100);
             }

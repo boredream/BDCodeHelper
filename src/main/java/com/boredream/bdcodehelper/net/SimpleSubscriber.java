@@ -1,7 +1,5 @@
 package com.boredream.bdcodehelper.net;
 
-import android.util.Log;
-
 import com.boredream.bdcodehelper.base.BaseView;
 
 import rx.Subscriber;

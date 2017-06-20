@@ -2,9 +2,9 @@ package com.boredream.bdcodehelper.net;
 
 import com.boredream.bdcodehelper.base.BaseView;
 
-import rx.Subscriber;
+import io.reactivex.observers.DisposableObserver;
 
-public class SimpleSubscriber<T> extends Subscriber<T> {
+public class SimpleSubscriber<T> extends DisposableObserver<T> {
 
     private BaseView view;
 
@@ -20,7 +20,7 @@ public class SimpleSubscriber<T> extends Subscriber<T> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
 
     }
 

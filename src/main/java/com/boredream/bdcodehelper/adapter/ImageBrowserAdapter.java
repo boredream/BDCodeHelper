@@ -2,6 +2,7 @@ package com.boredream.bdcodehelper.adapter;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,8 @@ import android.widget.ProgressBar;
 import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.entity.ImageUrlInterface;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.List;
 
@@ -55,29 +54,22 @@ public class ImageBrowserAdapter extends PagerAdapter {
 
         Glide.with(context)
                 .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .placeholder(R.mipmap.ic_account_circle_grey600_24dp)
-//                .error(R.mipmap.ic_account_circle_grey600_24dp)
-                .centerCrop()
-                .crossFade()
-                .into(new SimpleTarget<GlideDrawable>() {
+                .into(new SimpleTarget<Drawable>() {
 
                     @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        super.onLoadFailed(e, errorDrawable);
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
                         pb_loading.setVisibility(View.GONE);
                         iv_image_browser.setVisibility(View.VISIBLE);
                     }
 
                     @Override
-                    public void onLoadStarted(Drawable placeholder) {
-                        super.onLoadStarted(placeholder);
+                    public void onLoadStarted(@Nullable Drawable placeholder) {
                         pb_loading.setVisibility(View.VISIBLE);
                         iv_image_browser.setVisibility(View.GONE);
                     }
 
                     @Override
-                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
                         pb_loading.setVisibility(View.GONE);
                         iv_image_browser.setVisibility(View.VISIBLE);
 

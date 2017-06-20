@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.boredream.bdcodehelper.entity.IUser;
+import com.boredream.bdcodehelper.entity.User;
 import com.google.gson.Gson;
 
 /**
@@ -35,7 +35,7 @@ public class UserInfoKeeper {
     private static final String SP_KEY_USER_ID = "user_id";
     private static final String SP_KEY_TOKEN = "token";
 
-    private IUser currentUser;
+    private User currentUser;
     private String token;
 
     public void setToken(String token) {
@@ -45,10 +45,10 @@ public class UserInfoKeeper {
     /**
      * 获取当前登录用户,先从缓存中获取,获取不到时从sp中获取
      */
-    public IUser getCurrentUser() {
+    public User getCurrentUser() {
         String userJson = sp.getString(SP_KEY_CURRENT_USER, null);
         if (currentUser == null && !TextUtils.isEmpty(userJson)) {
-            currentUser = new Gson().fromJson(userJson, IUser.class);
+            currentUser = new Gson().fromJson(userJson, User.class);
         }
         return currentUser;
     }
@@ -56,7 +56,7 @@ public class UserInfoKeeper {
     /**
      * 保存设置当前登录用户,缓存和sp中都进行保存
      */
-    public void setCurrentUser(IUser user) {
+    public void setCurrentUser(User user) {
         if (user != null) {
             String userJson = new Gson().toJson(user);
             sp.edit().putString(SP_KEY_CURRENT_USER, userJson).apply();

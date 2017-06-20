@@ -4,14 +4,14 @@ package com.boredream.bdcodehelper.base;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.boredream.bdcodehelper.R;
+import com.boredream.bdcodehelper.utils.AppUtils;
 import com.boredream.bdcodehelper.utils.DialogUtils;
 import com.boredream.bdcodehelper.utils.ToastUtils;
 

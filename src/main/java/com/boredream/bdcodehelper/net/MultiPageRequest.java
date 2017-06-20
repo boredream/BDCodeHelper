@@ -1,6 +1,6 @@
 package com.boredream.bdcodehelper.net;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public abstract class MultiPageRequest<T> {
 

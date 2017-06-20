@@ -17,9 +17,8 @@ import com.boredream.bdcodehelper.view.DividerItemDecoration;
 
 import java.util.ArrayList;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
+import io.reactivex.Observable;
+import io.reactivex.observers.DisposableObserver;
 
 // TODO: 2017/3/13 和view分离的p
 public class MultiPageLoadPresent {
@@ -64,7 +63,7 @@ public class MultiPageLoadPresent {
     private ArrayList datas;
     private PageIndex pageIndex;
     private MultiPageRequest request;
-    private Subscriber subscriber;
+    private DisposableObserver subscriber;
 
     public void setDatas(ArrayList datas) {
         this.datas = datas;
@@ -76,10 +75,10 @@ public class MultiPageLoadPresent {
         });
     }
 
-    public <T> Subscription load(RecyclerView.Adapter adapter,
+    public <T> void load(RecyclerView.Adapter adapter,
                                  ArrayList datas,
                                  MultiPageRequest<T> request,
-                                 Subscriber<T> subscriber) {
+                                 DisposableObserver<T> subscriber) {
         this.datas = datas;
         this.request = request;
         this.subscriber = subscriber;
@@ -101,7 +100,7 @@ public class MultiPageLoadPresent {
             }
         });
 
-        return loadData(this.pageIndex.toStartPage());
+        loadData(this.pageIndex.toStartPage());
     }
 
     public void setStatus(int status) {
@@ -138,36 +137,36 @@ public class MultiPageLoadPresent {
      *
      * @param page 页数
      */
-    private Subscription loadData(final int page) {
+    private void loadData(final int page) {
         Observable observable = this.request.request(page);
-        return ObservableDecorator.decorate(observable).subscribe(
-                new Subscriber<ListResponse>() {
-                    @Override
-                    public void onNext(ListResponse response) {
-                        if (subscriber != null) {
-                            subscriber.onNext(response);
-                        }
-                        setRefreshing(false);
-
-                        // 加载成功后更新数据
-                        pageIndex.setResponse(loadMoreAdapter, datas, response.getResults());
+        ObservableDecorator.decorate(observable).subscribe(
+            new DisposableObserver<ListResponse>() {
+                @Override
+                public void onNext(ListResponse response) {
+                    if (subscriber != null) {
+                        subscriber.onNext(response);
                     }
+                    setRefreshing(false);
 
-                    @Override
-                    public void onCompleted() {
-                        if (subscriber != null) {
-                            subscriber.onCompleted();
-                        }
-                    }
+                    // 加载成功后更新数据
+                    pageIndex.setResponse(loadMoreAdapter, datas, response.getResults());
+                }
 
-                    @Override
-                    public void onError(Throwable throwable) {
-                        if (subscriber != null) {
-                            subscriber.onError(throwable);
-                        }
-                        setRefreshing(false);
+                @Override
+                public void onComplete() {
+                    if (subscriber != null) {
+                        subscriber.onComplete();
                     }
-                });
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    if (subscriber != null) {
+                        subscriber.onError(throwable);
+                    }
+                    setRefreshing(false);
+                }
+            });
     }
 
 }

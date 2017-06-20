@@ -1,12 +1,8 @@
 package com.boredream.bdcodehelper.net;
 
-import android.text.TextUtils;
-
 import com.boredream.bdcodehelper.entity.ErrorResponse;
 import com.boredream.bdcodehelper.utils.StringUtils;
 import com.google.gson.Gson;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.ResponseBody;
 
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -14,7 +10,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import retrofit.HttpException;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 public class ErrorConstants {
     public static Map<Integer, String> errors;
@@ -129,7 +127,7 @@ public class ErrorConstants {
             MediaType type = responseBody.contentType();
 
             // 如果是application/json类型数据,则解析返回内容
-            if (type.type().equals("application") && type.subtype().equals("json")) {
+            if (type != null && type.type().equals("application") && type.subtype().equals("json")) {
                 try {
                     // 这里的返回内容是Bmob/AVOS/Parse等RestFul API文档中的错误代码和错误信息对象
                     ErrorResponse errorResponse = new Gson().fromJson(

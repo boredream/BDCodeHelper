@@ -19,6 +19,11 @@ import java.io.File;
 
 public class AppUtils {
 
+    public static String getSimplePackageName(Context context) {
+        String packageName = context.getPackageName();
+        return packageName.substring(packageName.lastIndexOf("."));
+    }
+
     /**
      * 获取版本名称 1.0.0
      */

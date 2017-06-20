@@ -1,12 +1,12 @@
 package com.boredream.bdcodehelper.function;
 
-import com.boredream.bdcodehelper.entity.IUser;
+import com.boredream.bdcodehelper.entity.User;
 import com.boredream.bdcodehelper.net.BaseHttpRequest;
 import com.boredream.bdcodehelper.net.ObservableDecorator;
 import com.boredream.bdcodehelper.net.SimpleSubscriber;
 import com.boredream.bdcodehelper.utils.StringUtils;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
@@ -28,10 +28,10 @@ public class LoginPresenter implements LoginContract.Presenter {
             return;
         }
 
-        Observable<IUser> observable = BaseHttpRequest.login(username, password);
-        ObservableDecorator.decorate(observable).subscribe(new SimpleSubscriber<IUser>(view) {
+        Observable<User> observable = BaseHttpRequest.login(username, password);
+        ObservableDecorator.decorate(observable).subscribe(new SimpleSubscriber<User>(view) {
             @Override
-            public void onNext(IUser user) {
+            public void onNext(User user) {
                 if (!view.isActive()) {
                     return;
                 }

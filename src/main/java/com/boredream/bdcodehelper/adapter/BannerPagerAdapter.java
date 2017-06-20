@@ -14,7 +14,7 @@ import com.boredream.bdcodehelper.activity.ImageBrowserActivity;
 import com.boredream.bdcodehelper.activity.WebViewActivity;
 import com.boredream.bdcodehelper.entity.ImageUrlInterface;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
@@ -69,9 +69,7 @@ public class BannerPagerAdapter<T extends ImageUrlInterface> extends PagerAdapte
         final String url = image.getImageUrl();
         Glide.with(context)
                 .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .crossFade()
+                .apply(new RequestOptions().centerCrop())
                 .into(iv);
 
         iv.setOnClickListener(new View.OnClickListener() {

@@ -3,12 +3,12 @@ package com.boredream.bdcodehelper.utils;
 import com.boredream.bdcodehelper.entity.ErrorResponse;
 import com.boredream.bdcodehelper.net.ErrorConstants;
 import com.google.gson.Gson;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.ResponseBody;
 
 import java.net.UnknownHostException;
 
-import retrofit.HttpException;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 
 public class ErrorInfoUtils {
 
@@ -25,7 +25,7 @@ public class ErrorInfoUtils {
             MediaType type = responseBody.contentType();
 
             // 如果是application/json类型数据,则解析返回内容
-            if (type.type().equals("application") && type.subtype().equals("json")) {
+            if (type != null && type.type().equals("application") && type.subtype().equals("json")) {
                 try {
                     // 这里的返回内容是Bmob/AVOS/Parse等RestFul API文档中的错误代码和错误信息对象
                     ErrorResponse errorResponse = new Gson().fromJson(

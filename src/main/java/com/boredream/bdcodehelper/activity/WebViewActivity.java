@@ -3,6 +3,7 @@ package com.boredream.bdcodehelper.activity;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,8 +16,6 @@ public class WebViewActivity extends BoreBaseActivity {
 
     public static final String EXTRA_TITLE = "title";
     public static final String EXTRA_URL = "url";
-
-    // FIXME: 2017/2/28 title
 
     private WebView webview;
     private TitlebarView titlebar;
@@ -32,13 +31,16 @@ public class WebViewActivity extends BoreBaseActivity {
 
         initView();
 
-        showProgressDialog();
+        showProgress();
         webview.loadUrl(url);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
         titlebar = (TitlebarView) findViewById(R.id.title);
+        if (!TextUtils.isEmpty(title)) {
+            titlebar.setTitleText(title);
+        }
         webview = (WebView) findViewById(R.id.webview);
         webview.setWebViewClient(new MyWebClient());
 
@@ -60,7 +62,7 @@ public class WebViewActivity extends BoreBaseActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             titlebar.setTitleText(view.getTitle());
-            dismissProgressDialog();
+            dismissProgress();
         }
 
         public boolean shouldOverrideUrlLoading(WebView view, String url) {

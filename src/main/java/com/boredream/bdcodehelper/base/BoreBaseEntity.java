@@ -15,24 +15,25 @@ public class BoreBaseEntity extends Pointer {
     // 添加新数据时,返回为objectId + createdAt
     // 更新数据时,返回为updateAt
 
-    private String createdAt;
-    private String updatedAt;
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    // TODO: 2017/6/30 各种格式
+//    private String createdAt;
+//    private String updatedAt;
+//
+//    public String getCreatedAt() {
+//        return createdAt;
+//    }
+//
+//    public void setCreatedAt(String createdAt) {
+//        this.createdAt = createdAt;
+//    }
+//
+//    public String getUpdatedAt() {
+//        return updatedAt;
+//    }
+//
+//    public void setUpdatedAt(String updatedAt) {
+//        this.updatedAt = updatedAt;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -41,14 +42,5 @@ public class BoreBaseEntity extends Pointer {
             return this.objectId != null ? this.objectId.equals(oEntity.objectId) : false;
         }
         return super.equals(o);
-    }
-
-    @Override
-    public String toString() {
-        return "BaseEntity{" +
-                "objectId='" + objectId + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                '}';
     }
 }

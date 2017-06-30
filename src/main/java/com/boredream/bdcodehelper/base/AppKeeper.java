@@ -2,13 +2,12 @@ package com.boredream.bdcodehelper.base;
 
 import android.app.Application;
 
-import com.boredream.bdcodehelper.net.BaseHttpRequest;
+import com.boredream.bdcodehelper.net.HttpClientFactory;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.model.GlideUrl;
 
 import java.io.InputStream;
-
 
 public class AppKeeper {
 
@@ -29,7 +28,7 @@ public class AppKeeper {
      * 图片加载框架Glide,使用OkHttp处理网络请求
      */
     private static void initGlide(Application app) {
-        OkHttpUrlLoader.Factory factory = new OkHttpUrlLoader.Factory(BaseHttpRequest.getHttpClient());
+        OkHttpUrlLoader.Factory factory = new OkHttpUrlLoader.Factory(HttpClientFactory.getOkHttpClient());
         Glide.get(app).getRegistry().append(GlideUrl.class, InputStream.class, factory);
     }
 

@@ -8,6 +8,7 @@ public class User extends BoreBaseEntity {
     protected String username;
     protected String password;
     protected String sessionToken;
+    protected String imToken;
 
     public String getUserId() {
         return userId;
@@ -39,5 +40,13 @@ public class User extends BoreBaseEntity {
 
     public void setSessionToken(String sessionToken) {
         this.sessionToken = sessionToken;
+    }
+
+    public String getImToken() {
+        return imToken;
+    }
+
+    public void setImToken(String imToken) {
+        this.imToken = imToken;
     }
 }

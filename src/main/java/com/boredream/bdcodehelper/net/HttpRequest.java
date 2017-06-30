@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import com.boredream.bdcodehelper.base.BoreBaseEntity;
 import com.boredream.bdcodehelper.base.UserInfoKeeper;
 import com.boredream.bdcodehelper.entity.AppUpdateInfo;
+import com.boredream.bdcodehelper.entity.CloudResponse;
 import com.boredream.bdcodehelper.entity.FileUploadResponse;
 import com.boredream.bdcodehelper.entity.ListResponse;
 import com.boredream.bdcodehelper.entity.UpdatePswRequest;
@@ -18,24 +19,18 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.observers.DisposableObserver;
-import okhttp3.Interceptor;
+import io.reactivex.functions.Function;
 import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -46,64 +41,45 @@ import retrofit2.http.Query;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
-public class BaseHttpRequest {
+public class HttpRequest {
 
-    public static final int COUNT_OF_PAGE = 20;
-
-    // LeanCloud
     public static final String HOST = "https://api.leancloud.cn";
 
-    public static final String FILE_HOST = "";
-    private static final String APP_ID_NAME = "X-LC-Id";
-    private static final String API_KEY_NAME = "X-LC-Key";
+    protected Retrofit retrofit;
+    private static volatile HttpRequest singleton = null;
 
-    public static final String SESSION_TOKEN_KEY = "X-LC-Session";
-    private static final String APP_ID_VALUE = "YeWYXUgKCPByvToJj3u1mUUw-gzGzoHsz";
-
-    private static final String API_KEY_VALUE = "Ypx2LgIxvScVwgzPI0UcNSgM";
-
-    protected static Retrofit retrofit;
-    protected static OkHttpClient httpClient;
-
-    public static OkHttpClient getHttpClient() {
-        return httpClient;
+    public static HttpRequest getSingleton() {
+        if (singleton == null) {
+            synchronized (HttpRequest.class) {
+                if (singleton == null) {
+                    singleton = new HttpRequest();
+                }
+            }
+        }
+        return singleton;
     }
 
-    static {
-        // OkHttpClient
-        httpClient = new OkHttpClient();
-
-        // 统一添加的Header
-        httpClient.networkInterceptors().add(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder()
-                        .addHeader("Content-Type", "application/json")
-                        .addHeader(APP_ID_NAME, APP_ID_VALUE)
-                        .addHeader(API_KEY_NAME, API_KEY_VALUE)
-                        .addHeader(SESSION_TOKEN_KEY, UserInfoKeeper.getInstance().getToken())
-                        .build();
-                return chain.proceed(request);
-            }
-        });
-
+    protected HttpRequest() {
         // Retrofit
         retrofit = new Retrofit.Builder()
                 .baseUrl(HOST)
                 .addConverterFactory(GsonConverterFactory.create()) // gson
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // rxjava 响应式编程
-                .client(httpClient)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // rxjava 响应式编程
+                .client(HttpClientFactory.getOkHttpClient())
                 .callbackExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
                 .build();
     }
 
-
-    public interface BaseService {
+    public interface ApiService {
         // 登录用户
-        @GET("/1/login")
+        @GET("/1.1/login")
         Observable<User> login(
                 @Query("username") String username,
                 @Query("password") String password);
+
+        // 利用token获取登陆用户信息
+        @GET("/1.1/users/me")
+        Observable<User> login();
 
         // 手机获取验证码
         @POST("/1/requestSmsCode")
@@ -158,13 +134,29 @@ public class BaseHttpRequest {
         @Streaming
         @GET
         Observable<ResponseBody> downloadFile(@Url String fileUrl);
+
+        // cloud
+        @POST("/1.1/call/imlogin")
+        Observable<CloudResponse<User>> imlogin(
+                @Body Map<String, String> request);
     }
 
-    public static BaseService getBaseApiService() {
-        return retrofit.create(BaseService.class);
+    public ApiService getApiService() {
+        return retrofit.create(ApiService.class);
     }
 
     //////////////////////////////
+
+
+    private Consumer<User> loginConsumer = new Consumer<User>() {
+        @Override
+        public void accept(@NonNull User user) throws Exception {
+            // 保存登录用户数据以及token信息
+            UserInfoKeeper.getInstance().setCurrentUser(user);
+            // 保存自动登录使用的信息
+            UserInfoKeeper.getInstance().saveLoginData(user.getUserId(), user.getSessionToken());
+        }
+    };
 
     /**
      * 登录用户
@@ -172,40 +164,59 @@ public class BaseHttpRequest {
      * @param username 用户名
      * @param password 密码
      */
-    public static Observable<User> login(String username, String password) {
-        BaseService service = getBaseApiService();
+    public Observable<User> login(String username, String password) {
+        ApiService service = getApiService();
         return service.login(username, password)
-                .doOnNext(new Consumer<User>() {
+                .doOnNext(loginConsumer);
+    }
+
+    /**
+     * 登录用户
+     *
+     * @param username 用户名
+     * @param password 密码
+     */
+    public Observable<User> loginWithIm(String username, String password) {
+        ApiService service = getApiService();
+        Map<String, String> request = new HashMap<>();
+        request.put("username", username);
+        request.put("password", password);
+        return service.imlogin(request)
+                .map(new Function<CloudResponse<User>, User>() {
                     @Override
-                    public void accept(@NonNull User user) throws Exception {
-                        // 保存登录用户数据以及token信息
-                        UserInfoKeeper.getInstance().setCurrentUser(user);
-                        // 保存自动登录使用的信息
-                        UserInfoKeeper.getInstance().saveLoginData(user.getUserId(), user.getSessionToken());
+                    public User apply(@NonNull CloudResponse<User> response) throws Exception {
+                        // TODO: 2017/6/30 error
+                        return response.getResult();
                     }
-                });
+                })
+                .doOnNext(loginConsumer);
     }
 
     /**
      * 使用token自动登录
-     *
-     * @param loginData size为2的数组, 第一个为当前用户id, 第二个为当前用户token
      */
-    public static Observable<User> loginByToken(final String[] loginData) {
-        BaseService service = getBaseApiService();
-        // 这种自动登录方法其实是使用token去再次获取当前账号数据
-        return service.getUserById(loginData[0])
-                .doOnNext(new Consumer<User>() {
+    public Observable<User> loginByToken() {
+        ApiService service = getApiService();
+        return service.login()
+                .doOnNext(loginConsumer);
+    }
+
+    /**
+     * 使用token自动登录
+     */
+    public Observable<User> loginByTokenWithIm(String sessionToken) {
+        ApiService service = getApiService();
+        Map<String, String> request = new HashMap<>();
+        request.put("sessionToken", sessionToken);
+        return service.imlogin(request)
+                .map(new Function<CloudResponse<User>, User>() {
                     @Override
-                    public void accept(@NonNull User user) throws Exception {
-                        // 获取用户信息接口不会返回token
-                        UserInfoKeeper.getInstance().setToken(loginData[1]);
-                        // 保存登录用户数据以及token信息
-                        UserInfoKeeper.getInstance().setCurrentUser(user);
-                        // 保存自动登录使用的信息
-                        UserInfoKeeper.getInstance().saveLoginData(user.getUserId(), user.getSessionToken());
+                    public User apply(@NonNull CloudResponse<User> response) throws Exception {
+                        // TODO: 2017/6/30 error
+                        return response.getResult();
                     }
-                });
+                })
+                .doOnNext(loginConsumer);
     }
 
     /**
@@ -218,8 +229,8 @@ public class BaseHttpRequest {
      * @param reqH    上传图片需要压缩的高度
      * @param call
      */
-    public static void fileUpload(final Context context, Uri uri, int reqW, int reqH, final SimpleSubscriber<FileUploadResponse> call) {
-        final BaseService service = getBaseApiService();
+    public void fileUpload(final Context context, Uri uri, int reqW, int reqH, final SimpleDisposableObserver<FileUploadResponse> call) {
+        final ApiService service = getApiService();
         final String filename = "avatar_" + System.currentTimeMillis() + ".jpg";
 
         // 先从本地获取图片,利用Glide压缩图片后获取byte[]

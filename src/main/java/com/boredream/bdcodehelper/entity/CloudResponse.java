@@ -3,7 +3,9 @@ package com.boredream.bdcodehelper.entity;
 /**
  * 云函数返回数据
  */
-public class CloudResult<T> {
+public class CloudResponse<T> {
+
+    // TODO: 2017/6/30 error
 
     private T result;
 

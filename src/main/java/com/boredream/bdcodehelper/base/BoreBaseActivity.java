@@ -45,17 +45,17 @@ public class BoreBaseActivity extends AppCompatActivity implements BaseView{
 
     @Override
     public void showTip(String msg) {
-        showToast(msg);
+        ToastUtils.showToast(this, msg);
     }
 
     @Override
     public void showProgress() {
-        showProgressDialog();
+        progressDialog.show();
     }
 
     @Override
     public void dismissProgress() {
-        dismissProgressDialog();
+        progressDialog.dismiss();
     }
 
     protected void setScreenOrientation() {
@@ -72,20 +72,8 @@ public class BoreBaseActivity extends AppCompatActivity implements BaseView{
         startActivity(intent);
     }
 
-    public void showToast(String msg) {
-        ToastUtils.showToast(this, msg, Toast.LENGTH_SHORT);
-    }
-
     public void showLog(String msg) {
         Log.i(TAG, msg);
-    }
-
-    public void showProgressDialog() {
-        progressDialog.show();
-    }
-
-    public void dismissProgressDialog() {
-        progressDialog.dismiss();
     }
 
 }

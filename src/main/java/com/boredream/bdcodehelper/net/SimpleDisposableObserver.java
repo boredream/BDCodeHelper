@@ -1,14 +1,17 @@
 package com.boredream.bdcodehelper.net;
 
 import com.boredream.bdcodehelper.base.BaseView;
+import com.boredream.bdcodehelper.base.BoreBaseActivity;
+
+import java.lang.ref.WeakReference;
 
 import io.reactivex.observers.DisposableObserver;
 
-public class SimpleSubscriber<T> extends DisposableObserver<T> {
+public class SimpleDisposableObserver<T> extends DisposableObserver<T> {
 
     private BaseView view;
 
-    public SimpleSubscriber(BaseView view) {
+    public SimpleDisposableObserver(BaseView view) {
         this.view = view;
     }
 
@@ -20,11 +23,6 @@ public class SimpleSubscriber<T> extends DisposableObserver<T> {
     }
 
     @Override
-    public void onComplete() {
-
-    }
-
-    @Override
     public void onError(Throwable e) {
         if(view.isActive()) {
             view.dismissProgress();
@@ -32,6 +30,11 @@ public class SimpleSubscriber<T> extends DisposableObserver<T> {
             String error = ErrorConstants.parseHttpErrorInfo(e);
             view.showTip(error);
         }
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 
     @Override

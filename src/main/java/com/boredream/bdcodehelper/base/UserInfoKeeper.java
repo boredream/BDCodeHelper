@@ -36,11 +36,6 @@ public class UserInfoKeeper {
     private static final String SP_KEY_TOKEN = "token";
 
     private User currentUser;
-    private String token;
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     /**
      * 获取当前登录用户,先从缓存中获取,获取不到时从sp中获取
@@ -90,33 +85,9 @@ public class UserInfoKeeper {
                 .apply();
     }
 
-    /**
-     * 获取当前用户的登录信息,用于自动登录
-     *
-     * @return [0]-用户userid [1]-用户口令token, 未保存或只保存一者时都返回null
-     */
-    public String[] getLoginData() {
-        String userid = sp.getString(SP_KEY_USER_ID, null);
-        String token = sp.getString(SP_KEY_TOKEN, null);
-        if (TextUtils.isEmpty(userid) || TextUtils.isEmpty(token)) {
-            return null;
-        }
-
-        return new String[]{userid, token};
-    }
-
-    /**
-     * 清空登录信息
-     */
-    public void clearLoginData() {
-        sp.edit().remove(SP_KEY_USER_ID)
-                .remove(SP_KEY_TOKEN)
-                .apply();
-    }
-
-    public String getToken() {
+    public String getSessionToken() {
         // 统一Header配置时用的token,没有的话要用空字符串,不能为null
-        String token = "";
+        String token = sp.getString(SP_KEY_TOKEN, "");
         if (currentUser != null && currentUser.getSessionToken() != null) {
             token = currentUser.getSessionToken();
         }
@@ -128,7 +99,6 @@ public class UserInfoKeeper {
      */
     public void logout() {
         clearCurrentUser();
-        clearLoginData();
     }
 
     /**

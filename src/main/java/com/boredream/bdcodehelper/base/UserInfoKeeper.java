@@ -32,7 +32,6 @@ public class UserInfoKeeper {
     }
 
     private static final String SP_KEY_CURRENT_USER = "current_user";
-    private static final String SP_KEY_USER_ID = "user_id";
     private static final String SP_KEY_TOKEN = "token";
 
     private User currentUser;
@@ -67,29 +66,22 @@ public class UserInfoKeeper {
         sp.edit().remove(SP_KEY_CURRENT_USER).apply();
     }
 
-    /**
-     * 保存当前用户的登录信息,用于自动登录
-     *
-     * @param userid 用户id
-     * @param token  用户口令
-     */
-    public void saveLoginData(String userid, String token) {
-        // 正常逻辑应该是直接用token去获取当前用户信息,不需要id,但是接口没有提供获取当前登录用户信息接口
-        if (TextUtils.isEmpty(userid) || TextUtils.isEmpty(token)) {
+    public void saveSessionToken(String token) {
+        if (TextUtils.isEmpty(token)) {
             return;
         }
 
         // 保存在sp中,不像是账号密码敏感信息,无需加密
-        sp.edit().putString(SP_KEY_USER_ID, userid)
-                .putString(SP_KEY_TOKEN, token)
-                .apply();
+        sp.edit().putString(SP_KEY_TOKEN, token).apply();
     }
 
     public String getSessionToken() {
         // 统一Header配置时用的token,没有的话要用空字符串,不能为null
-        String token = sp.getString(SP_KEY_TOKEN, "");
+        String token;
         if (currentUser != null && currentUser.getSessionToken() != null) {
             token = currentUser.getSessionToken();
+        } else {
+            token = sp.getString(SP_KEY_TOKEN, "");
         }
         return token;
     }

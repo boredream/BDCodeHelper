@@ -154,7 +154,7 @@ public class HttpRequest {
             // 保存登录用户数据以及token信息
             UserInfoKeeper.getInstance().setCurrentUser(user);
             // 保存自动登录使用的信息
-            UserInfoKeeper.getInstance().saveLoginData(user.getUserId(), user.getSessionToken());
+            UserInfoKeeper.getInstance().saveSessionToken(user.getSessionToken());
         }
     };
 

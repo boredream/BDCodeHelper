@@ -4,8 +4,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * fragment切换控制器, 初始化时直接add全部fragment, 然后利用show和hide进行切换控制
@@ -24,7 +29,7 @@ public class FragmentController {
         initFragment();
     }
 
-    public void initFragment() {
+    private void initFragment() {
         FragmentTransaction ft = fm.beginTransaction();
         for (int i = 0; i < fragments.size(); i++) {
             ft.add(containerId, fragments.get(i), String.valueOf(i));
@@ -66,4 +71,24 @@ public class FragmentController {
         return fragments.get(position);
     }
 
+    private Map<Integer, Integer> rbIdIndexMap = new HashMap<>();
+    public void setRadioGroup(RadioGroup rg) {
+        int rbIndex = 0;
+        for (int i = 0; i < rg.getChildCount(); i++) {
+            View view = rg.getChildAt(i);
+            if(view instanceof RadioButton) {
+                rbIdIndexMap.put(view.getId(), rbIndex++);
+            }
+        }
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Integer index = rbIdIndexMap.get(checkedId);
+                if(index != null) {
+                    showFragment(index);
+                }
+            }
+        });
+    }
 }

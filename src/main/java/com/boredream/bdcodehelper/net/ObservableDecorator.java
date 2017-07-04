@@ -10,6 +10,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ObservableDecorator {
 
     public static <T> Observable<T> decorate(Observable<T> observable) {
+        // TODO: 2017/7/4 过滤isActive
         return observable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }

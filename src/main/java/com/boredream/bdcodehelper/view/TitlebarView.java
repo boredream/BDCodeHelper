@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.utils.DisplayUtils;
 
-public class TitlebarView extends RelativeLayout {
+public class TitleBarView extends RelativeLayout {
 
     private Resources resources;
 
@@ -28,28 +28,30 @@ public class TitlebarView extends RelativeLayout {
     private TextView tvLeft;
     private TextView tvRight;
 
-    public TitlebarView(Context context) {
+    public TitleBarView(Context context) {
         super(context);
         init();
     }
 
-    public TitlebarView(Context context, AttributeSet attrs) {
+    public TitleBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public TitlebarView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TitleBarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public TitlebarView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TitleBarView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
     private void init() {
+        setMinimumHeight(DisplayUtils.dp2px(getContext(), 48));
+
         resources = getContext().getResources();
         setBackgroundColor(resources.getColor(R.color.colorPrimary));
 
@@ -66,7 +68,7 @@ public class TitlebarView extends RelativeLayout {
      * @param text 文字内容
      */
     public void setTitleText(CharSequence text) {
-//        tvTitle.setText(text);
+        tvTitle.setText(text);
     }
 
     /**

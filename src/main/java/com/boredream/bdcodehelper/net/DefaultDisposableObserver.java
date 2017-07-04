@@ -7,11 +7,11 @@ import java.lang.ref.WeakReference;
 
 import io.reactivex.observers.DisposableObserver;
 
-public class SimpleDisposableObserver<T> extends DisposableObserver<T> {
+public class DefaultDisposableObserver<T> extends DisposableObserver<T> {
 
     private BaseView view;
 
-    public SimpleDisposableObserver(BaseView view) {
+    public DefaultDisposableObserver(BaseView view) {
         this.view = view;
     }
 

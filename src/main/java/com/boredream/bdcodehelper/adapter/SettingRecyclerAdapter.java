@@ -78,14 +78,21 @@ public class SettingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         });
         SettingItem data = datas.get(position);
 
-        settingViewHolder.iv_left.setImageResource(data.leftImgRes);
+        if (data.leftImgRes != -1) {
+            settingViewHolder.iv_left.setVisibility(View.VISIBLE);
+            settingViewHolder.iv_left.setImageResource(data.leftImgRes);
+        } else {
+            settingViewHolder.iv_left.setVisibility(View.GONE);
+        }
+
+        settingViewHolder.tv_mid.setText(data.midText);
+
         if (!TextUtils.isEmpty(data.rightText)) {
             settingViewHolder.tv_right.setVisibility(View.VISIBLE);
             settingViewHolder.tv_right.setText(data.rightText);
         } else {
             settingViewHolder.tv_right.setVisibility(View.GONE);
         }
-        settingViewHolder.tv_mid.setText(data.midText);
 
         if (data.rightImage != -1) {
             settingViewHolder.iv_right.setVisibility(View.VISIBLE);

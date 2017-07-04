@@ -10,7 +10,7 @@ import android.webkit.WebViewClient;
 
 import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.base.BoreBaseActivity;
-import com.boredream.bdcodehelper.view.TitlebarView;
+import com.boredream.bdcodehelper.view.TitleBarView;
 
 public class WebViewActivity extends BoreBaseActivity {
 
@@ -18,7 +18,7 @@ public class WebViewActivity extends BoreBaseActivity {
     public static final String EXTRA_URL = "url";
 
     private WebView webview;
-    private TitlebarView titlebar;
+    private TitleBarView titlebar;
     private String title;
 
     @Override
@@ -37,7 +37,7 @@ public class WebViewActivity extends BoreBaseActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
-        titlebar = (TitlebarView) findViewById(R.id.title);
+        titlebar = (TitleBarView) findViewById(R.id.title);
         if (!TextUtils.isEmpty(title)) {
             titlebar.setTitleText(title);
         }

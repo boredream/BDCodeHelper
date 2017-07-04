@@ -14,6 +14,7 @@ import com.boredream.bdcodehelper.entity.FileUploadResponse;
 import com.boredream.bdcodehelper.entity.ListResponse;
 import com.boredream.bdcodehelper.entity.UpdatePswRequest;
 import com.boredream.bdcodehelper.entity.User;
+import com.boredream.bdcodehelper.entity.UserRegisterByMobilePhone;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -86,10 +87,10 @@ public class HttpRequest {
         Observable<Object> requestSmsCode(
                 @Body Map<String, Object> mobilePhoneNumber);
 
-        // 手机验证注册
-        @POST("/1/users")
-        Observable<User> userRegist(
-                @Body User user);
+        // 手机号注册
+        @POST("1.1/usersByMobilePhone")
+        Observable<User> usersByMobilePhone(
+                @Body UserRegisterByMobilePhone user);
 
         // 忘记密码重置
         @PUT("/1/resetPasswordBySmsCode/{smsCode}")
@@ -229,7 +230,7 @@ public class HttpRequest {
      * @param reqH    上传图片需要压缩的高度
      * @param call
      */
-    public void fileUpload(final Context context, Uri uri, int reqW, int reqH, final SimpleDisposableObserver<FileUploadResponse> call) {
+    public void fileUpload(final Context context, Uri uri, int reqW, int reqH, final DefaultDisposableObserver<FileUploadResponse> call) {
         final ApiService service = getApiService();
         final String filename = "avatar_" + System.currentTimeMillis() + ".jpg";
 

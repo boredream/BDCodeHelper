@@ -1,6 +1,6 @@
 package com.boredream.bdcodehelper.net;
 
-import com.boredream.bdcodehelper.entity.ErrorResponse;
+import com.boredream.bdcodehelper.entity.BaseResponse;
 import com.boredream.bdcodehelper.utils.StringUtils;
 import com.google.gson.Gson;
 
@@ -130,14 +130,17 @@ public class ErrorConstants {
             if (type != null && type.type().equals("application") && type.subtype().equals("json")) {
                 try {
                     // 这里的返回内容是Bmob/AVOS/Parse等RestFul API文档中的错误代码和错误信息对象
-                    ErrorResponse errorResponse = new Gson().fromJson(
-                            responseBody.string(), ErrorResponse.class);
+                    BaseResponse errorResponse = new Gson().fromJson(
+                            responseBody.string(), BaseResponse.class);
 
                     errorInfo = getLocalErrorInfo(errorResponse);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+        } else if(throwable instanceof LeanCloudError) {
+            LeanCloudError lce = (LeanCloudError) throwable;
+            errorInfo = getLocalErrorInfo(lce.getError());
         } else {
             if (throwable instanceof UnknownHostException) {
                 errorInfo = "无法连接到服务器";
@@ -150,7 +153,7 @@ public class ErrorConstants {
     /**
      * 获取本地预设错误信息
      */
-    private static String getLocalErrorInfo(ErrorResponse error) {
+    private static String getLocalErrorInfo(BaseResponse error) {
         String regEx = "[\u4e00-\u9fa5]+";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(error.getError()+"");

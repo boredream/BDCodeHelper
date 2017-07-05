@@ -63,7 +63,7 @@ public class UserInfoKeeper {
      */
     public void clearCurrentUser() {
         currentUser = null;
-        sp.edit().remove(SP_KEY_CURRENT_USER).apply();
+        sp.edit().remove(SP_KEY_CURRENT_USER).remove(SP_KEY_TOKEN).apply();
     }
 
     public void saveSessionToken(String token) {

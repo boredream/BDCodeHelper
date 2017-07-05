@@ -46,7 +46,7 @@ dependencies {
 
     // Espresso UI Testing
     androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
-    androidTestCompile ("com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion")
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion"
     androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
 
     // Retrofit
@@ -58,6 +58,8 @@ dependencies {
     // RxJava
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+    compile "com.trello.rxlifecycle2:rxlifecycle:$rootProject.rxlifecyclerVersion"
+    compile "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.rxlifecyclerVersion"
 
     // Glide
     compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
@@ -91,6 +93,7 @@ dependencies {
 //    retrofitVersion = '2.3.0'
 //    rxjavaVersion = '2.1.0'
 //    rxandroidVersion = '2.0.1'
+//    rxlifecyclerVersion = '2.1.0'
 //    glideVersion = '4.0.0-RC0'
 //    photoviewVersion = '1.2.4'
 //    eventbusVersion = '3.0.0'

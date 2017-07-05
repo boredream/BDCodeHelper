@@ -4,22 +4,23 @@ package com.boredream.bdcodehelper.base;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.boredream.bdcodehelper.utils.AppUtils;
 import com.boredream.bdcodehelper.utils.DialogUtils;
 import com.boredream.bdcodehelper.utils.ToastUtils;
+import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.RxLifecycle;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.components.RxActivity;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-public class BoreBaseActivity extends AppCompatActivity implements BaseView{
+public class BoreBaseActivity extends RxAppCompatActivity implements BaseView {
 
     protected String TAG;
     private Dialog progressDialog;
-    private boolean isActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +29,11 @@ public class BoreBaseActivity extends AppCompatActivity implements BaseView{
 
         TAG = getClass().getSimpleName();
         progressDialog = DialogUtils.createProgressDialog(this);
-        isActive = true;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        isActive = false;
-    }
-
-    @Override
-    public boolean isActive() {
-        return isActive;
+    public <T> LifecycleTransformer<T> getLifeCycleTransformer() {
+        return bindUntilEvent(ActivityEvent.DESTROY);
     }
 
     @Override

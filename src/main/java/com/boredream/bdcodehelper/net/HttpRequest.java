@@ -7,11 +7,9 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
 import com.boredream.bdcodehelper.base.BoreBaseEntity;
-import com.boredream.bdcodehelper.base.UserInfoKeeper;
 import com.boredream.bdcodehelper.entity.AppUpdateInfo;
-import com.boredream.bdcodehelper.entity.CloudResponse;
+import com.boredream.bdcodehelper.entity.BaseResponse;
 import com.boredream.bdcodehelper.entity.FileUploadResponse;
-import com.boredream.bdcodehelper.entity.ListResponse;
 import com.boredream.bdcodehelper.entity.UpdatePswRequest;
 import com.boredream.bdcodehelper.entity.User;
 import com.boredream.bdcodehelper.entity.UserRegisterByMobilePhone;
@@ -20,13 +18,10 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.io.File;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -78,6 +73,11 @@ public class HttpRequest {
                 @Query("username") String username,
                 @Query("password") String password);
 
+        // 注册
+        @POST("/1.1/users")
+        Observable<User> userRegist(
+                @Body User user);
+
         // 利用token获取登陆用户信息
         @GET("/1.1/users/me")
         Observable<User> login();
@@ -106,7 +106,7 @@ public class HttpRequest {
 
         // 根据昵称搜索用户
         @GET("/1/classes/_User")
-        Observable<ListResponse<User>> getUserByName(
+        Observable<User> getUserByName(
                 @Query("limit") int perPageCount,
                 @Query("skip") int page,
                 @Query("where") String where);
@@ -115,6 +115,11 @@ public class HttpRequest {
         @GET("/1/users/{objectId}")
         Observable<User> getUserById(
                 @Path("objectId") String userId);
+
+        // 根据条件获取用户集合
+        @GET("1.1/users")
+        Observable<BaseResponse<User>> getUsersByWhere(
+                @Query("where") String where);
 
         // 修改用户详情(注意, 提交什么参数修改什么参数)
         @PUT("/1/users/{objectId}")
@@ -130,7 +135,7 @@ public class HttpRequest {
 
         // 查询app更新信息
         @GET("/1/classes/AppUpdateInfo")
-        Observable<ListResponse<AppUpdateInfo>> getAppUpdateInfo();
+        Observable<AppUpdateInfo> getAppUpdateInfo();
 
         @Streaming
         @GET
@@ -138,7 +143,7 @@ public class HttpRequest {
 
         // cloud
         @POST("/1.1/call/imlogin")
-        Observable<CloudResponse<User>> imlogin(
+        Observable<BaseResponse<User>> imLogin(
                 @Body Map<String, String> request);
     }
 
@@ -148,76 +153,25 @@ public class HttpRequest {
 
     //////////////////////////////
 
-
-    private Consumer<User> loginConsumer = new Consumer<User>() {
-        @Override
-        public void accept(@NonNull User user) throws Exception {
-            // 保存登录用户数据以及token信息
-            UserInfoKeeper.getInstance().setCurrentUser(user);
-            // 保存自动登录使用的信息
-            UserInfoKeeper.getInstance().saveSessionToken(user.getSessionToken());
+    /**
+     * 根据用户名集合获取用户信息集合
+     *
+     * @param usernames 为null时查询全部好友
+     */
+    public Observable<BaseResponse<User>> getUsersByUsername(List<String> usernames) {
+        String where = "{}";
+        if (usernames != null) {
+            StringBuilder sb = new StringBuilder();
+            for (String id : usernames) {
+                if (sb.length() > 0) {
+                    sb.append(",");
+                }
+                sb.append("\"" + id + "\"");
+            }
+            where = "{\"username\":{\"$in\":[" + sb.toString() + "]}}";
         }
-    };
-
-    /**
-     * 登录用户
-     *
-     * @param username 用户名
-     * @param password 密码
-     */
-    public Observable<User> login(String username, String password) {
         ApiService service = getApiService();
-        return service.login(username, password)
-                .doOnNext(loginConsumer);
-    }
-
-    /**
-     * 登录用户
-     *
-     * @param username 用户名
-     * @param password 密码
-     */
-    public Observable<User> loginWithIm(String username, String password) {
-        ApiService service = getApiService();
-        Map<String, String> request = new HashMap<>();
-        request.put("username", username);
-        request.put("password", password);
-        return service.imlogin(request)
-                .map(new Function<CloudResponse<User>, User>() {
-                    @Override
-                    public User apply(@NonNull CloudResponse<User> response) throws Exception {
-                        // TODO: 2017/6/30 error
-                        return response.getResult();
-                    }
-                })
-                .doOnNext(loginConsumer);
-    }
-
-    /**
-     * 使用token自动登录
-     */
-    public Observable<User> loginByToken() {
-        ApiService service = getApiService();
-        return service.login()
-                .doOnNext(loginConsumer);
-    }
-
-    /**
-     * 使用token自动登录
-     */
-    public Observable<User> loginByTokenWithIm(String sessionToken) {
-        ApiService service = getApiService();
-        Map<String, String> request = new HashMap<>();
-        request.put("sessionToken", sessionToken);
-        return service.imlogin(request)
-                .map(new Function<CloudResponse<User>, User>() {
-                    @Override
-                    public User apply(@NonNull CloudResponse<User> response) throws Exception {
-                        // TODO: 2017/6/30 error
-                        return response.getResult();
-                    }
-                })
-                .doOnNext(loginConsumer);
+        return service.getUsersByWhere(where);
     }
 
     /**
@@ -241,9 +195,9 @@ public class HttpRequest {
                 // 上传图片
                 RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"), resource);
 
-                Observable<FileUploadResponse> observable = service.fileUpload(filename, requestBody);
-                ObservableDecorator.decorate(observable)
-                        .subscribe(call);
+                service.fileUpload(filename, requestBody)
+                    .compose(RxComposer.<FileUploadResponse>schedulers())
+                    .subscribe(call);
             }
 
             @Override

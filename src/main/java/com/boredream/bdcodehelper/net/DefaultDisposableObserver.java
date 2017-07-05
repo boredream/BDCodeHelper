@@ -1,9 +1,6 @@
 package com.boredream.bdcodehelper.net;
 
 import com.boredream.bdcodehelper.base.BaseView;
-import com.boredream.bdcodehelper.base.BoreBaseActivity;
-
-import java.lang.ref.WeakReference;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -17,19 +14,15 @@ public class DefaultDisposableObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onStart() {
-        if(view.isActive()) {
-            view.showProgress();
-        }
+        view.showProgress();
     }
 
     @Override
     public void onError(Throwable e) {
-        if(view.isActive()) {
-            view.dismissProgress();
+        view.dismissProgress();
 
-            String error = ErrorConstants.parseHttpErrorInfo(e);
-            view.showTip(error);
-        }
+        String error = ErrorConstants.parseHttpErrorInfo(e);
+        view.showTip(error);
     }
 
     @Override
@@ -39,8 +32,6 @@ public class DefaultDisposableObserver<T> extends DisposableObserver<T> {
 
     @Override
     public void onNext(T t) {
-        if(view.isActive()) {
-            view.dismissProgress();
-        }
+        view.dismissProgress();
     }
 }

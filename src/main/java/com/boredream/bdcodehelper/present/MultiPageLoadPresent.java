@@ -9,15 +9,14 @@ import android.view.View;
 
 import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.adapter.LoadMoreAdapter;
-import com.boredream.bdcodehelper.entity.ListResponse;
+import com.boredream.bdcodehelper.entity.BaseResponse;
 import com.boredream.bdcodehelper.entity.PageIndex;
 import com.boredream.bdcodehelper.net.MultiPageRequest;
-import com.boredream.bdcodehelper.net.ObservableDecorator;
+import com.boredream.bdcodehelper.net.RxComposer;
 import com.boredream.bdcodehelper.view.DividerItemDecoration;
 
 import java.util.ArrayList;
 
-import io.reactivex.Observable;
 import io.reactivex.observers.DisposableObserver;
 
 // TODO: 2017/3/13 和view分离的p
@@ -138,35 +137,36 @@ public class MultiPageLoadPresent {
      * @param page 页数
      */
     private void loadData(final int page) {
-        Observable observable = this.request.request(page);
-        ObservableDecorator.decorate(observable).subscribe(
-            new DisposableObserver<ListResponse>() {
-                @Override
-                public void onNext(ListResponse response) {
-                    if (subscriber != null) {
-                        subscriber.onNext(response);
-                    }
-                    setRefreshing(false);
+        request.request(page)
+                .compose(RxComposer.schedulers())
+                .subscribe(
+                    new DisposableObserver<BaseResponse>() {
+                        @Override
+                        public void onNext(BaseResponse response) {
+                            if (subscriber != null) {
+                                subscriber.onNext(response);
+                            }
+                            setRefreshing(false);
 
-                    // 加载成功后更新数据
-                    pageIndex.setResponse(loadMoreAdapter, datas, response.getResults());
-                }
+                            // 加载成功后更新数据
+                            pageIndex.setResponse(loadMoreAdapter, datas, response.getResults());
+                        }
 
-                @Override
-                public void onComplete() {
-                    if (subscriber != null) {
-                        subscriber.onComplete();
-                    }
-                }
+                        @Override
+                        public void onComplete() {
+                            if (subscriber != null) {
+                                subscriber.onComplete();
+                            }
+                        }
 
-                @Override
-                public void onError(Throwable throwable) {
-                    if (subscriber != null) {
-                        subscriber.onError(throwable);
-                    }
-                    setRefreshing(false);
-                }
-            });
+                        @Override
+                        public void onError(Throwable throwable) {
+                            if (subscriber != null) {
+                                subscriber.onError(throwable);
+                            }
+                            setRefreshing(false);
+                        }
+                    });
     }
 
 }

@@ -9,7 +9,7 @@
         android:id="@+id/tv_first_letter"
         style="@style/TextViewSubhead"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="24dp"
         android:background="@color/gray"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/margin_medium"

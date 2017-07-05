@@ -4,6 +4,7 @@ package com.boredream.bdcodehelper.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -24,19 +25,34 @@ public class PositionBar extends LinearLayout {
         this.listener = listener;
     }
 
+    public PositionBar(Context context) {
+        super(context);
+        init();
+    }
+
     public PositionBar(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
 
+    public PositionBar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
         setOrientation(VERTICAL);
-        setBackgroundResource(R.drawable.correct_primary);
+        setGravity(Gravity.CENTER_HORIZONTAL);
+        setItems(mItems);
     }
 
     public void setItems(String[] items) {
         mItems = items;
+        removeAllViews();
         for (CharSequence s : mItems) {
             TextView t = new TextView(getContext());
             t.setText(s);
-            t.setTextSize(10);
+            t.setTextSize(14);
             LayoutParams params = new LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, 0);
             params.weight = 1;
@@ -48,10 +64,6 @@ public class PositionBar extends LinearLayout {
 
     public String[] getItems() {
         return mItems;
-    }
-
-    public PositionBar(Context context) {
-        this(context, null);
     }
 
     @Override

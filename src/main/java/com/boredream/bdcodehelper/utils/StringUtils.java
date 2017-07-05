@@ -15,6 +15,10 @@ public class StringUtils {
         return str == null || str.length() == 0;
     }
 
+    public static String getFirstLetter(String letter) {
+        return String.valueOf(letter.toUpperCase().charAt(0));
+    }
+
     public static String getMoney(float cost) {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         return decimalFormat.format(cost);

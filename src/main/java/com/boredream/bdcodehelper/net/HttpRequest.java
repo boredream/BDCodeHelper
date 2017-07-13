@@ -104,17 +104,19 @@ public class HttpRequest {
                 @Path("smsCode") String smsCode,
                 @Body UpdatePswRequest updatePswRequest);
 
-        // 根据昵称搜索用户
-        @GET("/1/classes/_User")
-        Observable<User> getUserByName(
-                @Query("limit") int perPageCount,
-                @Query("skip") int page,
-                @Query("where") String where);
-
         // 获取用户详情
         @GET("/1/users/{objectId}")
         Observable<User> getUserById(
                 @Path("objectId") String userId);
+
+        // TODO: 2017/7/13 两个方法重复
+
+        // 根据条件获取用户集合
+        @GET("1.1/users")
+        Observable<BaseResponse<User>> getUsersByWhere(
+                @Query("limit") int perPageCount,
+                @Query("skip") int page,
+                @Query("where") String where);
 
         // 根据条件获取用户集合
         @GET("1.1/users")
@@ -154,11 +156,24 @@ public class HttpRequest {
     //////////////////////////////
 
     /**
+     * 根据用户名获取用户信息集合
+     *
+     */
+    public Observable<BaseResponse<User>> getUsersByUsername(String username, int page, int pageSize) {
+        String where = "{}";
+        if (username != null) {
+            where = "{\"username\":\"" + username + "\"}";
+        }
+        ApiService service = getApiService();
+        return service.getUsersByWhere(pageSize, (page - 1) * pageSize, where);
+    }
+
+    /**
      * 根据用户名集合获取用户信息集合
      *
      * @param usernames 为null时查询全部好友
      */
-    public Observable<BaseResponse<User>> getUsersByUsername(List<String> usernames) {
+    public Observable<BaseResponse<User>> getUsersByUsernames(List<String> usernames) {
         String where = "{}";
         if (usernames != null) {
             StringBuilder sb = new StringBuilder();
@@ -166,7 +181,7 @@ public class HttpRequest {
                 if (sb.length() > 0) {
                     sb.append(",");
                 }
-                sb.append("\"" + id + "\"");
+                sb.append("\"").append(id).append("\"");
             }
             where = "{\"username\":{\"$in\":[" + sb.toString() + "]}}";
         }

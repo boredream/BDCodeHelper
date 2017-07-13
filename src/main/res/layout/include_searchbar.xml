@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_search_bar">
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="1px"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <ImageView
+            android:id="@+id/searchbar_iv"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="6dp"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/searchbar_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/searchbar_iv"
+            android:background="@null"
+            android:gravity="center|left"
+            android:hint="请输入您想要搜索的内容"
+            android:imeOptions="actionSearch"
+            android:maxLength="30"
+            android:paddingRight="30dp"
+            android:singleLine="true"
+            android:textColor="#030303"
+            android:textColorHint="#BEBEBE"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/searchbar_iv_delete"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:padding="6dp"
+            android:src="@drawable/ic_search_delete"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/searchbar_tv_cancel"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+
+</LinearLayout>

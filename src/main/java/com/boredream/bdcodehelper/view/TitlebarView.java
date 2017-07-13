@@ -1,6 +1,7 @@
 package com.boredream.bdcodehelper.view;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ public class TitleBarView extends RelativeLayout {
 
     private int paddingHorizontal;
     private int paddingVertical;
+    private int minHeight;
 
     private TextView tvTitle;
     private ImageView ivLeft;
@@ -50,7 +52,8 @@ public class TitleBarView extends RelativeLayout {
     }
 
     private void init() {
-        setMinimumHeight(DisplayUtils.dp2px(getContext(), 48));
+        minHeight = DisplayUtils.dp2px(getContext(), 48);
+        setMinimumHeight(minHeight);
 
         resources = getContext().getResources();
         setBackgroundColor(resources.getColor(R.color.colorPrimary));
@@ -207,7 +210,7 @@ public class TitleBarView extends RelativeLayout {
     private ImageView createBtnImage() {
         ImageView iv = new ImageView(getContext());
         RelativeLayout.LayoutParams ivParams = new RelativeLayout.LayoutParams(
-                DisplayUtils.dp2px(getContext(), 40), LayoutParams.MATCH_PARENT);
+                DisplayUtils.dp2px(getContext(), 40), minHeight);
         iv.setLayoutParams(ivParams);
         iv.setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical);
         iv.setBackgroundResource(R.drawable.bg_tran2dark_sel);
@@ -223,7 +226,7 @@ public class TitleBarView extends RelativeLayout {
         tv.setGravity(Gravity.CENTER);
 
         LayoutParams tvParams = new LayoutParams(
-                LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+                LayoutParams.WRAP_CONTENT, minHeight);
         tv.setLayoutParams(tvParams);
         tv.setPadding(paddingHorizontal, 0, paddingHorizontal, 0);
         tv.setBackgroundResource(R.drawable.bg_tran2dark_sel);
@@ -233,4 +236,13 @@ public class TitleBarView extends RelativeLayout {
     }
 
 
+    public void setLeftBack(final Activity activity) {
+        setLeftImage(R.drawable.ic_back);
+        setLeftOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.finish();
+            }
+        });
+    }
 }

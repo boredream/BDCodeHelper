@@ -52,13 +52,6 @@ public class PageIndex {
     }
 
     /**
-     * 新页数数据获取成功, 将当前页数更新未新页数
-     */
-    private void success() {
-        currentPage = newPage;
-    }
-
-    /**
      * 起始页
      *
      * @return 起始页
@@ -88,7 +81,7 @@ public class PageIndex {
      */
     public <T> void setResponse(LoadMoreAdapter adapter, List<T> currentList, List<T> newList) {
         // 更新当前页数
-        success();
+        currentPage = newPage;
 
         // 如果当前页为起始页, 则清空数据
         if (currentPage == startPage) {

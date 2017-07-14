@@ -1,6 +1,7 @@
 package com.boredream.bdcodehelper.net;
 
-import com.boredream.bdcodehelper.entity.BaseResponse;
+import com.boredream.bdcodehelper.entity.CloudResponse;
+import com.boredream.bdcodehelper.entity.ListResponse;
 
 import java.util.ArrayList;
 
@@ -17,13 +18,13 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class RxComposer {
 
-    public static <T> ObservableTransformer<BaseResponse<T>, T> handleCloudResponse() {
-        return new ObservableTransformer<BaseResponse<T>, T>() {
+    public static <T> ObservableTransformer<CloudResponse<T>, T> handleCloudResponse() {
+        return new ObservableTransformer<CloudResponse<T>, T>() {
             @Override
-            public ObservableSource<T> apply(@NonNull Observable<BaseResponse<T>> upstream) {
-                return upstream.flatMap(new Function<BaseResponse<T>, ObservableSource<T>>() {
+            public ObservableSource<T> apply(@NonNull Observable<CloudResponse<T>> upstream) {
+                return upstream.flatMap(new Function<CloudResponse<T>, ObservableSource<T>>() {
                     @Override
-                    public ObservableSource<T> apply(@NonNull BaseResponse<T> response) throws Exception {
+                    public ObservableSource<T> apply(@NonNull CloudResponse<T> response) throws Exception {
                         if (response.success()) {
                             return Observable.just(response.getResult());
                         } else {
@@ -36,13 +37,13 @@ public class RxComposer {
         };
     }
 
-    public static <T> ObservableTransformer<BaseResponse<T>, ArrayList<T>> handleListResponse() {
-        return new ObservableTransformer<BaseResponse<T>, ArrayList<T>>() {
+    public static <T> ObservableTransformer<ListResponse<T>, ArrayList<T>> handleListResponse() {
+        return new ObservableTransformer<ListResponse<T>, ArrayList<T>>() {
             @Override
-            public ObservableSource<ArrayList<T>> apply(@NonNull Observable<BaseResponse<T>> upstream) {
-                return upstream.flatMap(new Function<BaseResponse<T>, ObservableSource<ArrayList<T>>>() {
+            public ObservableSource<ArrayList<T>> apply(@NonNull Observable<ListResponse<T>> upstream) {
+                return upstream.flatMap(new Function<ListResponse<T>, ObservableSource<ArrayList<T>>>() {
                     @Override
-                    public ObservableSource<ArrayList<T>> apply(@NonNull BaseResponse<T> response) throws Exception {
+                    public ObservableSource<ArrayList<T>> apply(@NonNull ListResponse<T> response) throws Exception {
                         ArrayList<T> results = response.getResults();
                         return Observable.just(results == null ? new ArrayList<T>() : results);
                     }

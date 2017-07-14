@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.adapter.LoadMoreAdapter;
-import com.boredream.bdcodehelper.entity.BaseResponse;
+import com.boredream.bdcodehelper.entity.ListResponse;
 import com.boredream.bdcodehelper.entity.PageIndex;
 import com.boredream.bdcodehelper.net.MultiPageRequest;
 import com.boredream.bdcodehelper.net.RxComposer;
@@ -140,9 +140,9 @@ public class MultiPageLoadPresent {
         request.request(page)
                 .compose(RxComposer.schedulers())
                 .subscribe(
-                    new DisposableObserver<BaseResponse>() {
+                    new DisposableObserver<ListResponse>() {
                         @Override
-                        public void onNext(BaseResponse response) {
+                        public void onNext(ListResponse response) {
                             if (subscriber != null) {
                                 subscriber.onNext(response);
                             }

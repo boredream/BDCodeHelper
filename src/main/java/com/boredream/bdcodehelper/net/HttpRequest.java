@@ -157,6 +157,13 @@ public class HttpRequest {
         @POST("/1.1/call/getFriends")
         Observable<CloudResponse<ArrayList<User>>> getFriends();
 
+        @POST("/1.1/call/get_friend_requests")
+        Observable<CloudResponse<ArrayList<User>>> getFriendRequests();
+
+        @POST("/1.1/call/apply_friend_request")
+        Observable<CloudResponse<Object>> applyFriendRequest(
+                @Body Map<String, String> request);
+
     }
 
     public ApiService getApiService() {

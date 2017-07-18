@@ -88,16 +88,16 @@ public class PageIndex {
             currentList.clear();
         }
 
-        if (newList == null) {
-            return;
+        if (newList != null && newList.size() > 0) {
+            // 添加数据
+            currentList.addAll(newList);
+
+            // 判断是否已经加载完全部数据，设置Adapter对应状态
+            adapter.setStatus(newList.size() == countPerPage
+                    ? LoadMoreAdapter.STATUS_HAVE_MORE : LoadMoreAdapter.STATUS_LOADED_ALL);
+        } else {
+            adapter.setStatus(LoadMoreAdapter.STATUS_LOADED_ALL);
         }
-
-        // 添加数据
-        currentList.addAll(newList);
-
-        // 设置是否已加载完全部数据状态
-        adapter.setStatus(newList.size() == countPerPage
-                ? LoadMoreAdapter.STATUS_HAVE_MORE : LoadMoreAdapter.STATUS_LOADED_ALL);
 
         // 更新UI
         adapter.notifyDataSetChanged();

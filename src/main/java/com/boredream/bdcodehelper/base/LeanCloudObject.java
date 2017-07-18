@@ -10,7 +10,7 @@ import com.boredream.bdcodehelper.entity.Pointer;
  * 这样的接口可以让对象在提交创建和获取的时候都更加方便<br/>
  * 提交时只要添加Pointer的type和className等所需字段即可,获取时基本不用做任何额外处理
  */
-public class BoreBaseEntity extends Pointer {
+public class LeanCloudObject extends Pointer {
 
     // 添加新数据时,返回为objectId + createdAt
     // 更新数据时,返回为updateAt
@@ -37,8 +37,8 @@ public class BoreBaseEntity extends Pointer {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof BoreBaseEntity) {
-            BoreBaseEntity oEntity = (BoreBaseEntity) o;
+        if (o instanceof LeanCloudObject) {
+            LeanCloudObject oEntity = (LeanCloudObject) o;
             return this.objectId != null ? this.objectId.equals(oEntity.objectId) : false;
         }
         return super.equals(o);

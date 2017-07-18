@@ -1,8 +1,8 @@
 package com.boredream.bdcodehelper.entity;
 
-import com.boredream.bdcodehelper.base.BoreBaseEntity;
+import com.boredream.bdcodehelper.base.LeanCloudObject;
 
-public class User extends BoreBaseEntity {
+public class User extends LeanCloudObject {
 
     private String username;
     private String nickname;

@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
-import com.boredream.bdcodehelper.base.BoreBaseEntity;
+import com.boredream.bdcodehelper.base.LeanCloudObject;
 import com.boredream.bdcodehelper.entity.AppUpdateInfo;
 import com.boredream.bdcodehelper.entity.CloudResponse;
 import com.boredream.bdcodehelper.entity.FileUploadResponse;
@@ -126,7 +126,7 @@ public class HttpRequest {
 
         // 修改用户详情(注意, 提交什么参数修改什么参数)
         @PUT("/1/users/{objectId}")
-        Observable<BoreBaseEntity> updateUserById(
+        Observable<LeanCloudObject> updateUserById(
                 @Path("objectId") String userId,
                 @Body Map<String, Object> updateInfo);
 
@@ -161,7 +161,7 @@ public class HttpRequest {
         Observable<CloudResponse<ArrayList<User>>> getFriendRequests();
 
         @POST("/1.1/call/apply_friend_request")
-        Observable<CloudResponse<Object>> applyFriendRequest(
+        Observable<CloudResponse<LeanCloudObject>> applyFriendRequest(
                 @Body Map<String, String> request);
 
     }

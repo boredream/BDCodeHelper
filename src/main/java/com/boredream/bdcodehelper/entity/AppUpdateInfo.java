@@ -1,9 +1,9 @@
 package com.boredream.bdcodehelper.entity;
 
 
-import com.boredream.bdcodehelper.base.BoreBaseEntity;
+import com.boredream.bdcodehelper.base.LeanCloudObject;
 
-public class AppUpdateInfo extends BoreBaseEntity {
+public class AppUpdateInfo extends LeanCloudObject {
 
     public static AppUpdateInfo get(String appName) {
         AppUpdateInfo appUpdateInfo = new AppUpdateInfo();

@@ -16,8 +16,9 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 
 /**
- * 图片工具类
+ * 图片工具类, 使用ImagePicker替代
  */
+@Deprecated
 public class ImageUtils {
 
     /**

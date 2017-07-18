@@ -43,11 +43,17 @@ public class BoreBaseActivity extends RxAppCompatActivity implements BaseView {
 
     @Override
     public void showProgress() {
+        if(progressDialog.isShowing()) {
+            return;
+        }
         progressDialog.show();
     }
 
     @Override
     public void dismissProgress() {
+        if(!progressDialog.isShowing()) {
+            return;
+        }
         progressDialog.dismiss();
     }
 

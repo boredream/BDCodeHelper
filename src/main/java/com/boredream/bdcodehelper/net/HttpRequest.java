@@ -1,10 +1,6 @@
 package com.boredream.bdcodehelper.net;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
 
 import com.boredream.bdcodehelper.base.LeanCloudObject;
 import com.boredream.bdcodehelper.entity.AppUpdateInfo;
@@ -14,16 +10,11 @@ import com.boredream.bdcodehelper.entity.ListResponse;
 import com.boredream.bdcodehelper.entity.UpdatePswRequest;
 import com.boredream.bdcodehelper.entity.User;
 import com.boredream.bdcodehelper.entity.UserRegisterByMobilePhone;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -183,41 +174,6 @@ public class HttpRequest {
         }
         ApiService service = getApiService();
         return service.getUsersByWhere(pageSize, (page - 1) * pageSize, where);
-    }
-
-    /**
-     * 上传图片
-     *
-     * @param call    上传成功回调
-     * @param context
-     * @param uri     图片uri
-     * @param reqW    上传图片需要压缩的宽度
-     * @param reqH    上传图片需要压缩的高度
-     * @param call
-     */
-    public void fileUpload(final Context context, Uri uri, int reqW, int reqH, final DefaultDisposableObserver<FileUploadResponse> call) {
-        final ApiService service = getApiService();
-        final String filename = "avatar_" + System.currentTimeMillis() + ".jpg";
-
-        // 先从本地获取图片,利用Glide压缩图片后获取byte[]
-        Glide.with(context).asFile().load(uri).into(new SimpleTarget<File>(reqW, reqH) {
-            @Override
-            public void onResourceReady(File resource, Transition<? super File> transition) {
-                // 上传图片
-                RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"), resource);
-
-                service.fileUpload(filename, requestBody)
-                    .compose(RxComposer.<FileUploadResponse>schedulers())
-                    .subscribe(call);
-            }
-
-            @Override
-            public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                super.onLoadFailed(errorDrawable);
-
-                call.onError(new Throwable("图片解析失败"));
-            }
-        });
     }
 
 }

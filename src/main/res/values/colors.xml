@@ -8,11 +8,11 @@
     <color name="colorSecondary">#50E3C2</color>
     <color name="colorSecondaryDark">#0d7860</color>
     <!-- 主体文字,标题/标签 -->
-    <color name="txt_black">#4A4A4A</color>
+    <color name="txt_black">#232323</color>
     <!-- 内容文字,正文 -->
-    <color name="txt_gray">#9B9B9B</color>
+    <color name="txt_gray">#666666</color>
     <!-- 辅助文字,提示 -->
-    <color name="txt_light_gray">#CCCCCC</color>
+    <color name="txt_light_gray">#bbbbbb</color>
     <!-- 背景色 -->
     <color name="bg_gray">#f1f1f1</color>
     <!-- 按下灰色 -->

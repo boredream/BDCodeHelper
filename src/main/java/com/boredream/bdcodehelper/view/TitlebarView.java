@@ -30,6 +30,26 @@ public class TitleBarView extends RelativeLayout {
     private TextView tvLeft;
     private TextView tvRight;
 
+    public TextView getTvTitle() {
+        return tvTitle;
+    }
+
+    public ImageView getIvLeft() {
+        return ivLeft;
+    }
+
+    public ImageView getIvRight() {
+        return ivRight;
+    }
+
+    public TextView getTvLeft() {
+        return tvLeft;
+    }
+
+    public TextView getTvRight() {
+        return tvRight;
+    }
+
     public TitleBarView(Context context) {
         super(context);
         init();
@@ -196,7 +216,8 @@ public class TitleBarView extends RelativeLayout {
         TextView tv = new TextView(getContext());
         tv.setTextColor(resources.getColor(R.color.white));
         tv.setTextSize(22);
-        tv.setMaxWidth(DisplayUtils.dp2px(getContext(), 280));
+        tv.setSingleLine();
+        tv.setMaxWidth(DisplayUtils.dp2px(getContext(), 260));
 
         LayoutParams tvParams = new LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

@@ -2,16 +2,12 @@ package com.boredream.bdcodehelper.adapter;
 
 
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.entity.SettingItem;
+import com.boredream.bdcodehelper.view.SettingItemView;
 
 import java.util.List;
 
@@ -20,7 +16,7 @@ import java.util.List;
  * <p>
  * Item通用样式为：左侧图标、中间文字、右侧文字、右侧图标。
  */
-public class SettingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SettingRecyclerAdapter extends RecyclerView.Adapter<SettingRecyclerAdapter.ViewHolder> {
 
     private static final int ITEM_VIEW_TYPE_SETTING_ITEM = 0x10001;
 
@@ -44,30 +40,22 @@ public class SettingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView iv_left;
-        public TextView tv_mid;
-        public TextView tv_right;
-        public ImageView iv_right;
+        public SettingItemView item;
 
         public ViewHolder(final View itemView) {
             super(itemView);
 
-            iv_left = (ImageView) itemView.findViewById(R.id.iv_left);
-            tv_mid = (TextView) itemView.findViewById(R.id.tv_mid);
-            tv_right = (TextView) itemView.findViewById(R.id.tv_right);
-            iv_right = (ImageView) itemView.findViewById(R.id.iv_right);
+            item = (SettingItemView) itemView;
         }
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_setting, parent, false);
-        return new ViewHolder(v);
+    public SettingRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(new SettingItemView(parent.getContext()));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ViewHolder settingViewHolder = (ViewHolder) holder;
+    public void onBindViewHolder(SettingRecyclerAdapter.ViewHolder holder, final int position) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,28 +66,10 @@ public class SettingRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         });
         SettingItem data = datas.get(position);
 
-        if (data.leftImgRes != -1) {
-            settingViewHolder.iv_left.setVisibility(View.VISIBLE);
-            settingViewHolder.iv_left.setImageResource(data.leftImgRes);
-        } else {
-            settingViewHolder.iv_left.setVisibility(View.GONE);
-        }
-
-        settingViewHolder.tv_mid.setText(data.midText);
-
-        if (!TextUtils.isEmpty(data.rightText)) {
-            settingViewHolder.tv_right.setVisibility(View.VISIBLE);
-            settingViewHolder.tv_right.setText(data.rightText);
-        } else {
-            settingViewHolder.tv_right.setVisibility(View.GONE);
-        }
-
-        if (data.rightImage != -1) {
-            settingViewHolder.iv_right.setVisibility(View.VISIBLE);
-            settingViewHolder.iv_right.setImageResource(data.rightImage);
-        } else {
-            settingViewHolder.iv_right.setVisibility(View.GONE);
-        }
+        holder.item.setLeftImg(data.leftImgRes)
+            .setMidText(data.midText)
+            .setRightText(data.rightText)
+            .setRightImg(data.rightImage);
     }
 
 }

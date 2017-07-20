@@ -18,15 +18,15 @@ public class WebViewActivity extends BoreBaseActivity {
     public static final String EXTRA_URL = "url";
 
     private WebView webview;
-    private TitleBarView titlebar;
-    private String title;
+    private TitleBarView title;
+    private String titleText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
 
-        title = getIntent().getStringExtra(EXTRA_TITLE);
+        titleText = getIntent().getStringExtra(EXTRA_TITLE);
         String url = getIntent().getStringExtra(EXTRA_URL);
 
         initView();
@@ -37,9 +37,9 @@ public class WebViewActivity extends BoreBaseActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
-        titlebar = (TitleBarView) findViewById(R.id.title);
-        if (!TextUtils.isEmpty(title)) {
-            titlebar.setTitleText(title);
+        title = (TitleBarView) findViewById(R.id.title);
+        if (!TextUtils.isEmpty(titleText)) {
+            title.setTitleText(titleText);
         }
         webview = (WebView) findViewById(R.id.webview);
         webview.setWebViewClient(new MyWebClient());
@@ -61,7 +61,7 @@ public class WebViewActivity extends BoreBaseActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            titlebar.setTitleText(view.getTitle());
+            title.setTitleText(view.getTitle());
             dismissProgress();
         }
 

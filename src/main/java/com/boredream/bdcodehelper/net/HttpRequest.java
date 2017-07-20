@@ -12,6 +12,7 @@ import com.boredream.bdcodehelper.entity.User;
 import com.boredream.bdcodehelper.entity.UserRegisterByMobilePhone;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -174,6 +175,27 @@ public class HttpRequest {
         }
         ApiService service = getApiService();
         return service.getUsersByWhere(pageSize, (page - 1) * pageSize, where);
+    }
+
+    /**
+     * 根据用户id集合获取用户信息集合
+     *
+     * @param userIds 为null时查询全部好友
+     */
+    public Observable<ListResponse<User>> getUsersByUsernames(List<String> userIds) {
+        String where = "{}";
+        if (userIds != null) {
+            StringBuilder sb = new StringBuilder();
+            for (String id : userIds) {
+                if (sb.length() > 0) {
+                    sb.append(",");
+                }
+                sb.append("\"").append(id).append("\"");
+            }
+            where = "{\"objectId\":{\"$in\":[" + sb.toString() + "]}}";
+        }
+        ApiService service = getApiService();
+        return service.getUsersByWhere(where);
     }
 
 }

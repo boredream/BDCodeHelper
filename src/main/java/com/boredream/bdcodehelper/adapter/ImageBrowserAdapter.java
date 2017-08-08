@@ -15,26 +15,37 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class ImageBrowserAdapter extends PagerAdapter {
+public class ImageBrowserAdapter<T extends ImageUrlInterface> extends PagerAdapter {
 
-    private Activity context;
-    private List<? extends ImageUrlInterface> picUrls;
+    protected Activity context;
+    protected List<T> imageUrls;
+    private Map<Integer, WeakReference<ImageView>> imageViews = new HashMap<>();
 
-    public ImageBrowserAdapter(Activity context, List<? extends ImageUrlInterface> picUrls) {
+    public ImageBrowserAdapter(Activity context, List<T> imageUrls) {
         this.context = context;
-        this.picUrls = picUrls;
+        this.imageUrls = imageUrls;
+    }
+
+    public ImageView getImageView(int position) {
+        int index = position % imageUrls.size();
+        WeakReference<ImageView> weakReference = imageViews.get(index);
+        if(weakReference == null) return null;
+        return weakReference.get();
     }
 
     @Override
     public int getCount() {
-        if (picUrls.size() > 1) {
+        if (imageUrls.size() > 1) {
             return Integer.MAX_VALUE;
         }
-        return picUrls.size();
+        return imageUrls.size();
     }
 
     @Override
@@ -46,11 +57,12 @@ public class ImageBrowserAdapter extends PagerAdapter {
     public View instantiateItem(final ViewGroup container, int position) {
         final View rootView = View.inflate(context, R.layout.item_image_browser, null);
 
-        int index = position % picUrls.size();
         final ProgressBar pb_loading = (ProgressBar) rootView.findViewById(R.id.pb_loading);
         final ImageView iv_image_browser = (ImageView) rootView.findViewById(R.id.iv_image_browser);
         final PhotoViewAttacher pva = new PhotoViewAttacher(iv_image_browser);
-        String url = picUrls.get(index).getImageUrl();
+
+        int index = position % imageUrls.size();
+        String url = imageUrls.get(index).getImageUrl();
 
         Glide.with(context)
                 .load(url)
@@ -85,12 +97,15 @@ public class ImageBrowserAdapter extends PagerAdapter {
             }
         });
 
+        imageViews.put(position % imageUrls.size(), new WeakReference<>(iv_image_browser));
         container.addView(rootView);
         return rootView;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
+        imageViews.remove(position % imageUrls.size());
         container.removeView((View) object);
     }
+
 }

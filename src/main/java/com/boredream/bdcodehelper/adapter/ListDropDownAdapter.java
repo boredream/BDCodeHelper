@@ -60,10 +60,10 @@ public class ListDropDownAdapter extends BaseAdapter {
         viewHolder.tv_title.setText(list.get(position));
         if (checkItemPosition != -1) {
             if (checkItemPosition == position) {
-                viewHolder.tv_title.setTextColor(context.getResources().getColor(R.color.drop_down_selected));
-                viewHolder.tv_title.setBackgroundResource(R.color.check_bg);
+                viewHolder.tv_title.setTextColor(0xFF8BC34A);
+                viewHolder.tv_title.setBackgroundResource(R.color.bg_gray);
             } else {
-                viewHolder.tv_title.setTextColor(context.getResources().getColor(R.color.drop_down_unselected));
+                viewHolder.tv_title.setTextColor(0xFF808080);
                 viewHolder.tv_title.setBackgroundResource(R.color.white);
             }
         }

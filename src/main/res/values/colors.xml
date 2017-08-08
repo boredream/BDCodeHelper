@@ -12,29 +12,23 @@
     <!-- 内容文字,正文 -->
     <color name="txt_gray">#666666</color>
     <!-- 辅助文字,提示 -->
-    <color name="txt_light_gray">#bbbbbb</color>
+    <color name="txt_light_gray">#BBBBBB</color>
     <!-- 背景色 -->
-    <color name="bg_gray">#f1f1f1</color>
+    <color name="bg_gray">#F1F1F1</color>
     <!-- 按下灰色 -->
-    <color name="bg_gray_pressed">#e8e8e8</color>
+    <color name="bg_gray_pressed">#E8E8E8</color>
     <!-- 高亮,红棕色 -->
-    <color name="brown">#d54c1c</color>
+    <color name="brown">#D54C1C</color>
     <!-- 分割线 -->
-    <color name="divider_gray">#cbcbcb</color>
-    <!-- other -->
-    <color name="txt_link_blue">#1ea5ff</color>
+    <color name="divider_gray">#CBCBCB</color>
+    <!-- 链接文字颜色 -->
+    <color name="txt_link_blue">#1EA5FF</color>
 
-    <color name="white">#ffffff</color>
-    <color name="gray">#cccccc</color>
-
-    <color name="province_line_border">#C7C7C7</color>
-
-    <color name="drop_down_selected">#8BC34A</color>
-    <color name="drop_down_unselected">#808080</color>
-
-    <color name="check_bg">#f1f1f1</color>
-
-    <!-- other -->
+    <!-- 通用颜色 -->
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#CCCCCC</color>
     <color name="cyan">#B6EBF8</color>
     <color name="red">#D0021B</color>
 

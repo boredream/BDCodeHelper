@@ -1,5 +1,6 @@
 package com.boredream.bdcodehelper.net;
 
+import com.boredream.bdcodehelper.base.BaseView;
 import com.boredream.bdcodehelper.entity.CloudResponse;
 import com.boredream.bdcodehelper.entity.ListResponse;
 
@@ -10,6 +11,9 @@ import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -60,4 +64,39 @@ public class RxComposer {
             }
         };
     }
+
+//    public static <T> ObservableTransformer<T, T> doProgress(final BaseView view) {
+//        return new ObservableTransformer<T, T>(){
+//            @Override
+//            public ObservableSource<T> apply(@NonNull final Observable<T> upstream) {
+//                return upstream.observeOn(AndroidSchedulers.mainThread())
+//                        .doOnSubscribe(new Consumer<Disposable>() {
+//                            @Override
+//                            public void accept(@NonNull Disposable disposable) throws Exception {
+//                                view.showProgress();
+//                            }
+//                        })
+//                        .doOnTerminate(new Action() {
+//                            @Override
+//                            public void run() throws Exception {
+//                                view.dismissProgress();
+//                            }
+//                        });
+//            }
+//        };
+//    }
+//
+//    public static <T> ObservableTransformer<T, T> defaultFaild(final BaseView view) {
+//        return new ObservableTransformer<T, T>(){
+//            @Override
+//            public ObservableSource<T> apply(@NonNull final Observable<T> upstream) {
+//                return upstream.doOnError(new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(@NonNull Throwable throwable) throws Exception {
+//
+//                    }
+//                });
+//            }
+//        };
+//    }
 }

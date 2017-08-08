@@ -6,15 +6,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.boredream.bdcodehelper.utils.DialogUtils;
 import com.boredream.bdcodehelper.utils.ToastUtils;
 import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.trello.rxlifecycle2.components.RxActivity;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 public class BoreBaseActivity extends RxAppCompatActivity implements BaseView {
@@ -74,5 +71,4 @@ public class BoreBaseActivity extends RxAppCompatActivity implements BaseView {
     public void showLog(String msg) {
         Log.i(TAG, msg);
     }
-
 }

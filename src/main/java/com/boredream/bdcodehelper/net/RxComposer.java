@@ -1,6 +1,5 @@
 package com.boredream.bdcodehelper.net;
 
-import com.boredream.bdcodehelper.base.BaseView;
 import com.boredream.bdcodehelper.entity.CloudResponse;
 import com.boredream.bdcodehelper.entity.ListResponse;
 
@@ -11,9 +10,6 @@ import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 

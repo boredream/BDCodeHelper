@@ -155,11 +155,14 @@ public class HttpRequest {
         @POST("/1.1/call/apply_friend_request")
         Observable<CloudResponse<LeanCloudObject>> applyFriendRequest(
                 @Body Map<String, String> request);
-
     }
 
     public ApiService getApiService() {
-        return retrofit.create(ApiService.class);
+        return getApiService(ApiService.class);
+    }
+
+    public <T> T getApiService(Class<T> apiInterface) {
+        return retrofit.create(apiInterface);
     }
 
     //////////////////////////////

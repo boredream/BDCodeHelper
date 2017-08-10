@@ -1,7 +1,7 @@
-package com.boredream.bdcodehelper.net;
+package com.boredream.bdcodehelper.lean.net;
 
 import com.boredream.bdcodehelper.entity.BaseResponse;
-import com.boredream.bdcodehelper.lean.net.LcErrorResponse;
+import com.boredream.bdcodehelper.lean.entity.LcErrorResponse;
 import com.boredream.bdcodehelper.utils.StringUtils;
 import com.google.gson.Gson;
 
@@ -15,7 +15,7 @@ import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
-public class ErrorConstants {
+public class LcErrorConstants {
     public static Map<Integer, String> errors;
 
     static {
@@ -159,7 +159,7 @@ public class ErrorConstants {
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(error.getError()+"");
 
-        String s = ErrorConstants.errors.get(error.getCode());
+        String s = LcErrorConstants.errors.get(error.getCode());
         if (m.find() || StringUtils.isEmpty(s)) {
             // 如果错误信息中有中文，或者没中文时无匹配错误码，则直接用错误信息
             return error.getError();

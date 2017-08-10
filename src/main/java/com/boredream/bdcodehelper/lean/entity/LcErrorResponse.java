@@ -1,4 +1,4 @@
-package com.boredream.bdcodehelper.lean.net;
+package com.boredream.bdcodehelper.lean.entity;
 
 import com.boredream.bdcodehelper.entity.BaseResponse;
 

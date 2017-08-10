@@ -2,6 +2,7 @@ package com.boredream.bdcodehelper.net;
 
 import com.boredream.bdcodehelper.lean.entity.CloudResponse;
 import com.boredream.bdcodehelper.lean.entity.ListResponse;
+import com.boredream.bdcodehelper.lean.net.LcErrorResponse;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class RxComposer {
                             return Observable.just(response.getResult());
                         } else {
                             // 云引擎error会走200成功回调，要特殊处理下
-                            return Observable.error(new LeanCloudError(response));
+                            return Observable.error(new LcErrorResponse(response));
                         }
                     }
                 });

@@ -1,10 +1,10 @@
-package com.boredream.bdcodehelper.net;
+package com.boredream.bdcodehelper.lean.net;
 
 import com.boredream.bdcodehelper.entity.BaseResponse;
 
-public class LeanCloudError extends Throwable {
+public class LcErrorResponse extends Throwable {
 
-    public LeanCloudError(BaseResponse error) {
+    public LcErrorResponse(BaseResponse error) {
         super();
         this.error = error;
     }

@@ -1,4 +1,4 @@
-package com.boredream.bdcodehelper.lean;
+package com.boredream.bdcodehelper.lean.entity;
 
 public class WhereQuery {
 

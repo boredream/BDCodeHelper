@@ -1,6 +1,6 @@
 package com.boredream.bdcodehelper.lean.entity;
 
-public class User extends LeanCloudObject {
+public class LcUser extends LeanCloudObject {
 
     private String username;
     private String nickname;

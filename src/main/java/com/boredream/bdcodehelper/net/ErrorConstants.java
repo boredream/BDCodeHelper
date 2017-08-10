@@ -1,6 +1,7 @@
 package com.boredream.bdcodehelper.net;
 
 import com.boredream.bdcodehelper.entity.BaseResponse;
+import com.boredream.bdcodehelper.lean.net.LcErrorResponse;
 import com.boredream.bdcodehelper.utils.StringUtils;
 import com.google.gson.Gson;
 
@@ -138,8 +139,8 @@ public class ErrorConstants {
                     e.printStackTrace();
                 }
             }
-        } else if(throwable instanceof LeanCloudError) {
-            LeanCloudError lce = (LeanCloudError) throwable;
+        } else if(throwable instanceof LcErrorResponse) {
+            LcErrorResponse lce = (LcErrorResponse) throwable;
             errorInfo = getLocalErrorInfo(lce.getError());
         } else {
             if (throwable instanceof UnknownHostException) {

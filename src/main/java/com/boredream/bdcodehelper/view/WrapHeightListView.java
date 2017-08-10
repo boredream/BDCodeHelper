@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
+// FIXME: 2017/8/10 recyclerview instead
 public class WrapHeightListView extends ListView {
 
     public WrapHeightListView(Context context) {

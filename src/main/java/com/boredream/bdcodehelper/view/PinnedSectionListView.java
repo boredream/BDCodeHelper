@@ -39,7 +39,7 @@ import android.widget.SectionIndexer;
 import com.boredream.bdcodehelper.BuildConfig;
 
 /**
- * ListView, which is capable to pin section views at its top while the rest is still scrolled.
+ * TODO 找个recyclerview的替代
  */
 public class PinnedSectionListView extends ListView {
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
+// FIXME: 2017/8/10 recyclerview instead
 public class WrapHeightGridView extends GridView {
 
     public WrapHeightGridView(Context context) {

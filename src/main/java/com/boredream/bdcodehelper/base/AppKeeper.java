@@ -28,7 +28,7 @@ public class AppKeeper {
      * 图片加载框架Glide,使用OkHttp处理网络请求
      */
     private static void initGlide(Application app) {
-        OkHttpUrlLoader.Factory factory = new OkHttpUrlLoader.Factory(HttpClientFactory.getOkHttpClient());
+        OkHttpUrlLoader.Factory factory = new OkHttpUrlLoader.Factory(HttpClientFactory.getLeanCloudHttpClient());
         Glide.get(app).getRegistry().append(GlideUrl.class, InputStream.class, factory);
     }
 

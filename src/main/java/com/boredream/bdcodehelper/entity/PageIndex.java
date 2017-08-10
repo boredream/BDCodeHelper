@@ -1,9 +1,5 @@
 package com.boredream.bdcodehelper.entity;
 
-import com.boredream.bdcodehelper.adapter.LoadMoreAdapter;
-
-import java.util.List;
-
 /**
  * 页数索引, 多页加载时使用
  */
@@ -71,36 +67,37 @@ public class PageIndex {
         return newPage;
     }
 
-    /**
-     * 数据获取成功, 设置返回结果
-     *
-     * @param adapter
-     * @param currentList 当前已有数据
-     * @param newList     请求获取的新数据
-     * @param <T>
-     */
-    public <T> void setResponse(LoadMoreAdapter adapter, List<T> currentList, List<T> newList) {
-        // 更新当前页数
-        currentPage = newPage;
-
-        // 如果当前页为起始页, 则清空数据
-        if (currentPage == startPage) {
-            currentList.clear();
-        }
-
-        if (newList != null && newList.size() > 0) {
-            // 添加数据
-            currentList.addAll(newList);
-
-            // 判断是否已经加载完全部数据，设置Adapter对应状态
-            adapter.setStatus(newList.size() == countPerPage
-                    ? LoadMoreAdapter.STATUS_HAVE_MORE : LoadMoreAdapter.STATUS_LOADED_ALL);
-        } else {
-            adapter.setStatus(LoadMoreAdapter.STATUS_LOADED_ALL);
-        }
-
-        // 更新UI
-        adapter.notifyDataSetChanged();
-    }
+    // TODO: 2017/8/10
+//    /**
+//     * 数据获取成功, 设置返回结果
+//     *
+//     * @param adapter
+//     * @param currentList 当前已有数据
+//     * @param newList     请求获取的新数据
+//     * @param <T>
+//     */
+//    public <T> void setResponse(LoadMoreAdapter adapter, List<T> currentList, List<T> newList) {
+//        // 更新当前页数
+//        currentPage = newPage;
+//
+//        // 如果当前页为起始页, 则清空数据
+//        if (currentPage == startPage) {
+//            currentList.clear();
+//        }
+//
+//        if (newList != null && newList.size() > 0) {
+//            // 添加数据
+//            currentList.addAll(newList);
+//
+//            // 判断是否已经加载完全部数据，设置Adapter对应状态
+//            adapter.setStatus(newList.size() == countPerPage
+//                    ? LoadMoreAdapter.STATUS_HAVE_MORE : LoadMoreAdapter.STATUS_LOADED_ALL);
+//        } else {
+//            adapter.setStatus(LoadMoreAdapter.STATUS_LOADED_ALL);
+//        }
+//
+//        // 更新UI
+//        adapter.notifyDataSetChanged();
+//    }
 
 }

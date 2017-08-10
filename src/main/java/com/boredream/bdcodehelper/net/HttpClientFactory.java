@@ -14,20 +14,17 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class HttpClientFactory {
 
-    private static final String APP_ID_NAME = "X-LC-Id";
-    private static final String API_KEY_NAME = "X-LC-Key";
-    private static final String SESSION_TOKEN_KEY = "X-LC-Session";
-
-    private static final String APP_ID_VALUE = "kCb4hozHVvHQIYbL9xf2rdRi-gzGzoHsz";
-    private static final String API_KEY_VALUE = "teykeivIf7fbObEo1TEvredO";
-
     private static volatile OkHttpClient httpClient;
 
     public OkHttpClient getHttpClient() {
         return httpClient;
     }
 
-    public static OkHttpClient getOkHttpClient() {
+    public static OkHttpClient getLeanCloudHttpClient() {
+        final String appId = "kCb4hozHVvHQIYbL9xf2rdRi-gzGzoHsz";
+        final String apiKey = "teykeivIf7fbObEo1TEvredO";
+        final String session = UserInfoKeeper.getInstance().getSessionToken();
+        
         if (httpClient == null) {
             synchronized (HttpClientFactory.class) {
                 if (httpClient == null) {
@@ -41,9 +38,9 @@ public class HttpClientFactory {
                                 public Response intercept(@NonNull Interceptor.Chain chain) throws IOException {
                                     Request request = chain.request().newBuilder()
                                             .addHeader("Content-Type", "application/json")
-                                            .addHeader(APP_ID_NAME, APP_ID_VALUE)
-                                            .addHeader(API_KEY_NAME, API_KEY_VALUE)
-                                            .addHeader(SESSION_TOKEN_KEY, UserInfoKeeper.getInstance().getSessionToken())
+                                            .addHeader("X-LC-Id", appId)
+                                            .addHeader("X-LC-Key", apiKey)
+                                            .addHeader("X-LC-Session", session)
                                             .build();
                                     return chain.proceed(request);
                                 }})

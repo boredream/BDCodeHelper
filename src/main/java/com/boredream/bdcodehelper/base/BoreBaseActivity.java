@@ -17,6 +17,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 public class BoreBaseActivity extends RxAppCompatActivity implements BaseView {
 
     protected String TAG;
+    // TODO: view替代dialog作为progress，同时支持empty和error、retry等操作
     private Dialog progressDialog;
 
     @Override

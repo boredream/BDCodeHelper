@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.boredream.bdcodehelper.entity.User;
+import com.boredream.bdcodehelper.lean.entity.User;
 import com.google.gson.Gson;
 
 /**

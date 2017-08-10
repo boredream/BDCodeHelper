@@ -2,14 +2,14 @@ package com.boredream.bdcodehelper.net;
 
 import android.os.AsyncTask;
 
-import com.boredream.bdcodehelper.base.LeanCloudObject;
-import com.boredream.bdcodehelper.entity.AppUpdateInfo;
-import com.boredream.bdcodehelper.entity.CloudResponse;
-import com.boredream.bdcodehelper.entity.FileUploadResponse;
-import com.boredream.bdcodehelper.entity.ListResponse;
-import com.boredream.bdcodehelper.entity.UpdatePswRequest;
-import com.boredream.bdcodehelper.entity.User;
-import com.boredream.bdcodehelper.entity.UserRegisterByMobilePhone;
+import com.boredream.bdcodehelper.lean.entity.LeanCloudObject;
+import com.boredream.bdcodehelper.lean.entity.AppUpdateInfo;
+import com.boredream.bdcodehelper.lean.entity.CloudResponse;
+import com.boredream.bdcodehelper.lean.entity.FileUploadResponse;
+import com.boredream.bdcodehelper.lean.entity.ListResponse;
+import com.boredream.bdcodehelper.lean.entity.UpdatePswRequest;
+import com.boredream.bdcodehelper.lean.entity.User;
+import com.boredream.bdcodehelper.lean.entity.UserRegisterByMobilePhone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class HttpRequest {
                 .baseUrl(HOST)
                 .addConverterFactory(GsonConverterFactory.create()) // gson
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // rxjava 响应式编程
-                .client(HttpClientFactory.getOkHttpClient())
+                .client(HttpClientFactory.getLeanCloudHttpClient())
                 .callbackExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
                 .build();
     }

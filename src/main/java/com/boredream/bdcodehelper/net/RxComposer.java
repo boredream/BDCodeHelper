@@ -1,7 +1,7 @@
 package com.boredream.bdcodehelper.net;
 
-import com.boredream.bdcodehelper.entity.CloudResponse;
-import com.boredream.bdcodehelper.entity.ListResponse;
+import com.boredream.bdcodehelper.lean.entity.CloudResponse;
+import com.boredream.bdcodehelper.lean.entity.ListResponse;
 
 import java.util.ArrayList;
 

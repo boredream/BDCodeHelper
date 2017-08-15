@@ -1,6 +1,8 @@
 package com.boredream.bdcodehelper.activity;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -20,7 +22,22 @@ public class ImageBrowserActivity extends BoreBaseActivity {
 
     private int position;
     private ImageBrowserAdapter adapter;
-    private ArrayList<? extends ImageUrlInterface> images;
+    private ArrayList<ImageUrlInterface> images;
+    private ArrayList<String> imageStrs;
+
+    public static void start(Context context, ArrayList<? extends ImageUrlInterface> images, int position) {
+        Intent intent = new Intent(context, ImageBrowserActivity.class);
+        intent.putExtra("images", images);
+        intent.putExtra("position", position % images.size());
+        context.startActivity(intent);
+    }
+
+    public static void startSimple(Context context, ArrayList<String> imageStrs, int position) {
+        Intent intent = new Intent(context, ImageBrowserActivity.class);
+        intent.putExtra("imageStrs", imageStrs);
+        intent.putExtra("position", position % imageStrs.size());
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +52,7 @@ public class ImageBrowserActivity extends BoreBaseActivity {
 
     private void initData() {
         images = (ArrayList<ImageUrlInterface>) getIntent().getSerializableExtra("images");
+        imageStrs = (ArrayList<String>) getIntent().getSerializableExtra("imageStrs");
         position = getIntent().getIntExtra("position", 0);
     }
 
@@ -44,11 +62,16 @@ public class ImageBrowserActivity extends BoreBaseActivity {
     }
 
     private void setData() {
-        adapter = new ImageBrowserAdapter(this, images);
+        if(images != null) {
+            adapter = new ImageBrowserAdapter(this);
+            adapter.setImages(images);
+        } else {
+            adapter = new ImageBrowserAdapter(this);
+            adapter.setImageStrs(imageStrs);
+        }
         vp_image_brower.setAdapter(adapter);
 
-        final int size = images.size();
-//        int initPosition = Integer.MAX_VALUE / 2 / size * size + position;
+        final int size = images != null ? images.size() : imageStrs.size();
         int initPosition = position;
 
         if (size > 1) {

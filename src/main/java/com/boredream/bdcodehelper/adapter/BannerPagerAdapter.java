@@ -84,10 +84,7 @@ public class BannerPagerAdapter<T extends ImageUrlInterface> extends PagerAdapte
                         intent.putExtra("url", image.getImageLink());
                         context.startActivity(intent);
                     } else {
-                        Intent intent = new Intent(context, ImageBrowserActivity.class);
-                        intent.putExtra("images", images);
-                        intent.putExtra("position", position % images.size());
-                        context.startActivity(intent);
+                        ImageBrowserActivity.start(context, images, position % images.size());
                     }
                 }
             }

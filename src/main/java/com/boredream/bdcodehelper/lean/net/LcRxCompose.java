@@ -14,13 +14,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
-/**
- * <pre>
- *     author : lichunyang
- *     time   : 2017/08/10
- *     desc   :
- * </pre>
- */
 public class LcRxCompose {
 
     public static <T> ObservableTransformer<T, T> defaultFailed(final BaseView view) {

@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class MockUtils {
 
-    private static String getImgUrl() {
+    public static String getImgUrl() {
         List<String> imgs = new ArrayList<>();
         imgs.add("http://img4.duitang.com/uploads/item/201408/19/20140819172216_zPzZT.jpeg");
         imgs.add("http://img2.niutuku.com/desk/221/221-25356.jpg");
@@ -23,7 +23,7 @@ public class MockUtils {
         return imgs.get(new Random().nextInt(imgs.size()));
     }
 
-    private static String getVideoUrl() {
+    public static String getVideoUrl() {
         List<String> imgs = new ArrayList<>();
         imgs.add("http://baobab.wdjcdn.com/1455782903700jy.mp4");
         imgs.add("http://baobab.wdjcdn.com/145076769089714.mp4");
@@ -31,7 +31,7 @@ public class MockUtils {
         return imgs.get(new Random().nextInt(imgs.size()));
     }
 
-    private static String getMusicUrl() {
+    public static String getMusicUrl() {
         List<String> imgs = new ArrayList<>();
         imgs.add("http://om5.alicdn.com/450/10450/56300/1073345_73731_l.mp3?auth_key=1d4f10afb733a4165686066a7f0852f8-1498446000-0-null");
         imgs.add("http://audio.xmcdn.com/group11/M08/3A/55/wKgDbVWbJuzz1oTfACgSj0ux7aQ198.m4a");

@@ -4,16 +4,17 @@ import android.app.Application;
 
 public class AppKeeper {
 
-    public static Application app;
+    private static Application app;
 
     public static void init(Application app) {
         AppKeeper.app = app;
     }
 
-    public static void checkInit() {
+    public static Application getApp() {
         if(AppKeeper.app == null) {
             throw new RuntimeException("you must call AppKeeper.init(application) in your Application class first");
         }
+        return app;
     }
 
 }

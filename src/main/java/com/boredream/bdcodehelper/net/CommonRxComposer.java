@@ -37,9 +37,15 @@ public class CommonRxComposer {
                                 view.showProgress();
                             }
                         })
-                        .doOnTerminate(new Action() {
+                        .doOnError(new Consumer<Throwable>() {
                             @Override
-                            public void run() throws Exception {
+                            public void accept(@NonNull Throwable throwable) throws Exception {
+                                view.dismissProgress();
+                            }
+                        })
+                        .doOnNext(new Consumer<T>() {
+                            @Override
+                            public void accept(@NonNull T t) throws Exception {
                                 view.dismissProgress();
                             }
                         });

@@ -66,9 +66,12 @@ dependencies {
     compile "com.github.bumptech.glide:okhttp3-integration:$rootProject.glideVersion"
 
     // Others
-    compile "com.commit451:PhotoView:$rootProject.photoviewVersion"
+//    compile "com.commit451:PhotoView:$rootProject.photoviewVersion"
     compile "org.greenrobot:eventbus:$rootProject.eventbusVersion"
     compile "com.github.promeg:tinypinyin:$rootProject.pinyinVersion"
+
+    // 包含photoView
+    compile ('com.bilibili:boxing-impl:0.8.0')
 }
 
 // copy to rootProject build.gradle

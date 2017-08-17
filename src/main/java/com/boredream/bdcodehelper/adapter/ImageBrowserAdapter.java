@@ -100,6 +100,7 @@ public class ImageBrowserAdapter extends PagerAdapter {
 
         final ImageView iv_image_browser = (ImageView) rootView.findViewById(R.id.iv_image_browser);
         final View pb_loading = rootView.findViewById(R.id.pb_loading);
+
         final PhotoViewAttacher pva = new PhotoViewAttacher(iv_image_browser);
 
         String url = getUrls(position);
@@ -134,6 +135,11 @@ public class ImageBrowserAdapter extends PagerAdapter {
             @Override
             public void onPhotoTap(View view, float x, float y) {
                 context.onBackPressed();
+            }
+
+            @Override
+            public void onOutsidePhotoTap() {
+
             }
         });
 

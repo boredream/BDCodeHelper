@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.boredream.bdcodehelper.R;
 import com.boredream.bdcodehelper.adapter.ImageBrowserAdapter;
 import com.boredream.bdcodehelper.base.BoreBaseActivity;
-import com.boredream.bdcodehelper.entity.ImageUrlInterface;
 
 import java.util.ArrayList;
 
@@ -22,20 +21,12 @@ public class ImageBrowserActivity extends BoreBaseActivity {
 
     private int position;
     private ImageBrowserAdapter adapter;
-    private ArrayList<ImageUrlInterface> images;
-    private ArrayList<String> imageStrs;
+    private ArrayList images;
 
-    public static void start(Context context, ArrayList<? extends ImageUrlInterface> images, int position) {
+    public static void start(Context context, ArrayList images, int position) {
         Intent intent = new Intent(context, ImageBrowserActivity.class);
         intent.putExtra("images", images);
         intent.putExtra("position", position % images.size());
-        context.startActivity(intent);
-    }
-
-    public static void startSimple(Context context, ArrayList<String> imageStrs, int position) {
-        Intent intent = new Intent(context, ImageBrowserActivity.class);
-        intent.putExtra("imageStrs", imageStrs);
-        intent.putExtra("position", position % imageStrs.size());
         context.startActivity(intent);
     }
 
@@ -51,8 +42,7 @@ public class ImageBrowserActivity extends BoreBaseActivity {
     }
 
     private void initData() {
-        images = (ArrayList<ImageUrlInterface>) getIntent().getSerializableExtra("images");
-        imageStrs = (ArrayList<String>) getIntent().getSerializableExtra("imageStrs");
+        images = (ArrayList) getIntent().getSerializableExtra("images");
         position = getIntent().getIntExtra("position", 0);
     }
 
@@ -62,21 +52,14 @@ public class ImageBrowserActivity extends BoreBaseActivity {
     }
 
     private void setData() {
-        if(images != null) {
-            adapter = new ImageBrowserAdapter(this);
-            adapter.setImages(images);
-        } else {
-            adapter = new ImageBrowserAdapter(this);
-            adapter.setImageStrs(imageStrs);
-        }
+        adapter = new ImageBrowserAdapter(this, images);
         vp_image_brower.setAdapter(adapter);
 
-        final int size = images != null ? images.size() : imageStrs.size();
         int initPosition = position;
 
-        if (size > 1) {
+        if (images.size() > 1) {
             tv_image_index.setVisibility(View.VISIBLE);
-            tv_image_index.setText((position + 1) + "/" + size);
+            tv_image_index.setText((position + 1) + "/" + images.size());
         } else {
             tv_image_index.setVisibility(View.GONE);
         }
@@ -85,8 +68,8 @@ public class ImageBrowserActivity extends BoreBaseActivity {
 
             @Override
             public void onPageSelected(int arg0) {
-                int index = arg0 % size;
-                tv_image_index.setText((index + 1) + "/" + size);
+                int index = arg0 % images.size();
+                tv_image_index.setText((index + 1) + "/" + images.size());
             }
 
             @Override

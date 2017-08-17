@@ -46,24 +46,33 @@ public class LcHttpRequest {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
-
                 HttpUrl url = request.url();
                 Set<String> names = url.queryParameterNames();
+                String urlStr = url.url().toString();
+
                 if(names.contains("page")) {
                     // 如果包含page，则自动转换为limit和skip的leancloud规则
                     int page = Integer.parseInt(url.queryParameterValues("page").get(0));
                     int skip = LcUtils.page2skip(page);
 
-                    HttpUrl newUrl = url.newBuilder()
+                    url = url.newBuilder()
                             .removeAllQueryParameters("page")
                             .addQueryParameter("limit", String.valueOf(LcUtils.PAGE_SIZE))
                             .addQueryParameter("skip", String.valueOf(skip))
                             .build();
+                }
 
-                    request = chain.request().newBuilder()
-                            .url(newUrl)
+                if(urlStr.contains("Goods")) {
+                    // 如果是Goods接口，则按时间倒序
+                    url = url.newBuilder()
+                            .addQueryParameter("order", "-createdAt")
+                            .addQueryParameter("include", "user")
                             .build();
                 }
+
+                request = chain.request().newBuilder()
+                        .url(url)
+                        .build();
                 return chain.proceed(request);
             }
         });

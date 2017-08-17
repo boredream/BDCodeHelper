@@ -2,14 +2,16 @@ package com.boredream.bdcodehelper.entity;
 
 import java.io.Serializable;
 
-public interface ImageUrlInterface extends Serializable {
+public abstract class ImageUrlInterface implements Serializable {
 
-    String getThumbImageUrl();
+    public abstract String getImageUrl();
 
-    String getImageUrl();
+    public abstract String getImageTitle();
 
-    String getImageTitle();
+    public abstract String getImageLink();
 
-    String getImageLink();
-
+    @Override
+    public String toString() {
+        return getImageUrl();
+    }
 }

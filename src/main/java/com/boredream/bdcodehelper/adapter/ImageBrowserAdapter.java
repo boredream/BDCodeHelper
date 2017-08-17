@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.boredream.bdcodehelper.R;
-import com.boredream.bdcodehelper.entity.ImageUrlInterface;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -29,27 +28,11 @@ public class ImageBrowserAdapter extends PagerAdapter {
     private Activity context;
     private LayoutInflater layoutInflater;
     private Map<Integer, WeakReference<ImageView>> imageViews = new HashMap<>();
-    private ArrayList<ImageUrlInterface> images;
-    private ArrayList<String> imageStrs;
+    private ArrayList images;
 
-    public void setImages(ArrayList<ImageUrlInterface> images) {
-        this.images = images;
-    }
-
-    public ArrayList<ImageUrlInterface> getImages() {
-        return images;
-    }
-
-    public void setImageStrs(ArrayList<String> imageStrs) {
-        this.imageStrs = imageStrs;
-    }
-
-    public ArrayList<String> getImageStrs() {
-        return imageStrs;
-    }
-
-    public ImageBrowserAdapter(Activity context) {
+    public ImageBrowserAdapter(Activity context, ArrayList images) {
         this.context = context;
+        this.images = images;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -73,20 +56,15 @@ public class ImageBrowserAdapter extends PagerAdapter {
     }
 
     private String getUrls(int position) {
-        if(images != null) {
-            return images.get(position % images.size()).getImageUrl();
-        } else {
-            return imageStrs.get(position % imageStrs.size());
-        }
+        return images.get(position % images.size()).toString();
     }
 
     @Override
     public int getCount() {
-        int size = images != null ? images.size() : imageStrs.size();
-        if (size > 1) {
+        if (images.size() > 1) {
             return Integer.MAX_VALUE;
         }
-        return size;
+        return images.size();
     }
 
     @Override
@@ -143,22 +121,14 @@ public class ImageBrowserAdapter extends PagerAdapter {
             }
         });
 
-        if(images != null) {
-            imageViews.put(position % images.size(), new WeakReference<>(iv_image_browser));
-        } else {
-            imageViews.put(position % imageStrs.size(), new WeakReference<>(iv_image_browser));
-        }
+        imageViews.put(position % images.size(), new WeakReference<>(iv_image_browser));
         container.addView(rootView);
         return rootView;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        if(images != null) {
-            imageViews.remove(position % images.size());
-        } else {
-            imageViews.remove(position % imageStrs.size());
-        }
+        imageViews.remove(position % images.size());
         container.removeView((View) object);
     }
 

@@ -8,7 +8,6 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -21,12 +20,22 @@ public class CommonRxComposer {
         return new ObservableTransformer<T, T>(){
             @Override
             public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
-                return upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+                return upstream.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }
 
-    public static <T> ObservableTransformer<T, T> doProgress(final BaseView view) {
+    public static <T> ObservableTransformer<T, T> lifecycler(final BaseView view) {
+        return new ObservableTransformer<T, T>(){
+            @Override
+            public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
+                return upstream.compose(view.<T>getLifeCycleTransformer());
+            }
+        };
+    }
+
+    public static <T> ObservableTransformer<T, T> handleProgress(final BaseView view) {
         return new ObservableTransformer<T, T>(){
             @Override
             public ObservableSource<T> apply(@NonNull final Observable<T> upstream) {

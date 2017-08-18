@@ -1,7 +1,7 @@
 package com.boredream.bdcodehelper.lean.entity;
 
 
-public class AppUpdateInfo extends LeanCloudObject {
+public class AppUpdateInfo extends Pointer {
 
     public static AppUpdateInfo get(String appName) {
         AppUpdateInfo appUpdateInfo = new AppUpdateInfo();

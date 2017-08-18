@@ -26,7 +26,7 @@ public class CommonRxComposer {
         };
     }
 
-    public static <T> ObservableTransformer<T, T> lifecycler(final BaseView view) {
+    public static <T> ObservableTransformer<T, T> lifecycle(final BaseView view) {
         return new ObservableTransformer<T, T>(){
             @Override
             public ObservableSource<T> apply(@NonNull Observable<T> upstream) {

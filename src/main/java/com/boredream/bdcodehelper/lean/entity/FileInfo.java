@@ -1,6 +1,6 @@
 package com.boredream.bdcodehelper.lean.entity;
 
-public class FileInfo extends LeanCloudObject {
+public class FileInfo extends Pointer {
     private String cdn;
     private String filename;
     private String url;

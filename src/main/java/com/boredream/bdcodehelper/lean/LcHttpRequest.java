@@ -66,7 +66,6 @@ public class LcHttpRequest {
                     // 如果是Goods接口，则按时间倒序
                     url = url.newBuilder()
                             .addQueryParameter("order", "-createdAt")
-                            .addQueryParameter("include", "user")
                             .build();
                 }
 

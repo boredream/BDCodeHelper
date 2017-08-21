@@ -1,4 +1,4 @@
-package com.boredream.bdcodehelper.base;
+package com.boredream.bdcodehelper.constants;
 
 import android.app.Application;
 

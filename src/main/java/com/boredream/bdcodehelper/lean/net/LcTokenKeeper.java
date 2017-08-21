@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.boredream.bdcodehelper.base.AppKeeper;
+import com.boredream.bdcodehelper.constants.AppKeeper;
 
 public class LcTokenKeeper {
 

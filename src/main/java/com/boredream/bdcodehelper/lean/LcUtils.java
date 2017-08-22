@@ -21,4 +21,9 @@ public class LcUtils {
         return pointer;
     }
 
+    public static String getDate(String date) {
+        // 2017-08-15T15:25:28.353Z
+        return date.substring(0, 10) + date.substring(12);
+    }
+
 }

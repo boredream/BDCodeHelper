@@ -1,7 +1,5 @@
 package com.boredream.bdcodehelper.lean.entity;
 
-import com.boredream.bdcodehelper.entity.BaseResponse;
-
 public class LcErrorResponse extends Throwable {
 
     public LcErrorResponse(BaseResponse error) {

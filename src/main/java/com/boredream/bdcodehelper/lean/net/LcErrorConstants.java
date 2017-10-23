@@ -1,6 +1,6 @@
 package com.boredream.bdcodehelper.lean.net;
 
-import com.boredream.bdcodehelper.entity.BaseResponse;
+import com.boredream.bdcodehelper.lean.entity.BaseResponse;
 import com.boredream.bdcodehelper.lean.entity.LcErrorResponse;
 import com.boredream.bdcodehelper.utils.StringUtils;
 import com.google.gson.Gson;

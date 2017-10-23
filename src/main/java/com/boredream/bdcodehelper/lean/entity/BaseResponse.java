@@ -1,4 +1,4 @@
-package com.boredream.bdcodehelper.entity;
+package com.boredream.bdcodehelper.lean.entity;
 
 public class BaseResponse {
 

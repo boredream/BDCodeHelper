@@ -1,7 +1,5 @@
 package com.boredream.bdcodehelper.lean.entity;
 
-import com.boredream.bdcodehelper.entity.BaseResponse;
-
 import java.util.ArrayList;
 
 public class ListResponse<T> extends BaseResponse {
